@@ -39,29 +39,15 @@ abstract class AbstractCharacter(
 
     override fun waitTurn() {
         scheduledExecutor = Executors.newSingleThreadScheduledExecutor()
-        when (this) {
-            is PlayerCharacter -> {
-                scheduledExecutor.schedule(
-                    /* command = */ ::addToQueue,
-                    /* delay = */ (this.equippedWeapon.weight / 10).toLong(),
-                    /* unit = */ TimeUnit.SECONDS
-                )
-            }
-
-            is Enemy -> {
-                scheduledExecutor.schedule(
-                    /* command = */ ::addToQueue,
-                    /* delay = */ (this.weight / 10).toLong(),
-                    /* unit = */ TimeUnit.SECONDS
-                )
-            }
-        }
+        this.waitTheirTurn(scheduledExecutor)
     }
+
+    abstract fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService)
 
     /**
      * Adds this character to the turns queue.
      */
-    private fun addToQueue() {
+    protected fun addToQueue() {
         turnsQueue.put(this)
         scheduledExecutor.shutdown()
     }

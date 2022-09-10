@@ -11,6 +11,8 @@ import cl.uchile.dcc.finalreality.model.Weapon
 import cl.uchile.dcc.finalreality.model.character.AbstractCharacter
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import java.util.concurrent.BlockingQueue
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 /**
  * A character controlled by the user.
@@ -27,6 +29,7 @@ interface PlayerCharacter {
    * Equips a weapon to the character.
    */
   fun equip(weapon: Weapon)
+  fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService)
 }
 
 /**
@@ -54,5 +57,11 @@ abstract class AbstractPlayerCharacter(
 
   override fun equip(weapon: Weapon) {
     _equippedWeapon = weapon
+  }
+  override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
+    scheduledExecutor.schedule(
+      /* command = */ ::addToQueue,
+      /* delay = */ (this.equippedWeapon.weight / 10).toLong(),
+      /* unit = */ TimeUnit.SECONDS)
   }
 }
