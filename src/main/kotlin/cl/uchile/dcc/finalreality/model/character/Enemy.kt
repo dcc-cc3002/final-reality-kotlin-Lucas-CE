@@ -3,9 +3,6 @@ package cl.uchile.dcc.finalreality.model.character
 import cl.uchile.dcc.finalreality.exceptions.Require
 import java.util.*
 import java.util.concurrent.BlockingQueue
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
 
 /**
  * A class that holds all the information of a single enemy of the game.
@@ -43,11 +40,4 @@ class Enemy(
     }
 
     override fun hashCode() = Objects.hash(Enemy::class, name, weight, maxHp, defense)
-
-    override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
-        scheduledExecutor.schedule(
-            /* command = */ ::addToQueue,
-            /* delay = */ (this.weight / 10).toLong(),
-            /* unit = */ TimeUnit.SECONDS)
-    }
 }
