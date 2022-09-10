@@ -31,7 +31,6 @@ class Enemy(
     val weight = Require.Stat(weight, "Weight") atLeast 1
 
     override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
-        System.out.println("Enemigo waiting turn")
         scheduledExecutor.schedule(
             /* command = */ ::addToQueue,
             /* delay = */ (this.weight / 10).toLong(),

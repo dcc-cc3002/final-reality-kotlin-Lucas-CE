@@ -31,10 +31,13 @@ abstract class AbstractCharacter(
 
     private lateinit var scheduledExecutor: ScheduledExecutorService
     override val maxHp = Require.Stat(maxHp, "Max Hp") atLeast 1
-    override var currentHp = maxHp
+    protected var _currentHp = maxHp
         set(value) {
             field = Require.Stat(value, "Current Hp") inRange 0..maxHp
         }
+    override val currentHp
+        get() = _currentHp
+
     override val defense = Require.Stat(defense, "Defense") atLeast 0
 
     override fun waitTurn() {
