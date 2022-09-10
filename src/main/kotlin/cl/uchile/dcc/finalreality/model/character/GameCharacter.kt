@@ -19,7 +19,7 @@ package cl.uchile.dcc.finalreality.model.character
 interface GameCharacter {
     val name: String
     val maxHp: Int
-    var currentHp: Int
+    val currentHp: Int
     val defense: Int
 
     /**

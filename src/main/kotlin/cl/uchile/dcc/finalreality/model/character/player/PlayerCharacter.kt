@@ -64,7 +64,6 @@ abstract class AbstractPlayerCharacter(
   }
 
   override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
-    System.out.println("Player waiting turn")
     scheduledExecutor.schedule(
       /* command = */ ::addToQueue,
       /* delay = */ (this.equippedWeapon.weight / 10).toLong(),
