@@ -3,6 +3,8 @@ package cl.uchile.dcc.finalreality.model.character
 import cl.uchile.dcc.finalreality.exceptions.Require
 import java.util.*
 import java.util.concurrent.BlockingQueue
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 /**
  * A class that holds all the information of a single enemy of the game.
@@ -28,6 +30,14 @@ class Enemy(
 ) : AbstractCharacter(name, maxHp, defense, turnsQueue) {
     val weight = Require.Stat(weight, "Weight") atLeast 1
 
+    override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
+        System.out.println("Enemigo waiting turn")
+        scheduledExecutor.schedule(
+            /* command = */ ::addToQueue,
+            /* delay = */ (this.weight / 10).toLong(),
+            /* unit = */ TimeUnit.SECONDS)
+    }
+
     override fun equals(other: Any?) = when {
         this === other                 -> true
         other !is Enemy                -> false
@@ -40,4 +50,5 @@ class Enemy(
     }
 
     override fun hashCode() = Objects.hash(Enemy::class, name, weight, maxHp, defense)
+
 }
