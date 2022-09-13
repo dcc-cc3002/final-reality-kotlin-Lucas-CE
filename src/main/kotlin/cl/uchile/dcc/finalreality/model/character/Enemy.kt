@@ -1,7 +1,7 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.exceptions.Require
-import java.util.*
+import java.util.Objects
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -34,7 +34,8 @@ class Enemy(
         scheduledExecutor.schedule(
             /* command = */ ::addToQueue,
             /* delay = */ (this.weight / 10).toLong(),
-            /* unit = */ TimeUnit.SECONDS)
+            /* unit = */ TimeUnit.SECONDS
+        )
     }
 
     override fun equals(other: Any?) = when {
@@ -49,5 +50,4 @@ class Enemy(
     }
 
     override fun hashCode() = Objects.hash(Enemy::class, name, weight, maxHp, defense)
-
 }
