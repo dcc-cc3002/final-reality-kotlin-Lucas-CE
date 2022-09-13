@@ -18,24 +18,21 @@ import java.util.concurrent.ScheduledExecutorService
  *    The queue with the characters waiting for their turn.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
- * @author ~Your name~
+ * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 abstract class AbstractCharacter(
     override val name: String,
     maxHp: Int,
     defense: Int,
-    private val turnsQueue: BlockingQueue<GameCharacter>,
+    private val turnsQueue: BlockingQueue<GameCharacter>
 ) : GameCharacter {
 
     private lateinit var scheduledExecutor: ScheduledExecutorService
     override val maxHp = Require.Stat(maxHp, "Max Hp") atLeast 1
-    protected var _currentHp = maxHp
+    override var currentHp = maxHp
         set(value) {
             field = Require.Stat(value, "Current Hp") inRange 0..maxHp
         }
-    override val currentHp
-        get() = _currentHp
-
     override val defense = Require.Stat(defense, "Defense") atLeast 0
 
     override fun waitTurn() {
@@ -43,6 +40,9 @@ abstract class AbstractCharacter(
         this.waitTheirTurn(scheduledExecutor)
     }
 
+    /**
+     * Abstraction of waitTurn to define it in each different AbstractCharacter
+     */
     abstract fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService)
 
     /**

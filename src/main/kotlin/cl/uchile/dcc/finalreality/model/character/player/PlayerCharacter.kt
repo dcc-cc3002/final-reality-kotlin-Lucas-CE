@@ -23,17 +23,17 @@ import java.util.concurrent.TimeUnit
  * @author ~Your name~
  */
 interface PlayerCharacter {
-  val equippedWeapon: Weapon
+    val equippedWeapon: Weapon
 
-  /**
-   * Equips a weapon to the character.
-   */
-  fun equip(weapon: Weapon)
+    /**
+     * Equips a weapon to the character.
+     */
+    fun equip(weapon: Weapon)
 
-  /**
-   * Waits the turn of the character.
-   */
-  fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService)
+    /**
+     * Waits the turn of the character.
+     */
+    fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService)
 }
 
 /**
@@ -49,24 +49,25 @@ interface PlayerCharacter {
  * @author ~Your name~
  */
 abstract class AbstractPlayerCharacter(
-  name: String,
-  maxHp: Int,
-  defense: Int,
-  turnsQueue: BlockingQueue<GameCharacter>
+    name: String,
+    maxHp: Int,
+    defense: Int,
+    turnsQueue: BlockingQueue<GameCharacter>
 ) : AbstractCharacter(name, maxHp, defense, turnsQueue), PlayerCharacter {
 
-  private lateinit var _equippedWeapon: Weapon
-  override val equippedWeapon: Weapon
-    get() = _equippedWeapon
+    private lateinit var _equippedWeapon: Weapon
+    override val equippedWeapon: Weapon
+        get() = _equippedWeapon
 
-  override fun equip(weapon: Weapon) {
-    _equippedWeapon = weapon
-  }
+    override fun equip(weapon: Weapon) {
+        _equippedWeapon = weapon
+    }
 
-  override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
-    scheduledExecutor.schedule(
-      /* command = */ ::addToQueue,
-      /* delay = */ (this.equippedWeapon.weight / 10).toLong(),
-      /* unit = */ TimeUnit.SECONDS)
-  }
+    override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
+        scheduledExecutor.schedule(
+            /* command = */ ::addToQueue,
+            /* delay = */ (this.equippedWeapon.weight / 10).toLong(),
+            /* unit = */ TimeUnit.SECONDS
+        )
+    }
 }
