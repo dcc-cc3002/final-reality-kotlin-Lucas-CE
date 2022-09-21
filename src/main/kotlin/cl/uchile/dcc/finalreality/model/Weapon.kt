@@ -26,14 +26,14 @@ class Weapon(
     val type: WeaponType
 ) {
     override fun equals(other: Any?) = when {
-        this === other                 -> true
-        other !is Weapon               -> false
+        this === other -> true
+        other !is Weapon -> false
         hashCode() != other.hashCode() -> false
-        name != other.name             -> false
-        damage != other.damage         -> false
-        weight != other.weight         -> false
-        type != other.type             -> false
-        else                           -> true
+        name != other.name -> false
+        damage != other.damage -> false
+        weight != other.weight -> false
+        type != other.type -> false
+        else -> true
     }
 
     override fun hashCode() = Objects.hash(Weapon::class, name, damage, weight, type)

@@ -1,5 +1,5 @@
 /*
- * "Final Reality" (c) by R8V and ~Your name~
+ * "Final Reality" (c) by R8V and Lucase
  * "Final Reality" is licensed under a
  * Creative Commons Attribution 4.0 International License.
  * You should have received a copy of the license along with this
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
  * @property equippedWeapon
  *    the weapon that the character is currently using
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
- * @author ~Your name~
+ * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 interface PlayerCharacter {
     val equippedWeapon: Weapon
@@ -46,7 +46,7 @@ interface PlayerCharacter {
  * @constructor Creates a new playable character.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
- * @author ~Your name~
+ * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 abstract class AbstractPlayerCharacter(
     name: String,

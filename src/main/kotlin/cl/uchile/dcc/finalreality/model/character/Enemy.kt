@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
  *  play.
  *
  * @author <a href="https://github.com/r8vnhill">R8V</a>
- * @author ~Your name~
+ * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 class Enemy(
     name: String,
