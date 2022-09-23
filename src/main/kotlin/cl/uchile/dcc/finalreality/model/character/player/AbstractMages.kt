@@ -5,7 +5,7 @@ import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import java.util.concurrent.BlockingQueue
 
 /**
- *  A class that holds all the information of mage character.
+ *  A abstract class that holds all the information of mage character.
  *
  * @param name        the character's name
  * @param maxHp       the character's maximum health points
