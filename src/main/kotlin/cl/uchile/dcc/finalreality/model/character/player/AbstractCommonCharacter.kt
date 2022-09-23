@@ -4,7 +4,7 @@ import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import java.util.concurrent.BlockingQueue
 
 /**
- *  A abstract class that holds all the information of commons characters.
+ *  An abstract class that holds all the information of commons characters.
  *
  * @param name        the character's name
  * @param maxHp       the character's maximum health points
@@ -18,7 +18,7 @@ import java.util.concurrent.BlockingQueue
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 
-abstract class AbstractCommonCharacter (
+abstract class AbstractCommonCharacter(
     name: String,
     maxHp: Int,
     defense: Int,
