@@ -43,7 +43,7 @@ abstract class AbstractCharacter(
     /**
      * Abstraction of waitTurn to define it in each different AbstractCharacter
      */
-    abstract fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService)
+    protected abstract fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService)
 
     /**
      * Adds this character to the turns queue.
