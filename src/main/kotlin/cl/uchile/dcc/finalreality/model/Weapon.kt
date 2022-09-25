@@ -17,7 +17,7 @@ import java.util.Objects
  * @constructor Creates a weapon with a name, a base damage, speed, and it's type.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
- * @author ~Your name~
+ * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 class Weapon(
     val name: String,
@@ -45,7 +45,7 @@ class Weapon(
  * Enumeration of all the weapon types.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
- * @author ~Your name~
+ * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 enum class WeaponType {
     SWORD, AXE, KNIFE, STAFF, BOW
