@@ -1,7 +1,5 @@
 package cl.uchile.dcc.finalreality.model.weapon
 
-import java.util.Objects
-
 /**
  * A class that holds all the information of a weapon.
  *
@@ -19,27 +17,11 @@ import java.util.Objects
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
-class Weapon(
+abstract class AbstractWeapon(
     override val name: String,
     override val damage: Int,
-    override val weight: Int,
-    val type: WeaponType
-) : GameWeapon {
-    override fun equals(other: Any?) = when {
-        this === other -> true
-        other !is Weapon -> false
-        hashCode() != other.hashCode() -> false
-        name != other.name -> false
-        damage != other.damage -> false
-        weight != other.weight -> false
-        type != other.type -> false
-        else -> true
-    }
-
-    override fun hashCode() = Objects.hash(Weapon::class, name, damage, weight, type)
-
-    override fun toString() = "Weapon { name: $name, damage: $damage, weight: $weight, type: $type}"
-}
+    override val weight: Int
+) : GameWeapon
 
 /**
  * Enumeration of all the weapon types.
