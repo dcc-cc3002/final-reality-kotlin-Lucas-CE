@@ -20,11 +20,11 @@ import java.util.Objects
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 class Weapon(
-    val name: String,
-    val damage: Int,
-    val weight: Int,
+    override val name: String,
+    override val damage: Int,
+    override val weight: Int,
     val type: WeaponType
-) {
+) : GameWeapon {
     override fun equals(other: Any?) = when {
         this === other -> true
         other !is Weapon -> false
