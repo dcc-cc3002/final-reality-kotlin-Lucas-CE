@@ -11,7 +11,7 @@ import java.util.Objects
  * @constructor Creates a new Bow.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
- * @author ~Your name~
+ * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 
 class Bow(

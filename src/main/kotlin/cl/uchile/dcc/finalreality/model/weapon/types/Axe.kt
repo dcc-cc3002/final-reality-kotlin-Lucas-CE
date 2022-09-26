@@ -12,7 +12,7 @@ import java.util.Objects
  * @constructor Creates a new Axe.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
- * @author ~Your name~
+ * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 
 class Axe(
