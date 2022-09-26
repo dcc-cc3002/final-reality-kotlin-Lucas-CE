@@ -22,13 +22,3 @@ abstract class AbstractWeapon(
     override val damage: Int,
     override val weight: Int
 ) : GameWeapon
-
-/**
- * Enumeration of all the weapon types.
- *
- * @author <a href="https://www.github.com/r8vnhill">R8V</a>
- * @author <a href="https://github.com/Lucas-CE">Lucase</a>
- */
-enum class WeaponType {
-    SWORD, AXE, KNIFE, STAFF, BOW
-}
