@@ -56,10 +56,11 @@ abstract class AbstractPlayerCharacter(
 ) : AbstractCharacter(name, maxHp, defense, turnsQueue), PlayerCharacter {
 
     private lateinit var _equippedWeapon: GameWeapon
-    override lateinit var equippedWeapon: GameWeapon
+    override val equippedWeapon: GameWeapon
+        get() = _equippedWeapon
 
     override fun equip(weapon: GameWeapon) {
-        equippedWeapon = weapon
+        _equippedWeapon  = weapon
     }
 
     override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
