@@ -1,4 +1,4 @@
-package cl.uchile.dcc.finalreality.model
+package cl.uchile.dcc.finalreality.model.weapon
 
 import java.util.Objects
 

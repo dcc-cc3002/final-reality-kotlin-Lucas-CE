@@ -7,7 +7,7 @@
  */
 package cl.uchile.dcc.finalreality.model.character.player
 
-import cl.uchile.dcc.finalreality.model.Weapon
+import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.character.AbstractCharacter
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import java.util.concurrent.BlockingQueue
@@ -23,12 +23,12 @@ import java.util.concurrent.TimeUnit
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 interface PlayerCharacter {
-    val equippedWeapon: Weapon
+    val equippedWeapon: GameWeapon
 
     /**
      * Equips a weapon to the character.
      */
-    fun equip(weapon: Weapon)
+    fun equip(weapon: GameWeapon)
 
     /**
      * Waits the turn of the character.
@@ -55,12 +55,11 @@ abstract class AbstractPlayerCharacter(
     turnsQueue: BlockingQueue<GameCharacter>
 ) : AbstractCharacter(name, maxHp, defense, turnsQueue), PlayerCharacter {
 
-    private lateinit var _equippedWeapon: Weapon
-    override val equippedWeapon: Weapon
-        get() = _equippedWeapon
+    private lateinit var _equippedWeapon: GameWeapon
+    override lateinit var equippedWeapon: GameWeapon
 
-    override fun equip(weapon: Weapon) {
-        _equippedWeapon = weapon
+    override fun equip(weapon: GameWeapon) {
+        equippedWeapon = weapon
     }
 
     override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {

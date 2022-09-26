@@ -1,7 +1,7 @@
 package cl.uchile.dcc
 
-import cl.uchile.dcc.finalreality.model.Weapon
-import cl.uchile.dcc.finalreality.model.WeaponType
+import cl.uchile.dcc.finalreality.model.weapon.Weapon
+import cl.uchile.dcc.finalreality.model.weapon.WeaponType
 import cl.uchile.dcc.finalreality.model.character.Enemy
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.Thief

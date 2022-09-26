@@ -1,4 +1,4 @@
-package cl.uchile.dcc.finalreality.model
+package cl.uchile.dcc.finalreality.model.weapon
 
 interface GameWeapon {
     val name: String
