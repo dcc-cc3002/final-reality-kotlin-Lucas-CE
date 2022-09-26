@@ -29,11 +29,6 @@ interface PlayerCharacter {
      * Equips a weapon to the character.
      */
     fun equip(weapon: GameWeapon)
-
-    /**
-     * Waits the turn of the character.
-     */
-    fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService)
 }
 
 /**
