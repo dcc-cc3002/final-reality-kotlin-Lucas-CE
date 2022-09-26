@@ -2,6 +2,18 @@ package cl.uchile.dcc.finalreality.model.weapon.types
 
 import java.util.Objects
 
+/**
+ * A `Knife` is a type of [AbstractNormalWeapon].
+ *
+ * @param name        the weapon's name.
+ * @param damage      the weapon's damage.
+ * @param weight      the weapon's weight.
+ * @constructor Creates a new Knife.
+ *
+ * @author <a href="https://www.github.com/r8vnhill">R8V</a>
+ * @author ~Your name~
+ */
+
 class Knife(
     name: String,
     damage: Int,

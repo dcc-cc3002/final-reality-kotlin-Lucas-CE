@@ -2,6 +2,18 @@ package cl.uchile.dcc.finalreality.model.weapon.types
 
 import java.util.Objects
 
+/**
+ * A `Bow` is a type of [AbstractNormalWeapon].
+ *
+ * @param name        the weapon's name.
+ * @param damage      the weapon's damage.
+ * @param weight      the weapon's weight.
+ * @constructor Creates a new Bow.
+ *
+ * @author <a href="https://www.github.com/r8vnhill">R8V</a>
+ * @author ~Your name~
+ */
+
 class Bow(
     name: String,
     damage: Int,

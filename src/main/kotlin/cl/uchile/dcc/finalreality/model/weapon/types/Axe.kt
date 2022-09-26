@@ -1,7 +1,19 @@
 package cl.uchile.dcc.finalreality.model.weapon.types
 
-import cl.uchile.dcc.finalreality.model.weapon.AbstractWeapon
+import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
 import java.util.Objects
+
+/**
+ * A `Axe` is a type of [AbstractNormalWeapon].
+ *
+ * @param name        the weapon's name.
+ * @param damage      the weapon's damage.
+ * @param weight      the weapon's weight.
+ * @constructor Creates a new Axe.
+ *
+ * @author <a href="https://www.github.com/r8vnhill">R8V</a>
+ * @author ~Your name~
+ */
 
 class Axe(
     name: String,
