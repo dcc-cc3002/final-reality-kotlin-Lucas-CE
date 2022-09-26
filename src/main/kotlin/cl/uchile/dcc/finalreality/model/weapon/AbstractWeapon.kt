@@ -8,11 +8,9 @@ package cl.uchile.dcc.finalreality.model.weapon
  * @property damage Int
  *     The base damage done by the weapon.
  * @property weight Int
- *     The weight of the weapon.
- * @property type WeaponType
- *     The type of the weapon.
+ *     The weight is the speed of a gun.
  *
- * @constructor Creates a weapon with a name, a base damage, speed, and it's type.
+ * @constructor Creates a weapon with a name, a base damage, speed.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
