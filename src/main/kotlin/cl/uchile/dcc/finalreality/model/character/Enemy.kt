@@ -50,4 +50,9 @@ class Enemy(
     }
 
     override fun hashCode() = Objects.hash(Enemy::class, name, weight, maxHp, defense)
+    override fun toString(): String {
+        return "Enemy {name='$name', maxHp='$weight', maxHp='$maxHp', defense='$defense'}"
+    }
+
+
 }
