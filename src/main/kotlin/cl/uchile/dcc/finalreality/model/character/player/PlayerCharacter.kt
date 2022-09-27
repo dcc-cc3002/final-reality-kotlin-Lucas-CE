@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
-interface PlayerCharacter {
+interface PlayerCharacter : GameCharacter{
     val equippedWeapon: GameWeapon
 
     /**
