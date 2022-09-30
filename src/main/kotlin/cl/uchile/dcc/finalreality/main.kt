@@ -18,10 +18,10 @@ import kotlin.random.Random
 
 fun main() {
 
-    //Queue creation
+    // Queue creation
     val queue = LinkedBlockingQueue<GameCharacter>()
 
-    //Instance Characters
+    // Instance Characters
     val per1 = Knight("Hero 1", 10, 10, queue)
     val per2 = Engineer("Hero 2", 10, 10, queue)
     val per3 = Thief("Hero 3", 10, 10, queue)
@@ -29,21 +29,21 @@ fun main() {
     val per5 = WhiteMage("Hero 5", 10, 10, 10, queue)
     val ene1 = Enemy("Villain", 5, 100, 20, queue)
 
-    //Instance Weapons
+    // Instance Weapons
     val wep1 = Axe("Weapon 1", 9, Random.nextInt(1, 50))
     val wep2 = Bow("Weapon 2", 9, Random.nextInt(1, 50))
     val wep3 = Knife("Weapon 3", 9, Random.nextInt(1, 50))
     val wep4 = Staff("Weapon 4", 9, Random.nextInt(1, 50))
     val wep5 = Sword("Weapon 5", 9, Random.nextInt(1, 50))
 
-    //Player characters .equip(Weapon)
+    // Player characters .equip(Weapon)
     per1.equip(wep1)
     per2.equip(wep2)
     per3.equip(wep3)
     per4.equip(wep4)
     per5.equip(wep5)
 
-    //Game Character .waitTurn()
+    // Game Character .waitTurn()
     per1.waitTurn()
     per2.waitTurn()
     per3.waitTurn()
@@ -51,7 +51,7 @@ fun main() {
     per5.waitTurn()
     ene1.waitTurn()
 
-    //Test the queue
+    // Test the queue
     // Waits for 6 seconds to ensure that all characters have finished waiting
     Thread.sleep(6000)
     while (!queue.isEmpty()) {
@@ -60,7 +60,7 @@ fun main() {
         println(queue.poll())
     }
 
-    //Test equals
+    // Test equals
     val per11 = Knight("Hero 1", 10, 10, queue)
     val per12 = Knight("Hero 1", 10, 10, queue)
     val per13 = Knight("Hero 1", 20, 10, queue)
@@ -73,27 +73,26 @@ fun main() {
     println("Should return true, returns :" + wep11.equals(wep12))
     println("Should return false, returns :" + wep11.equals(wep13))
 
-    //Test toStrings
+    // Test toStrings
     println("toString Knight character : $per11")
     println("toString Axe character : $wep11")
 
-    //Limits properties
+    // Test limits properties
     try {
         per11.currentHp = -1
-    } catch (Ex : InvalidStatValueException){
+    } catch (Ex: InvalidStatValueException) {
         println("currentHp : cannot be out of range (0, maxHp)")
     }
 
     try {
         val per21 = Knight("test", 0, 1, queue)
-    } catch (Ex : InvalidStatValueException){
+    } catch (Ex: InvalidStatValueException) {
         println("maxHp : cannot be less than 0")
     }
 
     try {
         val per22 = Knight("test", 1, -1, queue)
-    } catch (Ex : InvalidStatValueException){
+    } catch (Ex: InvalidStatValueException) {
         println("defense : cannot be less than 0")
     }
-
 }
