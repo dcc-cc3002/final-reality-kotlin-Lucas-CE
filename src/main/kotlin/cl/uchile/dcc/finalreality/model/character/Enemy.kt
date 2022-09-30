@@ -53,6 +53,4 @@ class Enemy(
     override fun toString(): String {
         return "Enemy {name='$name', maxHp='$weight', maxHp='$maxHp', defense='$defense'}"
     }
-
-
 }

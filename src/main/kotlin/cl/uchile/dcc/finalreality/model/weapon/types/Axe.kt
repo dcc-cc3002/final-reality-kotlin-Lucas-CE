@@ -1,6 +1,5 @@
 package cl.uchile.dcc.finalreality.model.weapon.types
 
-import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
 import java.util.Objects
 
 /**
@@ -19,7 +18,7 @@ class Axe(
     name: String,
     physicalDamage: Int,
     weight: Int
-): AbstractNormalWeapon(name, physicalDamage, weight){
+) : AbstractNormalWeapon(name, physicalDamage, weight) {
 
     override fun equals(other: Any?) = when {
         this === other -> true

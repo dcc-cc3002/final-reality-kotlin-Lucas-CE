@@ -18,7 +18,7 @@ class Bow(
     name: String,
     physicalDamage: Int,
     weight: Int
-): AbstractNormalWeapon(name, physicalDamage, weight){
+) : AbstractNormalWeapon(name, physicalDamage, weight) {
 
     override fun equals(other: Any?) = when {
         this === other -> true

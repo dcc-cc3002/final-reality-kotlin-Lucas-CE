@@ -18,7 +18,7 @@ class Staff(
     name: String,
     magicDamage: Int,
     weight: Int
-): AbstractMagicWeapon(name, magicDamage, weight){
+) : AbstractMagicWeapon(name, magicDamage, weight) {
 
     override fun equals(other: Any?) = when {
         this === other -> true

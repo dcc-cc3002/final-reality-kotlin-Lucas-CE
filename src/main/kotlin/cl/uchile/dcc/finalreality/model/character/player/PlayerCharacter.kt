@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
-interface PlayerCharacter : GameCharacter{
+interface PlayerCharacter : GameCharacter {
     val equippedWeapon: GameWeapon
 
     /**
@@ -55,7 +55,7 @@ abstract class AbstractPlayerCharacter(
         get() = _equippedWeapon
 
     override fun equip(weapon: GameWeapon) {
-        _equippedWeapon  = weapon
+        _equippedWeapon = weapon
     }
 
     override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {

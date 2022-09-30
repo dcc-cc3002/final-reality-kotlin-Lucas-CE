@@ -18,6 +18,6 @@ abstract class AbstractNormalWeapon(
     name: String,
     val physicalDamage: Int,
     weight: Int
-): AbstractWeapon(name, weight){
+) : AbstractWeapon(name, weight) {
     override val damage = physicalDamage
 }
