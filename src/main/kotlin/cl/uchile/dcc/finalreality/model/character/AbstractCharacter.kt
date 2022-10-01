@@ -1,11 +1,9 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.exceptions.Require
-import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
 
 /**
  * An abstract class that holds the common behaviour of all the characters in the game.
@@ -20,13 +18,13 @@ import java.util.concurrent.TimeUnit
  *    The queue with the characters waiting for their turn.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
- * @author ~Your name~
+ * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 abstract class AbstractCharacter(
     override val name: String,
     maxHp: Int,
     defense: Int,
-    private val turnsQueue: BlockingQueue<GameCharacter>,
+    private val turnsQueue: BlockingQueue<GameCharacter>
 ) : GameCharacter {
 
     private lateinit var scheduledExecutor: ScheduledExecutorService
@@ -39,29 +37,18 @@ abstract class AbstractCharacter(
 
     override fun waitTurn() {
         scheduledExecutor = Executors.newSingleThreadScheduledExecutor()
-        when (this) {
-            is PlayerCharacter -> {
-                scheduledExecutor.schedule(
-                    /* command = */ ::addToQueue,
-                    /* delay = */ (this.equippedWeapon.weight / 10).toLong(),
-                    /* unit = */ TimeUnit.SECONDS
-                )
-            }
-
-            is Enemy -> {
-                scheduledExecutor.schedule(
-                    /* command = */ ::addToQueue,
-                    /* delay = */ (this.weight / 10).toLong(),
-                    /* unit = */ TimeUnit.SECONDS
-                )
-            }
-        }
+        this.waitTheirTurn(scheduledExecutor)
     }
+
+    /**
+     * Abstraction of waitTurn to define it in each different AbstractCharacter
+     */
+    protected abstract fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService)
 
     /**
      * Adds this character to the turns queue.
      */
-    private fun addToQueue() {
+    protected fun addToQueue() {
         turnsQueue.put(this)
         scheduledExecutor.shutdown()
     }
