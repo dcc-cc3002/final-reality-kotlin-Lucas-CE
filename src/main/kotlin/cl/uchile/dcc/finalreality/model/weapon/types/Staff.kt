@@ -32,5 +32,5 @@ class Staff(
 
     override fun hashCode() = Objects.hash(Staff::class, name, damage, weight)
 
-    override fun toString() = "Staff { name: $name, damage: $damage, weight: $weight}"
+    override fun toString() = "Staff {name='$name', damage='$damage', weight='$weight'}"
 }
