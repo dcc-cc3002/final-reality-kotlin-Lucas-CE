@@ -6,7 +6,7 @@ import cl.uchile.dcc.finalreality.model.weapon.AbstractWeapon
  * A class that holds all the information of a weapon with magic damage.
  *
  * @param name           the weapon's name.
- * @param magicDamage    the weapon's magicDamage.
+ * @param damage    the weapon's magicDamage.
  * @param weight         the weapon's speed.
  * @constructor Creates a new magic weapon.
  *
@@ -16,8 +16,6 @@ import cl.uchile.dcc.finalreality.model.weapon.AbstractWeapon
 
 abstract class AbstractMagicWeapon(
     name: String,
-    val magicDamage: Int,
+    override val damage: Int,
     weight: Int
-) : AbstractWeapon(name, weight) {
-    override val damage = magicDamage
-}
+) : AbstractWeapon(name, weight)
