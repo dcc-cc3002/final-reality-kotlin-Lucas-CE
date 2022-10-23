@@ -11,11 +11,11 @@ import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
 
-private const val WHMG1_NAME = "BLMG1"
+private const val WHMG1_NAME = "WHMG1"
 private const val WHMG1_MAXHP = 100
 private const val WHMG1_MAXMP = 30
 private const val WHMG1_DEFENSE = 10
-private const val WHMG2_NAME = "BLMG2"
+private const val WHMG2_NAME = "WHMG2"
 private const val WHMG2_MAXHP = 80
 private const val WHMG2_MAXMP = 20
 private const val WHMG2_DEFENSE = 20
@@ -30,7 +30,7 @@ class WhiteMageSpec : FunSpec ({
         Whmg2 = WhiteMage(WHMG2_NAME, WHMG2_MAXHP, WHMG2_MAXMP, WHMG2_DEFENSE, queue)
     }
 
-    test("toString must return the Black mage description") {
+    test("toString must return the White mage description") {
         checkAll(
             Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
             Arb.positiveInt(100))
@@ -41,7 +41,7 @@ class WhiteMageSpec : FunSpec ({
         }
     }
 
-    test("Two Black mages with the same parameters are equals") {
+    test("Two White mages with the same parameters are equals") {
         checkAll(
             Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
             Arb.positiveInt(100))
@@ -53,7 +53,7 @@ class WhiteMageSpec : FunSpec ({
         }
     }
 
-    test("Two Black mages with different parameters are not equals") {
+    test("Two White mages with different parameters are not equals") {
         Whmg1 shouldNotBeSameInstanceAs Whmg2
         Whmg1 shouldNotBe Whmg2
     }

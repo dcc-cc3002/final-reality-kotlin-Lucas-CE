@@ -11,10 +11,10 @@ import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
 
-private const val THF1_NAME = "KNGT1"
+private const val THF1_NAME = "THF1"
 private const val THF1_MAXHP = 100
 private const val THF1_DEFENSE = 10
-private const val THF2_NAME = "KNGT2"
+private const val THF2_NAME = "THF2"
 private const val THF2_MAXHP = 80
 private const val THF2_DEFENSE = 20
 
@@ -28,7 +28,7 @@ class ThiefSpec : FunSpec ({
         Thf2 = Thief(THF2_NAME, THF2_MAXHP, THF2_DEFENSE, queue)
     }
 
-    test("toString must return the Knight description") {
+    test("toString must return the Thief description") {
         checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100))
         { name, maxHp, defense ->
             val Thf3 = Thief(name, maxHp, defense, queue)
@@ -36,7 +36,7 @@ class ThiefSpec : FunSpec ({
         }
     }
 
-    test("Two Knights with the same parameters are equals") {
+    test("Two Thiefs with the same parameters are equals") {
         checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100))
         { name, maxHp, defense ->
             val Thf31 = Thief(name, maxHp, defense, queue)
@@ -46,7 +46,7 @@ class ThiefSpec : FunSpec ({
         }
     }
 
-    test("Two Knights with different parameters are not equals") {
+    test("Two Thiefs with different parameters are not equals") {
         Thf1 shouldNotBeSameInstanceAs Thf2
         Thf1 shouldNotBe Thf2
     }
