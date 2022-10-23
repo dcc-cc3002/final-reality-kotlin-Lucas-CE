@@ -6,7 +6,7 @@ import java.util.Objects
  * A `Axe` is a type of [AbstractNormalWeapon].
  *
  * @param name              the weapon's name.
- * @param physicalDamage    the weapon's physicalDamage.
+ * @param damage            the weapon's damage.
  * @param weight            the weapon's weight.
  * @constructor Creates a new Axe.
  *
@@ -16,21 +16,21 @@ import java.util.Objects
 
 class Axe(
     name: String,
-    physicalDamage: Int,
+    damage: Int,
     weight: Int
-) : AbstractNormalWeapon(name, physicalDamage, weight) {
+) : AbstractNormalWeapon(name, damage, weight) {
 
     override fun equals(other: Any?) = when {
         this === other -> true
         other !is Axe -> false
         hashCode() != other.hashCode() -> false
         name != other.name -> false
-        damage != other.physicalDamage -> false
+        damage != other.damage -> false
         weight != other.weight -> false
         else -> true
     }
 
-    override fun hashCode() = Objects.hash(Axe::class, name, physicalDamage, weight)
+    override fun hashCode() = Objects.hash(Axe::class, name, damage, weight)
 
-    override fun toString() = "Axe { name: $name, damage: $physicalDamage, weight: $weight}"
+    override fun toString() = "Axe { name: $name, damage: $damage, weight: $weight}"
 }
