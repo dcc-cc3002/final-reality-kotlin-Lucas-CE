@@ -23,9 +23,10 @@ class EngineerSpec : FunSpec({
     lateinit var Eng1: Engineer
     lateinit var Eng2: Engineer
     lateinit var Eng12: Engineer
-    val queue = LinkedBlockingQueue<GameCharacter>()
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
 
     beforeEach {
+        queue = LinkedBlockingQueue<GameCharacter>()
         Eng1 = Engineer(ENG1_NAME, ENG1_MAXHP, ENG1_DEFENSE, queue)
         Eng2 = Engineer(ENG2_NAME, ENG2_MAXHP, ENG2_DEFENSE, queue)
         Eng12 = Engineer(ENG1_NAME, ENG1_MAXHP, ENG1_DEFENSE, queue)
@@ -55,7 +56,12 @@ class EngineerSpec : FunSpec({
     }
 
     test("Two Engineers with different parameters have not the same hash code"){
-        Eng1.hashCode() shouldNotBe Eng2.hashCode()
+        checkAll(Arb.string(), Arb.positiveInt(200), Arb.positiveInt(50))
+        { name, maxHp, defense ->
+            val Eng31 = Engineer(name, maxHp, defense, queue)
+            val Eng32 = Engineer(name, maxHp, defense, queue)
+            Eng31.hashCode() shouldBe Eng32.hashCode()
+        }
     }
 
     test("Two Engineers with the same parameters have the same hash code"){
