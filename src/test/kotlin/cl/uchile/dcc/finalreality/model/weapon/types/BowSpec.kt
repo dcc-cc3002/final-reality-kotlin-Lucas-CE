@@ -47,4 +47,17 @@ class BowSpec : FunSpec ({
         Bow1 shouldNotBeSameInstanceAs Bow2
         Bow1 shouldNotBe Bow2
     }
+
+    test("Two Bows with the same parameters have the same hash code"){
+        checkAll(Arb.string(), Arb.positiveInt(20),Arb.positiveInt(50))
+        { name, damage, weight ->
+            val Bow31 = Bow(name, damage, weight)
+            val Bow32 = Bow(name, damage, weight)
+            Bow31.hashCode() shouldBe Bow32.hashCode()
+        }
+    }
+
+    test("Two Bows with different parameters have not the same hash code"){
+        Bow1.hashCode() shouldNotBe Bow2.hashCode()
+    }
 })
