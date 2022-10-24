@@ -22,11 +22,13 @@ private const val ENG2_DEFENSE = 20
 class EngineerSpec : FunSpec({
     lateinit var Eng1: Engineer
     lateinit var Eng2: Engineer
+    lateinit var Eng12: Engineer
     val queue = LinkedBlockingQueue<GameCharacter>()
 
     beforeEach {
         Eng1 = Engineer(ENG1_NAME, ENG1_MAXHP, ENG1_DEFENSE, queue)
         Eng2 = Engineer(ENG2_NAME, ENG2_MAXHP, ENG2_DEFENSE, queue)
+        Eng12 = Engineer(ENG1_NAME, ENG1_MAXHP, ENG1_DEFENSE, queue)
     }
 
     test("toString must return the Engineer description") {
@@ -52,5 +54,11 @@ class EngineerSpec : FunSpec({
         Eng1 shouldNotBe Eng2
     }
 
+    test("Two Engineers with different parameters have not the same hash code"){
+        Eng1.hashCode() shouldNotBe Eng2.hashCode()
+    }
 
+    test("Two Engineers with the same parameters have the same hash code"){
+        Eng1.hashCode() shouldBe Eng12.hashCode()
+    }
 })
