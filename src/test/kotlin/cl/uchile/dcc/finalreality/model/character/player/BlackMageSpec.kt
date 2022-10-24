@@ -24,11 +24,13 @@ private const val BLMG2_DEFENSE = 20
 class BlackMageSpec : FunSpec ({
     lateinit var Blmg1: BlackMage
     lateinit var Blmg2: BlackMage
+    lateinit var Blmg12: BlackMage
     val queue = LinkedBlockingQueue<GameCharacter>()
 
     beforeEach {
         Blmg1 = BlackMage(BLMG1_NAME, BLMG1_MAXHP, BLMG1_MAXMP, BLMG1_DEFENSE, queue)
         Blmg2 = BlackMage(BLMG2_NAME, BLMG2_MAXHP, BLMG2_MAXMP, BLMG2_DEFENSE, queue)
+        Blmg12 = BlackMage(BLMG1_NAME, BLMG1_MAXHP, BLMG1_MAXMP, BLMG1_DEFENSE, queue)
     }
 
     test("toString must return the Black mage description") {
@@ -55,5 +57,13 @@ class BlackMageSpec : FunSpec ({
     test("Two Black mages with different parameters are not equals") {
         Blmg1 shouldNotBeSameInstanceAs Blmg2
         Blmg1 shouldNotBe Blmg2
+    }
+
+    test("Two Black mages with different parameters have not the same hash code"){
+        Blmg1.hashCode() shouldNotBe Blmg2.hashCode()
+    }
+
+    test("Two Black mages with the same parameters have the same hash code"){
+        Blmg1.hashCode() shouldBe Blmg12.hashCode()
     }
 })
