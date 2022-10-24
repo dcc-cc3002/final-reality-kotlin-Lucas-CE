@@ -47,4 +47,17 @@ class AxeSpec : FunSpec ({
         Axe1 shouldNotBeSameInstanceAs Axe2
         Axe1 shouldNotBe Axe2
     }
+
+    test("Two Axes with the same parameters have the same hash code"){
+        checkAll(Arb.string(), Arb.positiveInt(20),Arb.positiveInt(50))
+        { name, damage, weight ->
+            val Axe31 = Axe(name, damage, weight)
+            val Axe32 = Axe(name, damage, weight)
+            Axe31.hashCode() shouldBe Axe32.hashCode()
+        }
+    }
+
+    test("Two Enemies with different parameters have not the same hash code"){
+        Axe1.hashCode() shouldNotBe Axe2.hashCode()
+    }
 })
