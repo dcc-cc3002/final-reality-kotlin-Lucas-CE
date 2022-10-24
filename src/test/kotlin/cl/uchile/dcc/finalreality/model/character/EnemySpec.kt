@@ -1,14 +1,17 @@
 package cl.uchile.dcc.finalreality.model.character
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import io.kotest.property.Arb
+import io.kotest.property.arbitrary.int
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
+import org.junit.jupiter.api.assertThrows
 
 private const val ENEM1_NAME = "ENEM1"
 private const val ENEM1_WEIGHT = 10
@@ -28,6 +31,18 @@ class EnemySpec : FunSpec ({
     beforeEach {
         Enem1 = Enemy(ENEM1_NAME, ENEM1_WEIGHT, ENEM1_MAXHP, ENEM1_DEFENSE, queue)
         Enem2 = Enemy(ENEM2_NAME, ENEM2_WEIGHT, ENEM2_MAXHP, ENEM2_DEFENSE, queue)
+    }
+
+    test("weight setter throws exception when the value is less 1"){
+        checkAll(
+            Arb.int(-ENEM1_WEIGHT..0)
+        )
+        { errorWeight ->
+            assertThrows<InvalidStatValueException> {
+                val EnemErrorWeight =
+                    Enemy(ENEM1_NAME, errorWeight, ENEM1_MAXHP, ENEM1_DEFENSE, queue)
+            }
+        }
     }
 
     test("toString must return the Enemy description") {
