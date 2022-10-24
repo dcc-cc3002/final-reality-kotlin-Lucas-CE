@@ -47,4 +47,17 @@ class SwordSpec : FunSpec ({
         Sword1 shouldNotBeSameInstanceAs Sword2
         Sword1 shouldNotBe Sword2
     }
+
+    test("Two Swords with the same parameters have the same hash code"){
+        checkAll(Arb.string(), Arb.positiveInt(20),Arb.positiveInt(50))
+        { name, damage, weight ->
+            val Sword31 = Sword(name, damage, weight)
+            val Sword32 = Sword(name, damage, weight)
+            Sword31.hashCode() shouldBe Sword32.hashCode()
+        }
+    }
+
+    test("Two Swords with different parameters have not the same hash code"){
+        Sword1.hashCode() shouldNotBe Sword2.hashCode()
+    }
 })
