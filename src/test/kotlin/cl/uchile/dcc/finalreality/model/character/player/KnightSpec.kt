@@ -21,11 +21,13 @@ private const val KNGT2_DEFENSE = 20
 class KnightSpec : FunSpec ({
     lateinit var Kngt1: Knight
     lateinit var Kngt2: Knight
+    lateinit var Kngt12: Knight
     val queue = LinkedBlockingQueue<GameCharacter>()
 
     beforeEach {
         Kngt1 = Knight(KNGT1_NAME, KNGT1_MAXHP, KNGT1_DEFENSE, queue)
         Kngt2 = Knight(KNGT2_NAME, KNGT2_MAXHP, KNGT2_DEFENSE, queue)
+        Kngt12 = Knight(KNGT1_NAME, KNGT1_MAXHP, KNGT1_DEFENSE, queue)
     }
 
     test("toString must return the Knight description") {
@@ -49,5 +51,13 @@ class KnightSpec : FunSpec ({
     test("Two Knights with different parameters are not equals") {
         Kngt1 shouldNotBeSameInstanceAs Kngt2
         Kngt1 shouldNotBe Kngt2
+    }
+
+    test("Two Knights with different parameters have not the same hash code"){
+        Kngt1.hashCode() shouldNotBe Kngt2.hashCode()
+    }
+
+    test("Two Knights with the same parameters have the same hash code"){
+        Kngt1.hashCode() shouldBe Kngt12.hashCode()
     }
 })
