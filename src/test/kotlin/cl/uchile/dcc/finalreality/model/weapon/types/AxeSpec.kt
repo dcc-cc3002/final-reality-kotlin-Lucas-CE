@@ -57,7 +57,7 @@ class AxeSpec : FunSpec ({
         }
     }
 
-    test("Two Enemies with different parameters have not the same hash code"){
+    test("Two Axes with different parameters have not the same hash code"){
         Axe1.hashCode() shouldNotBe Axe2.hashCode()
     }
 })
