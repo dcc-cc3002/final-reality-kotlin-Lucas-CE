@@ -50,7 +50,55 @@ class AbstractCharacterSpec : FunSpec ({
         magicWeapon = Staff(WEP_NAME, WEP_DMG, WEP_WGT)
     }
 
-    test("The currentHp initial value is the maxHp value"){
+    test("initializing maxHp with a value less than 1 throws an exception"){
+        checkAll(Arb.int(-MAXHP..0))
+        { maxHp ->
+            assertThrows<InvalidStatValueException> {
+                val BlackMage2 = BlackMage(NAME, maxHp, MAXMP, DEFENSE, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val Engineer2 = Engineer(NAME, maxHp, DEFENSE, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val Knight2 = Knight(NAME, maxHp, DEFENSE, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val Thief2 = Thief(NAME, maxHp, DEFENSE, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val WhiteMage2 = WhiteMage(NAME, maxHp, MAXMP, DEFENSE, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val Enemy2 = Enemy(NAME, ENEM_WGT, maxHp, DEFENSE, queue)
+            }
+        }
+    }
+
+    test("initializing defense with a value less than 0 throws an exception"){
+        checkAll(Arb.int(-DEFENSE..-1))
+        { defense ->
+            assertThrows<InvalidStatValueException> {
+                val BlackMage3 = BlackMage(NAME, MAXHP, MAXMP, defense, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val Engineer3 = Engineer(NAME, MAXHP, defense, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val Knight3 = Knight(NAME, MAXHP, defense, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val Thief3 = Thief(NAME, MAXHP, defense, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val WhiteMage3 = WhiteMage(NAME, MAXHP, MAXMP, defense, queue)
+            }
+            assertThrows<InvalidStatValueException> {
+                val Enemy3 = Enemy(NAME, ENEM_WGT, MAXHP, defense, queue)
+            }
+        }
+    }
+
+    test("currentHp initial value is the maxHp value"){
         BlackMage1.currentHp shouldBe MAXHP
         Engineer1.currentHp shouldBe MAXHP
         Knight1.currentHp shouldBe MAXHP
@@ -83,7 +131,6 @@ class AbstractCharacterSpec : FunSpec ({
     }
 
     test("The currentHp setter throws an exception when the value is out of range (0,maxHp)"){
-        //Test blackMage
         checkAll(
             Arb.int(MAXHP +1..2* MAXHP),
             Arb.int(-MAXHP..-1)
