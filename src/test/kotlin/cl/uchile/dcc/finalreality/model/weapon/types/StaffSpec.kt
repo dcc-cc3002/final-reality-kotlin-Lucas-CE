@@ -47,4 +47,17 @@ class StaffSpec : FunSpec ({
         Staff1 shouldNotBeSameInstanceAs Staff2
         Staff1 shouldNotBe Staff2
     }
+
+    test("Two Staffs with the same parameters have the same hash code"){
+        checkAll(Arb.string(), Arb.positiveInt(20),Arb.positiveInt(50))
+        { name, damage, weight ->
+            val Staff31 = Staff(name, damage, weight)
+            val Staff32 = Staff(name, damage, weight)
+            Staff31.hashCode() shouldBe Staff32.hashCode()
+        }
+    }
+
+    test("Two Staffs with different parameters have not the same hash code"){
+        Staff1.hashCode() shouldNotBe Staff2.hashCode()
+    }
 })
