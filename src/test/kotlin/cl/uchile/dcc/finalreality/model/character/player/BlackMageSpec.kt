@@ -62,9 +62,9 @@ class BlackMageSpec : FunSpec ({
     test("Two Black mages with different parameters have not the same hash code"){
         checkAll(Arb.string(), Arb.positiveInt(200),Arb.positiveInt(100),
                  Arb.positiveInt(50))
-        { name, weight, maxHp, defense ->
-            val Blmg31 = BlackMage(name, weight, maxHp, defense, queue)
-            val Blmg32 = BlackMage(name, weight, maxHp, defense, queue)
+        { name, maxHp, maxMp, defense ->
+            val Blmg31 = BlackMage(name, maxHp, maxMp, defense, queue)
+            val Blmg32 = BlackMage(name, maxHp, maxMp, defense, queue)
             Blmg31.hashCode() shouldBe Blmg32.hashCode()
         }
     }
