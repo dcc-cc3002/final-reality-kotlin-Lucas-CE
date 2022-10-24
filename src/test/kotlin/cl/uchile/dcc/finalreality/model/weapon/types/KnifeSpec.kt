@@ -33,7 +33,7 @@ class KnifeSpec : FunSpec ({
         }
     }
 
-    test("Two Knifes with the same parameters are equals") {
+    test("Two Knives with the same parameters are equals") {
         checkAll(Arb.string(), Arb.positiveInt(100), Arb.positiveInt(100))
         { name, damage, weight ->
             val Knife31 = Knife(name, damage, weight)
@@ -43,8 +43,21 @@ class KnifeSpec : FunSpec ({
         }
     }
 
-    test("Two Knifes with different parameters are not equals") {
+    test("Two Knives with different parameters are not equals") {
         Knife1 shouldNotBeSameInstanceAs Knife2
         Knife1 shouldNotBe Knife2
+    }
+
+    test("Two Knives with the same parameters have the same hash code"){
+        checkAll(Arb.string(), Arb.positiveInt(20),Arb.positiveInt(50))
+        { name, damage, weight ->
+            val Knife31 = Knife(name, damage, weight)
+            val Knife32 = Knife(name, damage, weight)
+            Knife31.hashCode() shouldBe Knife32.hashCode()
+        }
+    }
+
+    test("Two Knives with different parameters have not the same hash code"){
+        Knife1.hashCode() shouldNotBe Knife2.hashCode()
     }
 })
