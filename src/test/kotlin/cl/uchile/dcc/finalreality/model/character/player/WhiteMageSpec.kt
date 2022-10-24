@@ -61,7 +61,13 @@ class WhiteMageSpec : FunSpec ({
     }
 
     test("Two White mages with different parameters have not the same hash code"){
-        Whmg1.hashCode() shouldNotBe Whmg2.hashCode()
+        checkAll(Arb.string(), Arb.positiveInt(200),Arb.positiveInt(100),
+                 Arb.positiveInt(50))
+        { name, maxHp, maxMp, defense ->
+            val Whmg31 = WhiteMage(name, maxHp, maxMp, defense, queue)
+            val Whmg32 = WhiteMage(name, maxHp, maxMp, defense, queue)
+            Whmg31.hashCode() shouldBe Whmg32.hashCode()
+        }
     }
 
     test("Two White mages with the same parameters have the same hash code"){
