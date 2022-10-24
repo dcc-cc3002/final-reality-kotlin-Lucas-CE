@@ -54,7 +54,12 @@ class KnightSpec : FunSpec ({
     }
 
     test("Two Knights with different parameters have not the same hash code"){
-        Kngt1.hashCode() shouldNotBe Kngt2.hashCode()
+        checkAll(Arb.string(), Arb.positiveInt(200), Arb.positiveInt(50))
+        { name, maxHp, defense ->
+            val Kngt31 = Knight(name, maxHp, defense, queue)
+            val Kngt32 = Knight(name, maxHp, defense, queue)
+            Kngt31.hashCode() shouldBe Kngt32.hashCode()
+        }
     }
 
     test("Two Knights with the same parameters have the same hash code"){
