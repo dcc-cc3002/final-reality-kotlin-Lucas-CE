@@ -30,8 +30,8 @@ class AbstractPlayerCharacterSpec :FunSpec ({
         Knight1 = Knight(NAME, MAXHP, DEFENSE, queue)
         Thief1 = Thief(NAME, MAXHP, DEFENSE, queue)
         WhiteMage1 = WhiteMage(NAME, MAXHP, MAXMP, DEFENSE, queue)
-        val normalWeapon = Axe("AXE", 10, 5)
-        val magicWeapon = Staff("STAFF", 10, 5)
+        normalWeapon = Axe("AXE", 10, 5)
+        magicWeapon = Staff("STAFF", 10, 5)
     }
 
     test("The equip method change de equippedWeapon"){
