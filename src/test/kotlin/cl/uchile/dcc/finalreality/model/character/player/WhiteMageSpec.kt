@@ -23,11 +23,13 @@ private const val WHMG2_DEFENSE = 20
 class WhiteMageSpec : FunSpec ({
     lateinit var Whmg1: WhiteMage
     lateinit var Whmg2: WhiteMage
+    lateinit var Whmg12: WhiteMage
     val queue = LinkedBlockingQueue<GameCharacter>()
 
     beforeEach {
         Whmg1 = WhiteMage(WHMG1_NAME, WHMG1_MAXHP, WHMG1_MAXMP, WHMG1_DEFENSE, queue)
         Whmg2 = WhiteMage(WHMG2_NAME, WHMG2_MAXHP, WHMG2_MAXMP, WHMG2_DEFENSE, queue)
+        Whmg12 = WhiteMage(WHMG1_NAME, WHMG1_MAXHP, WHMG1_MAXMP, WHMG1_DEFENSE, queue)
     }
 
     test("toString must return the White mage description") {
@@ -56,5 +58,13 @@ class WhiteMageSpec : FunSpec ({
     test("Two White mages with different parameters are not equals") {
         Whmg1 shouldNotBeSameInstanceAs Whmg2
         Whmg1 shouldNotBe Whmg2
+    }
+
+    test("Two White mages with different parameters have not the same hash code"){
+        Whmg1.hashCode() shouldNotBe Whmg2.hashCode()
+    }
+
+    test("Two White mages with the same parameters have the same hash code"){
+        Whmg1.hashCode() shouldBe Whmg12.hashCode()
     }
 })
