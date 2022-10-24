@@ -38,7 +38,7 @@ class ThiefSpec : FunSpec ({
         }
     }
 
-    test("Two Thiefs with the same parameters are equals") {
+    test("Two Thieves with the same parameters are equals") {
         checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100))
         { name, maxHp, defense ->
             val Thf31 = Thief(name, maxHp, defense, queue)
@@ -48,16 +48,16 @@ class ThiefSpec : FunSpec ({
         }
     }
 
-    test("Two Thiefs with different parameters are not equals") {
+    test("Two Thieves with different parameters are not equals") {
         Thf1 shouldNotBeSameInstanceAs Thf2
         Thf1 shouldNotBe Thf2
     }
 
-    test("Two Engineers with different parameters have not the same hash code"){
+    test("Two Thieves with different parameters have not the same hash code"){
         Thf1.hashCode() shouldNotBe Thf2.hashCode()
     }
 
-    test("Two Engineers with the same parameters have the same hash code"){
+    test("Two Thieves with the same parameters have the same hash code"){
         Thf1.hashCode() shouldBe Thf12.hashCode()
     }
 })
