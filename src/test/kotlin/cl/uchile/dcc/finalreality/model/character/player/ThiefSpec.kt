@@ -21,11 +21,13 @@ private const val THF2_DEFENSE = 20
 class ThiefSpec : FunSpec ({
     lateinit var Thf1: Thief
     lateinit var Thf2: Thief
+    lateinit var Thf12: Thief
     val queue = LinkedBlockingQueue<GameCharacter>()
 
     beforeEach {
         Thf1 = Thief(THF1_NAME, THF1_MAXHP, THF1_DEFENSE, queue)
         Thf2 = Thief(THF2_NAME, THF2_MAXHP, THF2_DEFENSE, queue)
+        Thf12 = Thief(THF1_NAME, THF1_MAXHP, THF1_DEFENSE, queue)
     }
 
     test("toString must return the Thief description") {
@@ -49,5 +51,13 @@ class ThiefSpec : FunSpec ({
     test("Two Thiefs with different parameters are not equals") {
         Thf1 shouldNotBeSameInstanceAs Thf2
         Thf1 shouldNotBe Thf2
+    }
+
+    test("Two Engineers with different parameters have not the same hash code"){
+        Thf1.hashCode() shouldNotBe Thf2.hashCode()
+    }
+
+    test("Two Engineers with the same parameters have the same hash code"){
+        Thf1.hashCode() shouldBe Thf12.hashCode()
     }
 })
