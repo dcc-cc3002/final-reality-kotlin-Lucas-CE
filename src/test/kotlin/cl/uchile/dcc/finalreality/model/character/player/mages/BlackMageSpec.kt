@@ -1,4 +1,4 @@
-package cl.uchile.dcc.finalreality.model.character.player
+package cl.uchile.dcc.finalreality.model.character.player.mages
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import io.kotest.core.spec.style.FunSpec
@@ -20,8 +20,7 @@ private const val BLMG2_MAXHP = 80
 private const val BLMG2_MAXMP = 20
 private const val BLMG2_DEFENSE = 20
 
-
-class BlackMageSpec : FunSpec ({
+class BlackMageSpec : FunSpec({
     lateinit var Blmg1: BlackMage
     lateinit var Blmg2: BlackMage
     lateinit var Blmg12: BlackMage
@@ -34,18 +33,22 @@ class BlackMageSpec : FunSpec ({
     }
 
     test("toString must return the Black mage description") {
-        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
-                 Arb.positiveInt(100))
+        checkAll(
+            Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
+            Arb.positiveInt(100)
+        )
         { name, maxHp, maxMp, defense ->
             val Blmg3 = BlackMage(name, maxHp, maxMp, defense, queue)
             Blmg3.toString() shouldBe "BlackMage {name='$name', maxHp='$maxHp', maxMp='$maxMp', " +
-                                      "defense='$defense'}"
+                "defense='$defense'}"
         }
     }
 
     test("Two Black mages with the same parameters are equals") {
-        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
-                 Arb.positiveInt(100))
+        checkAll(
+            Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
+            Arb.positiveInt(100)
+        )
         { name, maxHp, maxMp, defense ->
             val Blmg31 = BlackMage(name, maxHp, maxMp, defense, queue)
             val Blmg32 = BlackMage(name, maxHp, maxMp, defense, queue)
@@ -60,8 +63,10 @@ class BlackMageSpec : FunSpec ({
     }
 
     test("Two Black mages with different parameters have not the same hash code"){
-        checkAll(Arb.string(), Arb.positiveInt(200),Arb.positiveInt(100),
-                 Arb.positiveInt(50))
+        checkAll(
+            Arb.string(), Arb.positiveInt(200), Arb.positiveInt(100),
+            Arb.positiveInt(50)
+        )
         { name, maxHp, maxMp, defense ->
             val Blmg31 = BlackMage(name, maxHp, maxMp, defense, queue)
             val Blmg32 = BlackMage(name, maxHp, maxMp, defense, queue)

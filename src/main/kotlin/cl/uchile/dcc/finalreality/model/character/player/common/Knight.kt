@@ -5,48 +5,46 @@
  * You should have received a copy of the license along with this
  * work. If not, see <http://creativecommons.org/licenses/by/4.0/>.
  */
-package cl.uchile.dcc.finalreality.model.character.player
+package cl.uchile.dcc.finalreality.model.character.player.common
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.character.player.AbstractCommonCharacter
 import java.util.Objects
 import java.util.concurrent.BlockingQueue
 
 /**
- * A White Mage is a type of [PlayerCharacter] that can cast white magic.
+ * A `Knight` is a type of [PlayerCharacter] that can equip `Sword`s, `Axe`s and
+ * `Knife`s.
  *
  * @param name        the character's name
  * @param maxHp       the character's maximum health points
- * @param maxMp       the character's maximum magic points
  * @param defense     the character's defense
  * @param turnsQueue  the queue with the characters waiting for their turn
- * @constructor Creates a new Black Mage.
+ * @constructor Creates a new Knight.
  *
- * @property currentMp The current MP of the character.
  * @property currentHp The current HP of the character.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
-class WhiteMage(
+class Knight(
     name: String,
     maxHp: Int,
-    maxMp: Int,
     defense: Int,
     turnsQueue: BlockingQueue<GameCharacter>
-) : AbstractMages(name, maxHp, maxMp, defense, turnsQueue) {
+) : AbstractCommonCharacter(name, maxHp, defense, turnsQueue) {
     override fun equals(other: Any?) = when {
         this === other -> true
-        other !is WhiteMage -> false
+        other !is Knight -> false
         hashCode() != other.hashCode() -> false
         name != other.name -> false
         maxHp != other.maxHp -> false
-        maxMp != other.maxMp -> false
         defense != other.defense -> false
         else -> true
     }
 
-    override fun hashCode() = Objects.hash(WhiteMage::class, name, maxHp, maxMp, defense)
+    override fun hashCode() = Objects.hash(Knight::class, name, maxHp, defense)
 
     override fun toString() =
-        "WhiteMage {name='$name', maxHp='$maxHp', maxMp='$maxMp', defense='$defense'}"
+        "Knight {name='$name', maxHp='$maxHp', defense='$defense'}"
 }

@@ -1,6 +1,11 @@
 package cl.uchile.dcc.finalreality.model.character.player
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
+import cl.uchile.dcc.finalreality.model.character.player.common.Knight
+import cl.uchile.dcc.finalreality.model.character.player.common.Thief
+import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
+import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.Staff
