@@ -14,45 +14,45 @@ import io.kotest.matchers.shouldBe
 import java.util.concurrent.LinkedBlockingQueue
 
 private const val NAME = "NAME"
-private const val MAXHP = 100
-private const val MAXMP = 30
+private const val MAX_HP = 100
+private const val MAX_MP = 30
 private const val DEFENSE = 10
 
-class AbstractPlayerCharacterSpec :FunSpec ({
-    lateinit var BlackMage1: BlackMage
-    lateinit var Engineer1: Engineer
-    lateinit var Knight1: Knight
-    lateinit var Thief1: Thief
-    lateinit var WhiteMage1: WhiteMage
+class AbstractPlayerCharacterSpec : FunSpec({
+    lateinit var blackMage1: BlackMage
+    lateinit var engineer1: Engineer
+    lateinit var knight1: Knight
+    lateinit var thief1: Thief
+    lateinit var whiteMage1: WhiteMage
     lateinit var queue: LinkedBlockingQueue<GameCharacter>
     lateinit var normalWeapon: GameWeapon
     lateinit var magicWeapon: GameWeapon
 
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()
-        BlackMage1 = BlackMage(NAME, MAXHP, MAXMP, DEFENSE, queue)
-        Engineer1 = Engineer(NAME, MAXHP, DEFENSE, queue)
-        Knight1 = Knight(NAME, MAXHP, DEFENSE, queue)
-        Thief1 = Thief(NAME, MAXHP, DEFENSE, queue)
-        WhiteMage1 = WhiteMage(NAME, MAXHP, MAXMP, DEFENSE, queue)
+        blackMage1 = BlackMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
+        engineer1 = Engineer(NAME, MAX_HP, DEFENSE, queue)
+        knight1 = Knight(NAME, MAX_HP, DEFENSE, queue)
+        thief1 = Thief(NAME, MAX_HP, DEFENSE, queue)
+        whiteMage1 = WhiteMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
         normalWeapon = Axe("AXE", 10, 5)
         magicWeapon = Staff("STAFF", 10, 5)
     }
 
-    test("The equip method change de equippedWeapon"){
-        Engineer1.equip(normalWeapon)
-        Engineer1.equippedWeapon shouldBe normalWeapon
+    test("The equip method change de equippedWeapon") {
+        engineer1.equip(normalWeapon)
+        engineer1.equippedWeapon shouldBe normalWeapon
 
-        Knight1.equip(normalWeapon)
-        Knight1.equippedWeapon shouldBe normalWeapon
+        knight1.equip(normalWeapon)
+        knight1.equippedWeapon shouldBe normalWeapon
 
-        Thief1.equip(normalWeapon)
-        Thief1.equippedWeapon shouldBe normalWeapon
+        thief1.equip(normalWeapon)
+        thief1.equippedWeapon shouldBe normalWeapon
 
-        BlackMage1.equip(magicWeapon)
-        BlackMage1.equippedWeapon shouldBe magicWeapon
+        blackMage1.equip(magicWeapon)
+        blackMage1.equippedWeapon shouldBe magicWeapon
 
-        WhiteMage1.equip(magicWeapon)
-        WhiteMage1.equippedWeapon shouldBe magicWeapon
+        whiteMage1.equip(magicWeapon)
+        whiteMage1.equippedWeapon shouldBe magicWeapon
     }
 })

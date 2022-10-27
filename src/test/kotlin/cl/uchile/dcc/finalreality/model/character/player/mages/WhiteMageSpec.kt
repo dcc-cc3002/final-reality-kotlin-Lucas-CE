@@ -12,33 +12,33 @@ import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
 
 private const val WHMG1_NAME = "WHMG1"
-private const val WHMG1_MAXHP = 100
-private const val WHMG1_MAXMP = 30
+private const val WHMG1_MAX_HP = 100
+private const val WHMG1_MAX_MP = 30
 private const val WHMG1_DEFENSE = 10
 private const val WHMG2_NAME = "WHMG2"
-private const val WHMG2_MAXHP = 80
-private const val WHMG2_MAXMP = 20
+private const val WHMG2_MAX_HP = 80
+private const val WHMG2_MAX_MP = 20
 private const val WHMG2_DEFENSE = 20
 
-class WhiteMageSpec : FunSpec ({
-    lateinit var Whmg1: WhiteMage
-    lateinit var Whmg2: WhiteMage
-    lateinit var Whmg12: WhiteMage
+class WhiteMageSpec : FunSpec({
+    lateinit var whmg1: WhiteMage
+    lateinit var whmg2: WhiteMage
+    lateinit var whmg12: WhiteMage
     val queue = LinkedBlockingQueue<GameCharacter>()
 
     beforeEach {
-        Whmg1 = WhiteMage(WHMG1_NAME, WHMG1_MAXHP, WHMG1_MAXMP, WHMG1_DEFENSE, queue)
-        Whmg2 = WhiteMage(WHMG2_NAME, WHMG2_MAXHP, WHMG2_MAXMP, WHMG2_DEFENSE, queue)
-        Whmg12 = WhiteMage(WHMG1_NAME, WHMG1_MAXHP, WHMG1_MAXMP, WHMG1_DEFENSE, queue)
+        whmg1 = WhiteMage(WHMG1_NAME, WHMG1_MAX_HP, WHMG1_MAX_MP, WHMG1_DEFENSE, queue)
+        whmg2 = WhiteMage(WHMG2_NAME, WHMG2_MAX_HP, WHMG2_MAX_MP, WHMG2_DEFENSE, queue)
+        whmg12 = WhiteMage(WHMG1_NAME, WHMG1_MAX_HP, WHMG1_MAX_MP, WHMG1_DEFENSE, queue)
     }
 
     test("toString must return the White mage description") {
         checkAll(
             Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
-            Arb.positiveInt(100))
-        { name, maxHp, maxMp, defense ->
-            val Whmg3 = WhiteMage(name, maxHp, maxMp, defense, queue)
-            Whmg3.toString() shouldBe "WhiteMage {name='$name', maxHp='$maxHp', maxMp='$maxMp', " +
+            Arb.positiveInt(100)
+        ) { name, maxHp, maxMp, defense ->
+            val whmg3 = WhiteMage(name, maxHp, maxMp, defense, queue)
+            whmg3.toString() shouldBe "WhiteMage {name='$name', maxHp='$maxHp', maxMp='$maxMp', " +
                 "defense='$defense'}"
         }
     }
@@ -46,31 +46,32 @@ class WhiteMageSpec : FunSpec ({
     test("Two White mages with the same parameters are equals") {
         checkAll(
             Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
-            Arb.positiveInt(100))
-        { name, maxHp, maxMp, defense ->
-            val Whmg31 = WhiteMage(name, maxHp, maxMp, defense, queue)
-            val Whmg32 = WhiteMage(name, maxHp, maxMp, defense, queue)
-            Whmg31 shouldNotBeSameInstanceAs Whmg32
-            Whmg31 shouldBe Whmg32
+            Arb.positiveInt(100)
+        ) { name, maxHp, maxMp, defense ->
+            val whmg31 = WhiteMage(name, maxHp, maxMp, defense, queue)
+            val whmg32 = WhiteMage(name, maxHp, maxMp, defense, queue)
+            whmg31 shouldNotBeSameInstanceAs whmg32
+            whmg31 shouldBe whmg32
         }
     }
 
     test("Two White mages with different parameters are not equals") {
-        Whmg1 shouldNotBeSameInstanceAs Whmg2
-        Whmg1 shouldNotBe Whmg2
+        whmg1 shouldNotBeSameInstanceAs whmg2
+        whmg1 shouldNotBe whmg2
     }
 
-    test("Two White mages with different parameters have not the same hash code"){
-        checkAll(Arb.string(), Arb.positiveInt(200),Arb.positiveInt(100),
-                 Arb.positiveInt(50))
-        { name, maxHp, maxMp, defense ->
-            val Whmg31 = WhiteMage(name, maxHp, maxMp, defense, queue)
-            val Whmg32 = WhiteMage(name, maxHp, maxMp, defense, queue)
-            Whmg31.hashCode() shouldBe Whmg32.hashCode()
+    test("Two White mages with different parameters have not the same hash code") {
+        checkAll(
+            Arb.string(), Arb.positiveInt(200), Arb.positiveInt(100),
+            Arb.positiveInt(50)
+        ) { name, maxHp, maxMp, defense ->
+            val whmg31 = WhiteMage(name, maxHp, maxMp, defense, queue)
+            val whmg32 = WhiteMage(name, maxHp, maxMp, defense, queue)
+            whmg31.hashCode() shouldBe whmg32.hashCode()
         }
     }
 
-    test("Two White mages with the same parameters have the same hash code"){
-        Whmg1.hashCode() shouldBe Whmg12.hashCode()
+    test("Two White mages with the same parameters have the same hash code") {
+        whmg1.hashCode() shouldBe whmg12.hashCode()
     }
 })

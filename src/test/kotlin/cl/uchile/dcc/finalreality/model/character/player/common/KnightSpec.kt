@@ -18,51 +18,51 @@ private const val KNGT2_NAME = "KNGT2"
 private const val KNGT2_MAXHP = 80
 private const val KNGT2_DEFENSE = 20
 
-class KnightSpec : FunSpec ({
-    lateinit var Kngt1: Knight
-    lateinit var Kngt2: Knight
-    lateinit var Kngt12: Knight
+class KnightSpec : FunSpec({
+    lateinit var kngt1: Knight
+    lateinit var kngt2: Knight
+    lateinit var kngt12: Knight
     val queue = LinkedBlockingQueue<GameCharacter>()
 
     beforeEach {
-        Kngt1 = Knight(KNGT1_NAME, KNGT1_MAXHP, KNGT1_DEFENSE, queue)
-        Kngt2 = Knight(KNGT2_NAME, KNGT2_MAXHP, KNGT2_DEFENSE, queue)
-        Kngt12 = Knight(KNGT1_NAME, KNGT1_MAXHP, KNGT1_DEFENSE, queue)
+        kngt1 = Knight(KNGT1_NAME, KNGT1_MAXHP, KNGT1_DEFENSE, queue)
+        kngt2 = Knight(KNGT2_NAME, KNGT2_MAXHP, KNGT2_DEFENSE, queue)
+        kngt12 = Knight(KNGT1_NAME, KNGT1_MAXHP, KNGT1_DEFENSE, queue)
     }
 
     test("toString must return the Knight description") {
-        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100))
-        { name, maxHp, defense ->
+        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100)) {
+            name, maxHp, defense ->
             val Knight3 = Knight(name, maxHp, defense, queue)
             Knight3.toString() shouldBe "Knight {name='$name', maxHp='$maxHp', defense='$defense'}"
         }
     }
 
     test("Two Knights with the same parameters are equals") {
-        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100))
-        { name, maxHp, defense ->
-            val Kngt31 = Knight(name, maxHp, defense, queue)
-            val Kngt32 = Knight(name, maxHp, defense, queue)
-            Kngt31 shouldNotBeSameInstanceAs Kngt32
-            Kngt31 shouldBe Kngt32
+        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100)) {
+            name, maxHp, defense ->
+            val kngt31 = Knight(name, maxHp, defense, queue)
+            val kngt32 = Knight(name, maxHp, defense, queue)
+            kngt31 shouldNotBeSameInstanceAs kngt32
+            kngt31 shouldBe kngt32
         }
     }
 
     test("Two Knights with different parameters are not equals") {
-        Kngt1 shouldNotBeSameInstanceAs Kngt2
-        Kngt1 shouldNotBe Kngt2
+        kngt1 shouldNotBeSameInstanceAs kngt2
+        kngt1 shouldNotBe kngt2
     }
 
-    test("Two Knights with different parameters have not the same hash code"){
-        checkAll(Arb.string(), Arb.positiveInt(200), Arb.positiveInt(50))
-        { name, maxHp, defense ->
-            val Kngt31 = Knight(name, maxHp, defense, queue)
-            val Kngt32 = Knight(name, maxHp, defense, queue)
-            Kngt31.hashCode() shouldBe Kngt32.hashCode()
+    test("Two Knights with different parameters have not the same hash code") {
+        checkAll(Arb.string(), Arb.positiveInt(200), Arb.positiveInt(50)) {
+            name, maxHp, defense ->
+            val kngt31 = Knight(name, maxHp, defense, queue)
+            val kngt32 = Knight(name, maxHp, defense, queue)
+            kngt31.hashCode() shouldBe kngt32.hashCode()
         }
     }
 
-    test("Two Knights with the same parameters have the same hash code"){
-        Kngt1.hashCode() shouldBe Kngt12.hashCode()
+    test("Two Knights with the same parameters have the same hash code") {
+        kngt1.hashCode() shouldBe kngt12.hashCode()
     }
 })

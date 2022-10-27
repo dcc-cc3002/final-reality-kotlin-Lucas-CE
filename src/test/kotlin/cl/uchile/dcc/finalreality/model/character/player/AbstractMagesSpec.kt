@@ -9,66 +9,55 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.checkAll
-import java.util.concurrent.LinkedBlockingQueue
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.LinkedBlockingQueue
 
 private const val MAGE_NAME = "MAGE1"
-private const val MAGE_MAXHP = 100
-private const val MAGE_MAXMP = 30
+private const val MAGE_MAX_HP = 100
+private const val MAGE_MAX_MP = 30
 private const val MAGE_DEFENSE = 10
 
-class AbstractMagesSpec : FunSpec ({
-    lateinit var BlackMage1: BlackMage
-    lateinit var WhiteMage1: WhiteMage
+class AbstractMagesSpec : FunSpec({
+    lateinit var blackMage1: BlackMage
+    lateinit var whiteMage1: WhiteMage
     val queue = LinkedBlockingQueue<GameCharacter>()
 
     beforeEach {
-        BlackMage1 = BlackMage(MAGE_NAME, MAGE_MAXHP, MAGE_MAXMP, MAGE_DEFENSE, queue)
-        WhiteMage1 = WhiteMage(MAGE_NAME, MAGE_MAXHP, MAGE_MAXMP, MAGE_DEFENSE, queue)
+        blackMage1 = BlackMage(MAGE_NAME, MAGE_MAX_HP, MAGE_MAX_MP, MAGE_DEFENSE, queue)
+        whiteMage1 = WhiteMage(MAGE_NAME, MAGE_MAX_HP, MAGE_MAX_MP, MAGE_DEFENSE, queue)
     }
 
-    test("The currentMp initial value is the maxMp value"){
-        BlackMage1.currentMp shouldBe MAGE_MAXMP
-        WhiteMage1.currentMp shouldBe MAGE_MAXMP
+    test("The currentMp initial value is the maxMp value") {
+        blackMage1.currentMp shouldBe MAGE_MAX_MP
+        whiteMage1.currentMp shouldBe MAGE_MAX_MP
     }
 
-    test("The currentMp setter change the currentMp value"){
-        checkAll(Arb.int(0..MAGE_MAXMP))
-        { currentMp ->
-            BlackMage1.currentMp = currentMp
-            BlackMage1.currentMp shouldBe currentMp
+    test("The currentMp setter change the currentMp value") {
+        checkAll(Arb.int(0..MAGE_MAX_MP)) {
+            currentMp ->
+            blackMage1.currentMp = currentMp
+            blackMage1.currentMp shouldBe currentMp
         }
 
-        checkAll(Arb.int(0..MAGE_MAXMP))
-        { currentMp ->
-            WhiteMage1.currentMp = currentMp
-            WhiteMage1.currentMp shouldBe currentMp
+        checkAll(Arb.int(0..MAGE_MAX_MP)) {
+            currentMp ->
+            whiteMage1.currentMp = currentMp
+            whiteMage1.currentMp shouldBe currentMp
         }
     }
 
-    test("The currentMp setter throws an exception when the value is out of range (0,maxMp)"){
+    test("The currentMp setter throws an exception when the value is out of range (0,maxMp)") {
 
-        //Test blackMage
         checkAll(
-            Arb.int(MAGE_MAXMP+1..2*MAGE_MAXMP),
-            Arb.int(-MAGE_MAXMP..-1)
-        )
-        { greaterMaxMp, lessMinMp ->
-            //BlackMage
-            assertThrows<InvalidStatValueException> {
-                BlackMage1.currentMp = greaterMaxMp
-            }
-            assertThrows<InvalidStatValueException> {
-                BlackMage1.currentMp = lessMinMp
-            }
-            //WhiteMage
-            assertThrows<InvalidStatValueException> {
-                WhiteMage1.currentMp = greaterMaxMp
-            }
-            assertThrows<InvalidStatValueException> {
-                WhiteMage1.currentMp = lessMinMp
-            }
+            Arb.int(MAGE_MAX_MP + 1..2 * MAGE_MAX_MP),
+            Arb.int(-MAGE_MAX_MP..-1)
+        ) { greaterMaxMp, lessMinMp ->
+            // BlackMage
+            assertThrows<InvalidStatValueException> { blackMage1.currentMp = greaterMaxMp }
+            assertThrows<InvalidStatValueException> { blackMage1.currentMp = lessMinMp }
+            // WhiteMage
+            assertThrows<InvalidStatValueException> { whiteMage1.currentMp = greaterMaxMp }
+            assertThrows<InvalidStatValueException> { whiteMage1.currentMp = lessMinMp }
         }
     }
-
 })

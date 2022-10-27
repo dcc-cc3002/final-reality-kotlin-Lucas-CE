@@ -9,55 +9,55 @@ import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 
-private const val STFF1_NAME = "STFF1"
-private const val STFF1_DAMAGE = 10
-private const val STFF1_WEIGHT = 15
-private const val STFF2_NAME = "STFF2"
-private const val STFF2_DAMAGE = 12
-private const val STFF2_WEIGHT = 30
+private const val STAFF1_NAME = "STAFF1"
+private const val STAFF1_DAMAGE = 10
+private const val STAFF1_WEIGHT = 15
+private const val STAFF2_NAME = "STAFF2"
+private const val STAFF2_DAMAGE = 12
+private const val STAFF2_WEIGHT = 30
 
-class StaffSpec : FunSpec ({
-    lateinit var Staff1: Staff
-    lateinit var Staff2: Staff
+class StaffSpec : FunSpec({
+    lateinit var staff1: Staff
+    lateinit var staff2: Staff
 
     beforeEach {
-        Staff1 = Staff(STFF1_NAME, STFF1_DAMAGE, STFF1_WEIGHT)
-        Staff2 = Staff(STFF2_NAME, STFF2_DAMAGE, STFF2_WEIGHT)
+        staff1 = Staff(STAFF1_NAME, STAFF1_DAMAGE, STAFF1_WEIGHT)
+        staff2 = Staff(STAFF2_NAME, STAFF2_DAMAGE, STAFF2_WEIGHT)
     }
 
     test("toString must return the Staff description") {
-        checkAll(Arb.string(), Arb.positiveInt(100), Arb.positiveInt(100))
-        { name, damage, weight ->
-            val Staff3 = Staff(name, damage, weight)
-            Staff3.toString() shouldBe "Staff {name='$name', damage='$damage', weight='$weight'}"
+        checkAll(Arb.string(), Arb.positiveInt(100), Arb.positiveInt(100)) {
+            name, damage, weight ->
+            val staff3 = Staff(name, damage, weight)
+            staff3.toString() shouldBe "Staff {name='$name', damage='$damage', weight='$weight'}"
         }
     }
 
     test("Two Staffs with the same parameters are equals") {
-        checkAll(Arb.string(), Arb.positiveInt(100), Arb.positiveInt(100))
-        { name, damage, weight ->
-            val Staff31 = Staff(name, damage, weight)
-            val Staff32 = Staff(name, damage, weight)
-            Staff31 shouldNotBeSameInstanceAs Staff32
-            Staff31 shouldBe Staff32
+        checkAll(Arb.string(), Arb.positiveInt(100), Arb.positiveInt(100)) {
+            name, damage, weight ->
+            val staff31 = Staff(name, damage, weight)
+            val staff32 = Staff(name, damage, weight)
+            staff31 shouldNotBeSameInstanceAs staff32
+            staff31 shouldBe staff32
         }
     }
 
     test("Two Staffs with different parameters are not equals") {
-        Staff1 shouldNotBeSameInstanceAs Staff2
-        Staff1 shouldNotBe Staff2
+        staff1 shouldNotBeSameInstanceAs staff2
+        staff1 shouldNotBe staff2
     }
 
-    test("Two Staffs with the same parameters have the same hash code"){
-        checkAll(Arb.string(), Arb.positiveInt(20),Arb.positiveInt(50))
-        { name, damage, weight ->
-            val Staff31 = Staff(name, damage, weight)
-            val Staff32 = Staff(name, damage, weight)
-            Staff31.hashCode() shouldBe Staff32.hashCode()
+    test("Two Staffs with the same parameters have the same hash code") {
+        checkAll(Arb.string(), Arb.positiveInt(20), Arb.positiveInt(50)) {
+            name, damage, weight ->
+            val staff31 = Staff(name, damage, weight)
+            val staff32 = Staff(name, damage, weight)
+            staff31.hashCode() shouldBe staff32.hashCode()
         }
     }
 
-    test("Two Staffs with different parameters have not the same hash code"){
-        Staff1.hashCode() shouldNotBe Staff2.hashCode()
+    test("Two Staffs with different parameters have not the same hash code") {
+        staff1.hashCode() shouldNotBe staff2.hashCode()
     }
 })

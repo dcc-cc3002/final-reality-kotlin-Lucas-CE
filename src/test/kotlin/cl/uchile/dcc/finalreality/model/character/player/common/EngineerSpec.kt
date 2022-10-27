@@ -11,60 +11,59 @@ import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
 
-private const val ENG1_NAME = "ENG1"
-private const val ENG1_MAXHP = 100
-private const val ENG1_DEFENSE = 10
-private const val ENG2_NAME = "ENG2"
-private const val ENG2_MAXHP = 80
-private const val ENG2_DEFENSE = 20
-
+private const val ENGINEER1_NAME = "ENGINEER1"
+private const val ENGINEER1_MAX_HP = 100
+private const val ENGINEER1_DEFENSE = 10
+private const val ENGINEER2_NAME = "ENGINEER2"
+private const val ENGINEER2_MAX_HP = 80
+private const val ENGINEER2_DEFENSE = 20
 
 class EngineerSpec : FunSpec({
-    lateinit var Eng1: Engineer
-    lateinit var Eng2: Engineer
-    lateinit var Eng12: Engineer
+    lateinit var eng1: Engineer
+    lateinit var eng2: Engineer
+    lateinit var eng12: Engineer
     lateinit var queue: LinkedBlockingQueue<GameCharacter>
 
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()
-        Eng1 = Engineer(ENG1_NAME, ENG1_MAXHP, ENG1_DEFENSE, queue)
-        Eng2 = Engineer(ENG2_NAME, ENG2_MAXHP, ENG2_DEFENSE, queue)
-        Eng12 = Engineer(ENG1_NAME, ENG1_MAXHP, ENG1_DEFENSE, queue)
+        eng1 = Engineer(ENGINEER1_NAME, ENGINEER1_MAX_HP, ENGINEER1_DEFENSE, queue)
+        eng2 = Engineer(ENGINEER2_NAME, ENGINEER2_MAX_HP, ENGINEER2_DEFENSE, queue)
+        eng12 = Engineer(ENGINEER1_NAME, ENGINEER1_MAX_HP, ENGINEER1_DEFENSE, queue)
     }
 
     test("toString must return the Engineer description") {
-        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100))
-        { name, maxHp, defense ->
-            val Eng3 = Engineer(name, maxHp, defense, queue)
-            Eng3.toString() shouldBe "Engineer {name='$name', maxHp='$maxHp', defense='$defense'}"
+        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100)) {
+            name, maxHp, defense ->
+            val eng3 = Engineer(name, maxHp, defense, queue)
+            eng3.toString() shouldBe "Engineer {name='$name', maxHp='$maxHp', defense='$defense'}"
         }
     }
 
     test("Two Engineers with the same parameters are equals") {
-        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100))
-        { name, maxHp, defense ->
-            val Eng31 = Engineer(name, maxHp, defense, queue)
-            val Eng32 = Engineer(name, maxHp, defense, queue)
-            Eng31 shouldNotBeSameInstanceAs Eng32
-            Eng31 shouldBe Eng32
+        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100)) {
+            name, maxHp, defense ->
+            val eng31 = Engineer(name, maxHp, defense, queue)
+            val eng32 = Engineer(name, maxHp, defense, queue)
+            eng31 shouldNotBeSameInstanceAs eng32
+            eng31 shouldBe eng32
         }
     }
 
     test("Two Engineers with different parameters are not equals") {
-        Eng1 shouldNotBeSameInstanceAs Eng2
-        Eng1 shouldNotBe Eng2
+        eng1 shouldNotBeSameInstanceAs eng2
+        eng1 shouldNotBe eng2
     }
 
-    test("Two Engineers with different parameters have not the same hash code"){
-        checkAll(Arb.string(), Arb.positiveInt(200), Arb.positiveInt(50))
-        { name, maxHp, defense ->
-            val Eng31 = Engineer(name, maxHp, defense, queue)
-            val Eng32 = Engineer(name, maxHp, defense, queue)
-            Eng31.hashCode() shouldBe Eng32.hashCode()
+    test("Two Engineers with different parameters have not the same hash code") {
+        checkAll(Arb.string(), Arb.positiveInt(200), Arb.positiveInt(50)) {
+            name, maxHp, defense ->
+            val eng31 = Engineer(name, maxHp, defense, queue)
+            val eng32 = Engineer(name, maxHp, defense, queue)
+            eng31.hashCode() shouldBe eng32.hashCode()
         }
     }
 
-    test("Two Engineers with the same parameters have the same hash code"){
-        Eng1.hashCode() shouldBe Eng12.hashCode()
+    test("Two Engineers with the same parameters have the same hash code") {
+        eng1.hashCode() shouldBe eng12.hashCode()
     }
 })

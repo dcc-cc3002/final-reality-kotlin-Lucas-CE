@@ -1,10 +1,10 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException
-import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
+import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
 import cl.uchile.dcc.finalreality.model.weapon.types.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.Staff
@@ -13,48 +13,48 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.checkAll
-import java.util.concurrent.LinkedBlockingQueue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.LinkedBlockingQueue
 
 private const val NAME = "NAME"
-private const val MAXHP = 100
-private const val MAXMP = 30
+private const val MAX_HP = 100
+private const val MAX_MP = 30
 private const val DEFENSE = 10
-private const val ENEM_WGT = 10
+private const val ENEMY_WGT = 10
 private const val WEP_NAME = "WEP"
 private const val WEP_DMG = 10
-private const val WEP_WGT = ENEM_WGT
+private const val WEP_WGT = ENEMY_WGT
 
-class AbstractCharacterSpec : FunSpec ({
+class AbstractCharacterSpec : FunSpec({
     lateinit var queue: LinkedBlockingQueue<GameCharacter>
-    lateinit var BlackMage1: BlackMage
-    lateinit var Engineer1: Engineer
-    lateinit var Knight1: Knight
-    lateinit var Thief1: Thief
-    lateinit var WhiteMage1: WhiteMage
-    lateinit var Enemy1: Enemy
+    lateinit var blackMage1: BlackMage
+    lateinit var engineer1: Engineer
+    lateinit var knight1: Knight
+    lateinit var thief1: Thief
+    lateinit var whiteMage1: WhiteMage
+    lateinit var enemy1: Enemy
     lateinit var normalWeapon: Axe
     lateinit var magicWeapon: Staff
 
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()
-        BlackMage1 = BlackMage(NAME, MAXHP, MAXMP, DEFENSE, queue)
-        Engineer1 = Engineer(NAME, MAXHP, DEFENSE, queue)
-        Knight1 = Knight(NAME, MAXHP, DEFENSE, queue)
-        Thief1 = Thief(NAME, MAXHP, DEFENSE, queue)
-        WhiteMage1 = WhiteMage(NAME, MAXHP, MAXMP, DEFENSE, queue)
-        Enemy1 = Enemy(NAME, ENEM_WGT, MAXHP, DEFENSE, queue)
+        blackMage1 = BlackMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
+        engineer1 = Engineer(NAME, MAX_HP, DEFENSE, queue)
+        knight1 = Knight(NAME, MAX_HP, DEFENSE, queue)
+        thief1 = Thief(NAME, MAX_HP, DEFENSE, queue)
+        whiteMage1 = WhiteMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
+        enemy1 = Enemy(NAME, ENEMY_WGT, MAX_HP, DEFENSE, queue)
         normalWeapon = Axe(WEP_NAME, WEP_DMG, WEP_WGT)
         magicWeapon = Staff(WEP_NAME, WEP_DMG, WEP_WGT)
     }
 
-    test("initializing maxHp with a value less than 1 throws an exception"){
-        checkAll(Arb.int(-MAXHP..0))
-        { maxHp ->
+    test("initializing maxHp with a value less than 1 throws an exception") {
+        checkAll(Arb.int(-MAX_HP..0)) {
+            maxHp ->
             assertThrows<InvalidStatValueException> {
-                val BlackMage2 = BlackMage(NAME, maxHp, MAXMP, DEFENSE, queue)
+                val BlackMage2 = BlackMage(NAME, maxHp, MAX_MP, DEFENSE, queue)
             }
             assertThrows<InvalidStatValueException> {
                 val Engineer2 = Engineer(NAME, maxHp, DEFENSE, queue)
@@ -66,124 +66,123 @@ class AbstractCharacterSpec : FunSpec ({
                 val Thief2 = Thief(NAME, maxHp, DEFENSE, queue)
             }
             assertThrows<InvalidStatValueException> {
-                val WhiteMage2 = WhiteMage(NAME, maxHp, MAXMP, DEFENSE, queue)
+                val WhiteMage2 = WhiteMage(NAME, maxHp, MAX_MP, DEFENSE, queue)
             }
             assertThrows<InvalidStatValueException> {
-                val Enemy2 = Enemy(NAME, ENEM_WGT, maxHp, DEFENSE, queue)
+                val Enemy2 = Enemy(NAME, ENEMY_WGT, maxHp, DEFENSE, queue)
             }
         }
     }
 
-    test("initializing defense with a value less than 0 throws an exception"){
-        checkAll(Arb.int(-DEFENSE..-1))
-        { defense ->
+    test("initializing defense with a value less than 0 throws an exception") {
+        checkAll(Arb.int(-DEFENSE..-1)) {
+            defense ->
             assertThrows<InvalidStatValueException> {
-                val BlackMage3 = BlackMage(NAME, MAXHP, MAXMP, defense, queue)
+                val BlackMage3 = BlackMage(NAME, MAX_HP, MAX_MP, defense, queue)
             }
             assertThrows<InvalidStatValueException> {
-                val Engineer3 = Engineer(NAME, MAXHP, defense, queue)
+                val Engineer3 = Engineer(NAME, MAX_HP, defense, queue)
             }
             assertThrows<InvalidStatValueException> {
-                val Knight3 = Knight(NAME, MAXHP, defense, queue)
+                val Knight3 = Knight(NAME, MAX_HP, defense, queue)
             }
             assertThrows<InvalidStatValueException> {
-                val Thief3 = Thief(NAME, MAXHP, defense, queue)
+                val Thief3 = Thief(NAME, MAX_HP, defense, queue)
             }
             assertThrows<InvalidStatValueException> {
-                val WhiteMage3 = WhiteMage(NAME, MAXHP, MAXMP, defense, queue)
+                val WhiteMage3 = WhiteMage(NAME, MAX_HP, MAX_MP, defense, queue)
             }
             assertThrows<InvalidStatValueException> {
-                val Enemy3 = Enemy(NAME, ENEM_WGT, MAXHP, defense, queue)
+                val Enemy3 = Enemy(NAME, ENEMY_WGT, MAX_HP, defense, queue)
             }
         }
     }
 
-    test("currentHp initial value is the maxHp value"){
-        BlackMage1.currentHp shouldBe MAXHP
-        Engineer1.currentHp shouldBe MAXHP
-        Knight1.currentHp shouldBe MAXHP
-        Thief1.currentHp shouldBe MAXHP
-        WhiteMage1.currentHp shouldBe MAXHP
-        Enemy1.currentHp shouldBe MAXHP
+    test("currentHp initial value is the maxHp value") {
+        blackMage1.currentHp shouldBe MAX_HP
+        engineer1.currentHp shouldBe MAX_HP
+        knight1.currentHp shouldBe MAX_HP
+        thief1.currentHp shouldBe MAX_HP
+        whiteMage1.currentHp shouldBe MAX_HP
+        enemy1.currentHp shouldBe MAX_HP
     }
 
-    test("The currentHp setter change the currentHp value"){
-        checkAll(Arb.int(0..MAXHP))
-        { currentHp ->
-            BlackMage1.currentHp = currentHp
-            BlackMage1.currentHp shouldBe currentHp
+    test("The currentHp setter change the currentHp value") {
+        checkAll(Arb.int(0..MAX_HP)) {
+            currentHp ->
+            blackMage1.currentHp = currentHp
+            blackMage1.currentHp shouldBe currentHp
 
-            Engineer1.currentHp = currentHp
-            Engineer1.currentHp shouldBe currentHp
+            engineer1.currentHp = currentHp
+            engineer1.currentHp shouldBe currentHp
 
-            Knight1.currentHp = currentHp
-            Knight1.currentHp shouldBe currentHp
+            knight1.currentHp = currentHp
+            knight1.currentHp shouldBe currentHp
 
-            Thief1.currentHp = currentHp
-            Thief1.currentHp shouldBe currentHp
+            thief1.currentHp = currentHp
+            thief1.currentHp shouldBe currentHp
 
-            WhiteMage1.currentHp = currentHp
-            WhiteMage1.currentHp shouldBe currentHp
+            whiteMage1.currentHp = currentHp
+            whiteMage1.currentHp shouldBe currentHp
 
-            Enemy1.currentHp = currentHp
-            Enemy1.currentHp shouldBe currentHp
+            enemy1.currentHp = currentHp
+            enemy1.currentHp shouldBe currentHp
         }
     }
 
-    test("The currentHp setter throws an exception when the value is out of range (0,maxHp)"){
+    test("The currentHp setter throws an exception when the value is out of range (0,maxHp)") {
         checkAll(
-            Arb.int(MAXHP +1..2* MAXHP),
-            Arb.int(-MAXHP..-1)
-        )
-        { greaterMaxHp, lessMinHp ->
-            //BlackMage
-            assertThrows<InvalidStatValueException> {BlackMage1.currentHp = greaterMaxHp}
-            assertThrows<InvalidStatValueException> {BlackMage1.currentHp = lessMinHp}
-            //Engineer
-            assertThrows<InvalidStatValueException> {Engineer1.currentHp = greaterMaxHp}
-            assertThrows<InvalidStatValueException> {Engineer1.currentHp = lessMinHp}
-            //Knight
-            assertThrows<InvalidStatValueException> {Knight1.currentHp = greaterMaxHp}
-            assertThrows<InvalidStatValueException> {Knight1.currentHp = lessMinHp}
-            //Thief
-            assertThrows<InvalidStatValueException> {Thief1.currentHp = greaterMaxHp}
-            assertThrows<InvalidStatValueException> {Thief1.currentHp = lessMinHp}
-            //WhiteMage
-            assertThrows<InvalidStatValueException> {WhiteMage1.currentHp = greaterMaxHp}
-            assertThrows<InvalidStatValueException> {WhiteMage1.currentHp = lessMinHp}
-            //Enemy
-            assertThrows<InvalidStatValueException> {Enemy1.currentHp = greaterMaxHp}
-            assertThrows<InvalidStatValueException> {Enemy1.currentHp = lessMinHp}
+            Arb.int(MAX_HP + 1..2 * MAX_HP),
+            Arb.int(-MAX_HP..-1)
+        ) { greaterMaxHp, lessMinHp ->
+            // BlackMage
+            assertThrows<InvalidStatValueException> { blackMage1.currentHp = greaterMaxHp }
+            assertThrows<InvalidStatValueException> { blackMage1.currentHp = lessMinHp }
+            // Engineer
+            assertThrows<InvalidStatValueException> { engineer1.currentHp = greaterMaxHp }
+            assertThrows<InvalidStatValueException> { engineer1.currentHp = lessMinHp }
+            // Knight
+            assertThrows<InvalidStatValueException> { knight1.currentHp = greaterMaxHp }
+            assertThrows<InvalidStatValueException> { knight1.currentHp = lessMinHp }
+            // Thief
+            assertThrows<InvalidStatValueException> { thief1.currentHp = greaterMaxHp }
+            assertThrows<InvalidStatValueException> { thief1.currentHp = lessMinHp }
+            // WhiteMage
+            assertThrows<InvalidStatValueException> { whiteMage1.currentHp = greaterMaxHp }
+            assertThrows<InvalidStatValueException> { whiteMage1.currentHp = lessMinHp }
+            // Enemy
+            assertThrows<InvalidStatValueException> { enemy1.currentHp = greaterMaxHp }
+            assertThrows<InvalidStatValueException> { enemy1.currentHp = lessMinHp }
         }
     }
 
-    test("waitTurn method must put in queue the character who is calling the function"){
-        BlackMage1.equip(magicWeapon)
-        WhiteMage1.equip(magicWeapon)
-        Engineer1.equip(normalWeapon)
-        Knight1.equip(normalWeapon)
-        Thief1.equip(normalWeapon)
+    test("waitTurn method must put in queue the character who is calling the function") {
+        blackMage1.equip(magicWeapon)
+        whiteMage1.equip(magicWeapon)
+        engineer1.equip(normalWeapon)
+        knight1.equip(normalWeapon)
+        thief1.equip(normalWeapon)
 
-        BlackMage1.waitTurn()
-        Thread.sleep(100)
-        Engineer1.waitTurn()
-        Thread.sleep(100)
-        Knight1.waitTurn()
-        Thread.sleep(100)
-        Thief1.waitTurn()
-        Thread.sleep(100)
-        WhiteMage1.waitTurn()
-        Thread.sleep(100)
-        Enemy1.waitTurn()
+        blackMage1.waitTurn()
+        withContext(Dispatchers.IO) { Thread.sleep(100) }
+        engineer1.waitTurn()
+        withContext(Dispatchers.IO) { Thread.sleep(100) }
+        knight1.waitTurn()
+        withContext(Dispatchers.IO) { Thread.sleep(100) }
+        thief1.waitTurn()
+        withContext(Dispatchers.IO) { Thread.sleep(100) }
+        whiteMage1.waitTurn()
+        withContext(Dispatchers.IO) { Thread.sleep(100) }
+        enemy1.waitTurn()
 
         withContext(Dispatchers.IO) {
             Thread.sleep(6000)
         }
-        queue.poll() shouldBe BlackMage1
-        queue.poll() shouldBe Engineer1
-        queue.poll() shouldBe Knight1
-        queue.poll() shouldBe Thief1
-        queue.poll() shouldBe WhiteMage1
-        queue.poll() shouldBe Enemy1
+        queue.poll() shouldBe blackMage1
+        queue.poll() shouldBe engineer1
+        queue.poll() shouldBe knight1
+        queue.poll() shouldBe thief1
+        queue.poll() shouldBe whiteMage1
+        queue.poll() shouldBe enemy1
     }
 })

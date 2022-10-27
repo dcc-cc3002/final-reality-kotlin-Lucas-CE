@@ -11,58 +11,58 @@ import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
 
-private const val THF1_NAME = "THF1"
-private const val THF1_MAXHP = 100
-private const val THF1_DEFENSE = 10
-private const val THF2_NAME = "THF2"
-private const val THF2_MAXHP = 80
-private const val THF2_DEFENSE = 20
+private const val THIEF1_NAME = "THIEF1"
+private const val THIEF1_MAX_HP = 100
+private const val THIEF1_DEFENSE = 10
+private const val THIEF2_NAME = "THIEF2"
+private const val THIEF2_MAX_HP = 80
+private const val THIEF2_DEFENSE = 20
 
-class ThiefSpec : FunSpec ({
-    lateinit var Thf1: Thief
-    lateinit var Thf2: Thief
-    lateinit var Thf12: Thief
+class ThiefSpec : FunSpec({
+    lateinit var thief1: Thief
+    lateinit var thief2: Thief
+    lateinit var thief12: Thief
     val queue = LinkedBlockingQueue<GameCharacter>()
 
     beforeEach {
-        Thf1 = Thief(THF1_NAME, THF1_MAXHP, THF1_DEFENSE, queue)
-        Thf2 = Thief(THF2_NAME, THF2_MAXHP, THF2_DEFENSE, queue)
-        Thf12 = Thief(THF1_NAME, THF1_MAXHP, THF1_DEFENSE, queue)
+        thief1 = Thief(THIEF1_NAME, THIEF1_MAX_HP, THIEF1_DEFENSE, queue)
+        thief2 = Thief(THIEF2_NAME, THIEF2_MAX_HP, THIEF2_DEFENSE, queue)
+        thief12 = Thief(THIEF1_NAME, THIEF1_MAX_HP, THIEF1_DEFENSE, queue)
     }
 
     test("toString must return the Thief description") {
-        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100))
-        { name, maxHp, defense ->
-            val Thf3 = Thief(name, maxHp, defense, queue)
-            Thf3.toString() shouldBe "Thief {name='$name', maxHp='$maxHp', defense='$defense'}"
+        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100)) {
+            name, maxHp, defense ->
+            val thief3 = Thief(name, maxHp, defense, queue)
+            thief3.toString() shouldBe "Thief {name='$name', maxHp='$maxHp', defense='$defense'}"
         }
     }
 
     test("Two Thieves with the same parameters are equals") {
-        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100))
-        { name, maxHp, defense ->
-            val Thf31 = Thief(name, maxHp, defense, queue)
-            val Thf32 = Thief(name, maxHp, defense, queue)
-            Thf31 shouldNotBeSameInstanceAs Thf32
-            Thf31 shouldBe Thf32
+        checkAll(Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(100)) {
+            name, maxHp, defense ->
+            val thief31 = Thief(name, maxHp, defense, queue)
+            val thief32 = Thief(name, maxHp, defense, queue)
+            thief31 shouldNotBeSameInstanceAs thief32
+            thief31 shouldBe thief32
         }
     }
 
     test("Two Thieves with different parameters are not equals") {
-        Thf1 shouldNotBeSameInstanceAs Thf2
-        Thf1 shouldNotBe Thf2
+        thief1 shouldNotBeSameInstanceAs thief2
+        thief1 shouldNotBe thief2
     }
 
-    test("Two Thieves with different parameters have not the same hash code"){
-        checkAll(Arb.string(), Arb.positiveInt(200), Arb.positiveInt(50))
-        { name, maxHp, defense ->
-            val Thf31 = Thief(name, maxHp, defense, queue)
-            val Thf32 = Thief(name, maxHp, defense, queue)
-            Thf31.hashCode() shouldBe Thf32.hashCode()
+    test("Two Thieves with different parameters have not the same hash code") {
+        checkAll(Arb.string(), Arb.positiveInt(200), Arb.positiveInt(50)) {
+            name, maxHp, defense ->
+            val thief31 = Thief(name, maxHp, defense, queue)
+            val thief32 = Thief(name, maxHp, defense, queue)
+            thief31.hashCode() shouldBe thief32.hashCode()
         }
     }
 
-    test("Two Thieves with the same parameters have the same hash code"){
-        Thf1.hashCode() shouldBe Thf12.hashCode()
+    test("Two Thieves with the same parameters have the same hash code") {
+        thief1.hashCode() shouldBe thief12.hashCode()
     }
 })
