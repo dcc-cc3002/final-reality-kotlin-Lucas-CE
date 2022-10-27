@@ -18,5 +18,6 @@ package cl.uchile.dcc.finalreality.model.weapon
 
 abstract class AbstractWeapon(
     override val name: String,
+    override val damage: Int,
     override val weight: Int
 ) : GameWeapon
