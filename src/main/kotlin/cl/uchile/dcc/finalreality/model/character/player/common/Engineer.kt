@@ -9,6 +9,8 @@ package cl.uchile.dcc.finalreality.model.character.player.common
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.AbstractCommonCharacter
+import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.EngineerWeapon
 import java.util.Objects
 import java.util.concurrent.BlockingQueue
 
@@ -33,6 +35,14 @@ class Engineer(
     defense: Int,
     turnsQueue: BlockingQueue<GameCharacter>
 ) : AbstractCommonCharacter(name, maxHp, defense, turnsQueue) {
+
+    override fun equip(weapon: GameWeapon) {
+        weapon.equipItToEngineer(this)
+    }
+
+    fun equipWeapon(weapon: EngineerWeapon) {
+        _equippedWeapon = weapon
+    }
 
     override fun equals(other: Any?) = when {
         this === other -> true

@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.model.weapon.types
 
+import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import java.util.Objects
 
 /**
@@ -19,6 +20,10 @@ class Knife(
     damage: Int,
     weight: Int
 ) : AbstractNormalWeapon(name, damage, weight) {
+
+    override fun equipItToEngineer(engineer: Engineer) {
+        throw AssertionError("This weapon cannot be equipped to an Engineer")
+    }
 
     override fun equals(other: Any?) = when {
         this === other -> true

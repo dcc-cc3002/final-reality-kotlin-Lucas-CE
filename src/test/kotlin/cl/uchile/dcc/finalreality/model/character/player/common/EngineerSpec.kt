@@ -1,6 +1,5 @@
 package cl.uchile.dcc.finalreality.model.character.player.common
 
-import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.weapon.types.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.Bow
@@ -80,10 +79,10 @@ class EngineerSpec : FunSpec({
         val engineerWeapon2 = Bow("bow", 10, 10)
         eng1.equip(engineerWeapon2)
         val nonEngineerweapon1 = Knife("knife", 10, 10)
-        assertThrows<InvalidStatValueException> { eng1.equip(nonEngineerweapon1) }
+        assertThrows<AssertionError> { eng1.equip(nonEngineerweapon1) }
         val nonEngineerweapon2 = Staff("staff", 10, 10)
-        assertThrows<InvalidStatValueException> { eng1.equip(nonEngineerweapon2) }
+        assertThrows<AssertionError> { eng1.equip(nonEngineerweapon2) }
         val nonEngineerweapon3 = Sword("sword", 10, 10)
-        assertThrows<InvalidStatValueException> { eng1.equip(nonEngineerweapon3) }
+        assertThrows<AssertionError> { eng1.equip(nonEngineerweapon3) }
     }
 })
