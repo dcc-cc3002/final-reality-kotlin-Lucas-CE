@@ -1,6 +1,12 @@
 package cl.uchile.dcc.finalreality.model.character.player.common
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.weapon.types.Axe
+import cl.uchile.dcc.finalreality.model.weapon.types.Bow
+import cl.uchile.dcc.finalreality.model.weapon.types.Knife
+import cl.uchile.dcc.finalreality.model.weapon.types.Staff
+import cl.uchile.dcc.finalreality.model.weapon.types.Sword
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -10,6 +16,7 @@ import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
+import org.junit.jupiter.api.assertThrows
 
 private const val ENGINEER1_NAME = "ENGINEER1"
 private const val ENGINEER1_MAX_HP = 100
@@ -65,5 +72,18 @@ class EngineerSpec : FunSpec({
 
     test("Two Engineers with the same parameters have the same hash code") {
         eng1.hashCode() shouldBe eng12.hashCode()
+    }
+
+    test("Only engineer weapons can be equipped to engineer") {
+        val engineerWeapon1 = Axe("axe", 10, 10)
+        eng1.equip(engineerWeapon1)
+        val engineerWeapon2 = Bow("bow", 10, 10)
+        eng1.equip(engineerWeapon2)
+        val nonEngineerweapon1 = Knife("knife", 10, 10)
+        assertThrows<InvalidStatValueException> { eng1.equip(nonEngineerweapon1) }
+        val nonEngineerweapon2 = Staff("staff", 10, 10)
+        assertThrows<InvalidStatValueException> { eng1.equip(nonEngineerweapon2) }
+        val nonEngineerweapon3 = Sword("sword", 10, 10)
+        assertThrows<InvalidStatValueException> { eng1.equip(nonEngineerweapon3) }
     }
 })
