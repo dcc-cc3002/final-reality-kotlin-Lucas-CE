@@ -4,6 +4,7 @@ import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
+import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
 import java.util.Objects
 
 /**
@@ -38,6 +39,10 @@ class Axe(
 
     override fun equipItToBlackMage(blackMage: BlackMage) {
         throw AssertionError("This weapon cannot be equipped to a Black mage")
+    }
+
+    override fun equipItToWhiteMage(whiteMage: WhiteMage) {
+        throw AssertionError("This weapon cannot be equipped to a White mage")
     }
 
     override fun equals(other: Any?) = when {

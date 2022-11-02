@@ -4,6 +4,7 @@ import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
+import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
 import java.util.Objects
 
 /**
@@ -22,7 +23,7 @@ class Staff(
     name: String,
     damage: Int,
     weight: Int
-) : AbstractMagicWeapon(name, damage, weight), BlackMageWeapon {
+) : AbstractMagicWeapon(name, damage, weight), BlackMageWeapon, WhiteMageWeapon {
 
     override fun equipItToEngineer(engineer: Engineer) {
         throw AssertionError("This weapon cannot be equipped to an Engineer")
@@ -38,6 +39,10 @@ class Staff(
 
     override fun equipItToBlackMage(blackMage: BlackMage) {
         blackMage.equipWeapon(this)
+    }
+
+    override fun equipItToWhiteMage(whiteMage: WhiteMage) {
+        whiteMage.equipWeapon(this)
     }
 
     override fun equals(other: Any?) = when {

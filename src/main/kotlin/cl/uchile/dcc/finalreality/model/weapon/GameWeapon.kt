@@ -4,6 +4,7 @@ import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
+import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
 
 /**
  * This represents a character from the game.
@@ -43,4 +44,9 @@ interface GameWeapon {
      * Equips this weapon to a black mage, if this weapon is BlackMageWeapon
      */
     fun equipItToBlackMage(blackMage: BlackMage)
+
+    /**
+     * Equips this weapon to a white mage, if this weapon is WhiteMageWeapon
+     */
+    fun equipItToWhiteMage(whiteMage: WhiteMage)
 }
