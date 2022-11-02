@@ -1,4 +1,4 @@
-package cl.uchile.dcc.finalreality.model.weapon.types
+package cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe

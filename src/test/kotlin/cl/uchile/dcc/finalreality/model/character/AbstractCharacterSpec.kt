@@ -6,12 +6,12 @@ import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
-import cl.uchile.dcc.finalreality.model.weapon.types.Axe
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.EngineerWeapon
-import cl.uchile.dcc.finalreality.model.weapon.types.Knife
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
 import cl.uchile.dcc.finalreality.model.weapon.types.KnightWeapon
-import cl.uchile.dcc.finalreality.model.weapon.types.Staff
-import cl.uchile.dcc.finalreality.model.weapon.types.Sword
+import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.Staff
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Sword
 import cl.uchile.dcc.finalreality.model.weapon.types.ThiefWeapon
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe

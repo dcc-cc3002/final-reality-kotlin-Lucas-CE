@@ -1,11 +1,11 @@
 package cl.uchile.dcc.finalreality.model.character.player.common
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
-import cl.uchile.dcc.finalreality.model.weapon.types.Axe
-import cl.uchile.dcc.finalreality.model.weapon.types.Bow
-import cl.uchile.dcc.finalreality.model.weapon.types.Knife
-import cl.uchile.dcc.finalreality.model.weapon.types.Staff
-import cl.uchile.dcc.finalreality.model.weapon.types.Sword
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
+import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.Staff
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Sword
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe

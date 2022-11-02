@@ -1,10 +1,13 @@
-package cl.uchile.dcc.finalreality.model.weapon.types
+package cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons
 
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
+import cl.uchile.dcc.finalreality.model.weapon.types.AbstractMagicWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.BlackMageWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.WhiteMageWeapon
 import java.util.Objects
 
 /**
