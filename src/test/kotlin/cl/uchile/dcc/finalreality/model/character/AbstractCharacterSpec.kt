@@ -7,16 +7,21 @@ import cl.uchile.dcc.finalreality.model.character.player.common.Thief
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
 import cl.uchile.dcc.finalreality.model.weapon.types.Axe
+import cl.uchile.dcc.finalreality.model.weapon.types.EngineerWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.Knife
+import cl.uchile.dcc.finalreality.model.weapon.types.KnightWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.Staff
+import cl.uchile.dcc.finalreality.model.weapon.types.Sword
+import cl.uchile.dcc.finalreality.model.weapon.types.ThiefWeapon
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.checkAll
+import java.util.concurrent.LinkedBlockingQueue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.junit.jupiter.api.assertThrows
-import java.util.concurrent.LinkedBlockingQueue
 
 private const val NAME = "NAME"
 private const val MAX_HP = 100
@@ -35,8 +40,10 @@ class AbstractCharacterSpec : FunSpec({
     lateinit var thief1: Thief
     lateinit var whiteMage1: WhiteMage
     lateinit var enemy1: Enemy
-    lateinit var normalWeapon: Axe
-    lateinit var magicWeapon: Staff
+    lateinit var mageWeapon: Staff
+    lateinit var engineerWeapon: EngineerWeapon
+    lateinit var knightWeapon: KnightWeapon
+    lateinit var thiefWeapon: ThiefWeapon
 
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()
@@ -46,8 +53,10 @@ class AbstractCharacterSpec : FunSpec({
         thief1 = Thief(NAME, MAX_HP, DEFENSE, queue)
         whiteMage1 = WhiteMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
         enemy1 = Enemy(NAME, ENEMY_WGT, MAX_HP, DEFENSE, queue)
-        normalWeapon = Axe(WEP_NAME, WEP_DMG, WEP_WGT)
-        magicWeapon = Staff(WEP_NAME, WEP_DMG, WEP_WGT)
+        mageWeapon = Staff(WEP_NAME, WEP_DMG, WEP_WGT)
+        engineerWeapon = Axe(WEP_NAME, WEP_DMG, WEP_WGT)
+        knightWeapon = Sword(WEP_NAME, WEP_DMG, WEP_WGT)
+        thiefWeapon = Knife(WEP_NAME, WEP_DMG, WEP_WGT)
     }
 
     test("initializing maxHp with a value less than 1 throws an exception") {
@@ -157,11 +166,11 @@ class AbstractCharacterSpec : FunSpec({
     }
 
     test("waitTurn method must put in queue the character who is calling the function") {
-        blackMage1.equip(magicWeapon)
-        whiteMage1.equip(magicWeapon)
-        engineer1.equip(normalWeapon)
-        knight1.equip(normalWeapon)
-        thief1.equip(normalWeapon)
+        blackMage1.equip(mageWeapon)
+        whiteMage1.equip(mageWeapon)
+        engineer1.equip(engineerWeapon)
+        knight1.equip(knightWeapon)
+        thief1.equip(thiefWeapon)
 
         blackMage1.waitTurn()
         withContext(Dispatchers.IO) { Thread.sleep(100) }
@@ -175,9 +184,8 @@ class AbstractCharacterSpec : FunSpec({
         withContext(Dispatchers.IO) { Thread.sleep(100) }
         enemy1.waitTurn()
 
-        withContext(Dispatchers.IO) {
-            Thread.sleep(6000)
-        }
+        withContext(Dispatchers.IO) { Thread.sleep(6000) }
+
         queue.poll() shouldBe blackMage1
         queue.poll() shouldBe engineer1
         queue.poll() shouldBe knight1
