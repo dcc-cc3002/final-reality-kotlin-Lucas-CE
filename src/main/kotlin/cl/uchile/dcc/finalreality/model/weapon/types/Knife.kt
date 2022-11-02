@@ -3,6 +3,7 @@ package cl.uchile.dcc.finalreality.model.weapon.types
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
+import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import java.util.Objects
 
 /**
@@ -21,7 +22,7 @@ class Knife(
     name: String,
     damage: Int,
     weight: Int
-) : AbstractNormalWeapon(name, damage, weight), KnightWeapon, ThiefWeapon {
+) : AbstractNormalWeapon(name, damage, weight), KnightWeapon, ThiefWeapon, BlackMageWeapon {
 
     override fun equipItToEngineer(engineer: Engineer) {
         throw AssertionError("This weapon cannot be equipped to an Engineer")
@@ -33,6 +34,10 @@ class Knife(
 
     override fun equipItToThief(thief: Thief) {
         thief.equipWeapon(this)
+    }
+
+    override fun equipItToBlackMage(blackMage: BlackMage) {
+        blackMage.equipWeapon(this)
     }
 
     override fun equals(other: Any?) = when {

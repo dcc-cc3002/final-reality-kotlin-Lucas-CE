@@ -3,6 +3,7 @@ package cl.uchile.dcc.finalreality.model.weapon.types
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
+import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import java.util.Objects
 
 /**
@@ -33,6 +34,10 @@ class Axe(
 
     override fun equipItToThief(thief: Thief) {
         throw AssertionError("This weapon cannot be equipped to a Thief")
+    }
+
+    override fun equipItToBlackMage(blackMage: BlackMage) {
+        throw AssertionError("This weapon cannot be equipped to a Black mage")
     }
 
     override fun equals(other: Any?) = when {

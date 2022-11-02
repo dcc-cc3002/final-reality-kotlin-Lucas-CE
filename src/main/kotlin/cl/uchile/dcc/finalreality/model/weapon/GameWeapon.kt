@@ -3,6 +3,7 @@ package cl.uchile.dcc.finalreality.model.weapon
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
+import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 
 /**
  * This represents a character from the game.
@@ -37,4 +38,9 @@ interface GameWeapon {
      * Equips this weapon to a thief, if this weapon is ThiefWeapon
      */
     fun equipItToThief(thief: Thief)
+
+    /**
+     * Equips this weapon to a black mage, if this weapon is BlackMageWeapon
+     */
+    fun equipItToBlackMage(blackMage: BlackMage)
 }
