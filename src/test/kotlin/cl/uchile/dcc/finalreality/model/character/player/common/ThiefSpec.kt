@@ -1,6 +1,11 @@
 package cl.uchile.dcc.finalreality.model.character.player.common
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.weapon.types.Axe
+import cl.uchile.dcc.finalreality.model.weapon.types.Bow
+import cl.uchile.dcc.finalreality.model.weapon.types.Knife
+import cl.uchile.dcc.finalreality.model.weapon.types.Staff
+import cl.uchile.dcc.finalreality.model.weapon.types.Sword
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -10,6 +15,7 @@ import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
+import org.junit.jupiter.api.assertThrows
 
 private const val THIEF1_NAME = "THIEF1"
 private const val THIEF1_MAX_HP = 100
@@ -64,5 +70,18 @@ class ThiefSpec : FunSpec({
 
     test("Two Thieves with the same parameters have the same hash code") {
         thief1.hashCode() shouldBe thief12.hashCode()
+    }
+
+    test("Only thief weapons can be equipped to thieves") {
+        val engineerWeapon1 = Bow("bow", 10, 10)
+        thief1.equip(engineerWeapon1)
+        val engineerWeapon2 = Knife("knife", 10, 10)
+        thief1.equip(engineerWeapon2)
+        val engineerWeapon3 = Sword("sword", 10, 10)
+        thief1.equip(engineerWeapon3)
+        val nonKnightWeapon1 = Axe("axe", 10, 10)
+        assertThrows<AssertionError> { thief1.equip(nonKnightWeapon1) }
+        val nonKnightWeapon2 = Staff("staff", 10, 10)
+        assertThrows<AssertionError> { thief1.equip(nonKnightWeapon2) }
     }
 })
