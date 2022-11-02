@@ -1,6 +1,11 @@
 package cl.uchile.dcc.finalreality.model.character.player.mages
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.weapon.types.Axe
+import cl.uchile.dcc.finalreality.model.weapon.types.Bow
+import cl.uchile.dcc.finalreality.model.weapon.types.Knife
+import cl.uchile.dcc.finalreality.model.weapon.types.Staff
+import cl.uchile.dcc.finalreality.model.weapon.types.Sword
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -10,6 +15,7 @@ import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
+import org.junit.jupiter.api.assertThrows
 
 private const val WHMG1_NAME = "WHMG1"
 private const val WHMG1_MAX_HP = 100
@@ -73,5 +79,18 @@ class WhiteMageSpec : FunSpec({
 
     test("Two White mages with the same parameters have the same hash code") {
         whmg1.hashCode() shouldBe whmg12.hashCode()
+    }
+
+    test("Only white mage weapons can be equipped to white mages") {
+        val engineerWeapon2 = Staff("staff", 10, 10)
+        whmg1.equip(engineerWeapon2)
+        val nonKnightWeapon1 = Axe("axe", 10, 10)
+        assertThrows<AssertionError> { whmg1.equip(nonKnightWeapon1) }
+        val nonKnightWeapon2 = Bow("bow", 10, 10)
+        assertThrows<AssertionError> { whmg1.equip(nonKnightWeapon2) }
+        val nonKnightWeapon3 = Knife("knife", 10, 10)
+        assertThrows<AssertionError> { whmg1.equip(nonKnightWeapon3) }
+        val nonKnightWeapon4 = Sword("sword", 10, 10)
+        assertThrows<AssertionError> { whmg1.equip(nonKnightWeapon4) }
     }
 })
