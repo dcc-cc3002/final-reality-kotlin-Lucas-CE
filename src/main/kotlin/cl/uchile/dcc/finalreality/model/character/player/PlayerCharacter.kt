@@ -54,10 +54,6 @@ abstract class AbstractPlayerCharacter(
     override val equippedWeapon: GameWeapon
         get() = _equippedWeapon
 
-    override fun equip(weapon: GameWeapon) {
-        _equippedWeapon = weapon
-    }
-
     override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
         scheduledExecutor.schedule(
             /* command = */ ::addToQueue,
