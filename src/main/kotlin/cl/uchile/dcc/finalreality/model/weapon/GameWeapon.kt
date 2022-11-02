@@ -1,6 +1,7 @@
 package cl.uchile.dcc.finalreality.model.weapon
 
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
+import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 
 /**
  * This represents a character from the game.
@@ -25,4 +26,9 @@ interface GameWeapon {
      * Equips this weapon to an engineer, if this weapon is EngineerWeapon
      */
     fun equipItToEngineer(engineer: Engineer)
+
+    /**
+     * Equips this weapon to a knight, if this weapon is KnightWeapon
+     */
+    fun equipItToKnight(knight: Knight)
 }
