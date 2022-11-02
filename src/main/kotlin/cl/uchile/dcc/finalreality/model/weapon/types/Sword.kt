@@ -2,6 +2,7 @@ package cl.uchile.dcc.finalreality.model.weapon.types
 
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
+import cl.uchile.dcc.finalreality.model.character.player.common.Thief
 import java.util.Objects
 
 /**
@@ -20,7 +21,7 @@ class Sword(
     name: String,
     damage: Int,
     weight: Int
-) : AbstractNormalWeapon(name, damage, weight), KnightWeapon {
+) : AbstractNormalWeapon(name, damage, weight), KnightWeapon, ThiefWeapon {
 
     override fun equipItToEngineer(engineer: Engineer) {
         throw AssertionError("This weapon cannot be equipped to an Engineer")
@@ -28,6 +29,10 @@ class Sword(
 
     override fun equipItToKnight(knight: Knight) {
         knight.equipWeapon(this)
+    }
+
+    override fun equipItToThief(thief: Thief) {
+        thief.equipWeapon(this)
     }
 
     override fun equals(other: Any?) = when {
