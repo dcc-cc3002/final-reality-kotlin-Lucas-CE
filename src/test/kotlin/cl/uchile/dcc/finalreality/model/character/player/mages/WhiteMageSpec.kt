@@ -87,11 +87,15 @@ class WhiteMageSpec : FunSpec({
         whmg1.equip(engineerWeapon2)
         val nonKnightWeapon1 = Axe("axe", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon1) }
+        whmg1.equippedWeapon shouldNotBe nonKnightWeapon1
         val nonKnightWeapon2 = Bow("bow", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon2) }
+        whmg1.equippedWeapon shouldNotBe nonKnightWeapon2
         val nonKnightWeapon3 = Knife("knife", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon3) }
+        whmg1.equippedWeapon shouldNotBe nonKnightWeapon3
         val nonKnightWeapon4 = Sword("sword", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon4) }
+        whmg1.equippedWeapon shouldNotBe nonKnightWeapon4
     }
 })

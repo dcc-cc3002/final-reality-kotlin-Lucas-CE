@@ -89,9 +89,12 @@ class BlackMageSpec : FunSpec({
         blmg1.equip(engineerWeapon2)
         val nonKnightWeapon1 = Axe("axe", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon1) }
+        blmg1.equippedWeapon shouldNotBe nonKnightWeapon1
         val nonKnightWeapon2 = Bow("bow", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon2) }
+        blmg1.equippedWeapon shouldNotBe nonKnightWeapon2
         val nonKnightWeapon3 = Sword("sword", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon3) }
+        blmg1.equippedWeapon shouldNotBe nonKnightWeapon3
     }
 })

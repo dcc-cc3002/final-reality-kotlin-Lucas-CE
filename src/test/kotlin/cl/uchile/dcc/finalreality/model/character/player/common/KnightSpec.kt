@@ -82,7 +82,9 @@ class KnightSpec : FunSpec({
         knight1.equip(engineerWeapon3)
         val nonKnightWeapon1 = Bow("bow", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { knight1.equip(nonKnightWeapon1) }
+        knight1.equippedWeapon shouldNotBe nonKnightWeapon1
         val nonKnightWeapon2 = Staff("staff", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { knight1.equip(nonKnightWeapon2) }
+        knight1.equippedWeapon shouldNotBe nonKnightWeapon2
     }
 })
