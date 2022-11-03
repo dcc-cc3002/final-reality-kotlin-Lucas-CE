@@ -15,8 +15,8 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
-import java.util.concurrent.LinkedBlockingQueue
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.LinkedBlockingQueue
 
 private const val THIEF1_NAME = "THIEF1"
 private const val THIEF1_MAX_HP = 100

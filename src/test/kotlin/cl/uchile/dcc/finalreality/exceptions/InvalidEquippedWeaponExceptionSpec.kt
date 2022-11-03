@@ -8,8 +8,10 @@ import io.kotest.property.checkAll
 import org.junit.jupiter.api.assertThrows
 
 class InvalidEquippedWeaponExceptionSpec : FunSpec({
-    test("An invalid equipped weapon exception can be thrown with a weapon class name, " +
-             "and a player character class name") {
+    test(
+        "An invalid equipped weapon exception can be thrown with a weapon class name, " +
+            "and a player character class name"
+    ) {
         checkAll(Arb.string(), Arb.string()) { weapon_class_name, player_class_name ->
             assertThrows<InvalidEquippedWeaponException> {
                 throw InvalidEquippedWeaponException(weapon_class_name, player_class_name)
