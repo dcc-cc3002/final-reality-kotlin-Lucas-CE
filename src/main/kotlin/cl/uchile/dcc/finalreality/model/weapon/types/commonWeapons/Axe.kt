@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
@@ -37,15 +38,15 @@ class Axe(
     }
 
     override fun equipItToThief(thief: Thief) {
-        throw AssertionError("This weapon cannot be equipped to a Thief")
+        throw InvalidEquippedWeaponException("Axe", "Thief")
     }
 
     override fun equipItToBlackMage(blackMage: BlackMage) {
-        throw AssertionError("This weapon cannot be equipped to a Black mage")
+        throw InvalidEquippedWeaponException("Axe", "Black Mage")
     }
 
     override fun equipItToWhiteMage(whiteMage: WhiteMage) {
-        throw AssertionError("This weapon cannot be equipped to a White mage")
+        throw InvalidEquippedWeaponException("Axe", "White Mage")
     }
 
     override fun equals(other: Any?) = when {

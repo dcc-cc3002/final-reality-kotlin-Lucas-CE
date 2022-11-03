@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
@@ -29,15 +30,15 @@ class Staff(
 ) : AbstractMagicWeapon(name, damage, weight), BlackMageWeapon, WhiteMageWeapon {
 
     override fun equipItToEngineer(engineer: Engineer) {
-        throw AssertionError("This weapon cannot be equipped to an Engineer")
+        throw InvalidEquippedWeaponException("Staff", "Engineer")
     }
 
     override fun equipItToKnight(knight: Knight) {
-        throw AssertionError("This weapon cannot be equipped to a Knight")
+        throw InvalidEquippedWeaponException("Staff", "Knight")
     }
 
     override fun equipItToThief(thief: Thief) {
-        throw AssertionError("This weapon cannot be equipped to a Thief")
+        throw InvalidEquippedWeaponException("Staff", "Thief")
     }
 
     override fun equipItToBlackMage(blackMage: BlackMage) {
