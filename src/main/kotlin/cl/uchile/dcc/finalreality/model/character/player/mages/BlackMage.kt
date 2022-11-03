@@ -42,6 +42,9 @@ class BlackMage(
         weapon.equipItToBlackMage(this)
     }
 
+    /**
+     * Equips a black mage weapon to the character.
+     */
     fun equipWeapon(weapon: BlackMageWeapon) {
         _equippedWeapon = weapon
     }

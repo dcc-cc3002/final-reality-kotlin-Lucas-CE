@@ -40,6 +40,9 @@ class Knight(
         weapon.equipItToKnight(this)
     }
 
+    /**
+     * Equips a knight weapon to the character.
+     */
     fun equipWeapon(weapon: KnightWeapon) {
         _equippedWeapon = weapon
     }

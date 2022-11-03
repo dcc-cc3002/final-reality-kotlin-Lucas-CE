@@ -39,6 +39,9 @@ class Thief(
         weapon.equipItToThief(this)
     }
 
+    /**
+     * Equips a thief weapon to the character.
+     */
     fun equipWeapon(weapon: ThiefWeapon) {
         _equippedWeapon = weapon
     }

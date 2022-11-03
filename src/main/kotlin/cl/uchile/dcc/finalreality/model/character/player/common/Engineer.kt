@@ -40,6 +40,9 @@ class Engineer(
         weapon.equipItToEngineer(this)
     }
 
+    /**
+     * Equips an engineer weapon to the character.
+     */
     fun equipWeapon(weapon: EngineerWeapon) {
         _equippedWeapon = weapon
     }
