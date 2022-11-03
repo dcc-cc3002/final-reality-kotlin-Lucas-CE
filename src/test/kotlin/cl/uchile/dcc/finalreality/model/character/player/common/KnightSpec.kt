@@ -1,11 +1,12 @@
 package cl.uchile.dcc.finalreality.model.character.player.common
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
-import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.Staff
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Sword
+import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.Staff
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -80,8 +81,8 @@ class KnightSpec : FunSpec({
         val engineerWeapon3 = Sword("sword", 10, 10)
         knight1.equip(engineerWeapon3)
         val nonKnightWeapon1 = Bow("bow", 10, 10)
-        assertThrows<AssertionError> { knight1.equip(nonKnightWeapon1) }
+        assertThrows<InvalidEquippedWeaponException> { knight1.equip(nonKnightWeapon1) }
         val nonKnightWeapon2 = Staff("staff", 10, 10)
-        assertThrows<AssertionError> { knight1.equip(nonKnightWeapon2) }
+        assertThrows<InvalidEquippedWeaponException> { knight1.equip(nonKnightWeapon2) }
     }
 })

@@ -1,11 +1,12 @@
 package cl.uchile.dcc.finalreality.model.character.player.mages
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
-import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.Staff
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Sword
+import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.Staff
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -87,10 +88,10 @@ class BlackMageSpec : FunSpec({
         val engineerWeapon2 = Staff("staff", 10, 10)
         blmg1.equip(engineerWeapon2)
         val nonKnightWeapon1 = Axe("axe", 10, 10)
-        assertThrows<AssertionError> { blmg1.equip(nonKnightWeapon1) }
+        assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon1) }
         val nonKnightWeapon2 = Bow("bow", 10, 10)
-        assertThrows<AssertionError> { blmg1.equip(nonKnightWeapon2) }
+        assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon2) }
         val nonKnightWeapon3 = Sword("sword", 10, 10)
-        assertThrows<AssertionError> { blmg1.equip(nonKnightWeapon3) }
+        assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon3) }
     }
 })
