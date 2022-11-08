@@ -14,8 +14,8 @@ import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Sword
 import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.Staff
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import java.util.concurrent.LinkedBlockingQueue
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.LinkedBlockingQueue
 
 private const val NAME = "NAME"
 private const val MAX_HP = 100

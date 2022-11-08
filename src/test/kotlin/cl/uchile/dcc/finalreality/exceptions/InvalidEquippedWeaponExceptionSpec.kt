@@ -5,8 +5,8 @@ import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import java.util.concurrent.LinkedBlockingQueue
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.LinkedBlockingQueue
 
 private const val NAME = "ENGINEER1"
 private const val MAX_HP = 100
@@ -31,7 +31,7 @@ class InvalidEquippedWeaponExceptionSpec : FunSpec({
             "and a player character class name"
     ) {
         assertThrows<InvalidEquippedWeaponException> {
-                throw InvalidEquippedWeaponException(weapon1, player1)
-            }.message shouldBe "The $weapon1 class cannot be equipped to a $player1 class"
-        }
+            throw InvalidEquippedWeaponException(weapon1, player1)
+        }.message shouldBe "The $weapon1 class cannot be equipped to a $player1 class"
+    }
 })
