@@ -10,7 +10,8 @@ package cl.uchile.dcc.finalreality.model.character.player.common
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.AbstractCommonCharacter
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
-import cl.uchile.dcc.finalreality.model.weapon.types.EngineerWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.AxeWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.BowWeapon
 import java.util.Objects
 import java.util.concurrent.BlockingQueue
 
@@ -40,11 +41,12 @@ class Engineer(
         weapon.equipItToEngineer(this)
     }
 
-    /**
-     * Equips an engineer weapon to the character.
-     */
-    fun equipWeapon(weapon: EngineerWeapon) {
-        _equippedWeapon = weapon
+    override fun equipAxe(axe: AxeWeapon) {
+        _equippedWeapon = axe
+    }
+
+    override fun equipBow(bow: BowWeapon) {
+        _equippedWeapon = bow
     }
 
     override fun equals(other: Any?) = when {
