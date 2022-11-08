@@ -4,10 +4,9 @@ import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 
 /**
- * This error is used to represent an invalid stat value.
+ * This error is used to represent equipping an invalid weapon.
  *
- * @constructor Creates a new `InvalidEquippedWeaponException` with a `description` of the
- * error.
+ * @constructor Creates a new `InvalidEquippedWeaponException` with a weapon, and a player character
  *
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */

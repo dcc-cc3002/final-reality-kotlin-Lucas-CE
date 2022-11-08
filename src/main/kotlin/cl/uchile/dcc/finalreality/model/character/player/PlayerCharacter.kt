@@ -35,6 +35,36 @@ interface PlayerCharacter : GameCharacter {
      * Equips a weapon to the character.
      */
     fun equip(weapon: GameWeapon)
+
+    /**
+     * Equip an Axe to a character that can equip an Axe, if the character can't,
+     * throws an exception
+     */
+    fun equipAxe(axe: AxeWeapon)
+
+    /**
+     * Equip a Bow to a character that can equip a Bow, if the character can't,
+     * throws an exception
+     */
+    fun equipBow(bow: BowWeapon)
+
+    /**
+     * Equip a Knife to a character that can equip a Knife, if the character can't,
+     * throws an exception
+     */
+    fun equipKnife(knife: KnifeWeapon)
+
+    /**
+     * Equip a Staff to a character that can equip a Staff, if the character can't,
+     * throws an exception
+     */
+    fun equipStaff(staff: StaffWeapon)
+
+    /**
+     * Equip a Sword to a character that can equip a Sword, if the character can't,
+     * throws an exception
+     */
+    fun equipSword(sword: SwordWeapon)
 }
 
 /**
@@ -60,23 +90,23 @@ abstract class AbstractPlayerCharacter(
     override val equippedWeapon: GameWeapon
         get() = _equippedWeapon
 
-    open fun equipAxe(axe: AxeWeapon) {
+    override fun equipAxe(axe: AxeWeapon) {
         throw InvalidEquippedWeaponException(axe, this)
     }
 
-    open fun equipBow(bow: BowWeapon) {
+    override fun equipBow(bow: BowWeapon) {
         throw InvalidEquippedWeaponException(bow, this)
     }
 
-    open fun equipKnife(knife: KnifeWeapon) {
+    override fun equipKnife(knife: KnifeWeapon) {
         throw InvalidEquippedWeaponException(knife, this)
     }
 
-    open fun equipSword(sword: SwordWeapon) {
+    override fun equipSword(sword: SwordWeapon) {
         throw InvalidEquippedWeaponException(sword, this)
     }
 
-    open fun equipStaff(staff: StaffWeapon) {
+    override fun equipStaff(staff: StaffWeapon) {
         throw InvalidEquippedWeaponException(staff, this)
     }
 
