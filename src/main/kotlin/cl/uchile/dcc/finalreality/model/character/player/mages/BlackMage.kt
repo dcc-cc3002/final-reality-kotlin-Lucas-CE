@@ -10,7 +10,8 @@ package cl.uchile.dcc.finalreality.model.character.player.mages
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.AbstractMages
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
-import cl.uchile.dcc.finalreality.model.weapon.types.BlackMageWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.KnifeWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.StaffWeapon
 import java.util.Objects
 import java.util.concurrent.BlockingQueue
 
@@ -42,11 +43,12 @@ class BlackMage(
         weapon.equipItToBlackMage(this)
     }
 
-    /**
-     * Equips a black mage weapon to the character.
-     */
-    fun equipWeapon(weapon: BlackMageWeapon) {
-        _equippedWeapon = weapon
+    override fun equipKnife(knife: KnifeWeapon) {
+        _equippedWeapon = knife
+    }
+
+    override fun equipStaff(staff: StaffWeapon) {
+        _equippedWeapon = staff
     }
 
     override fun equals(other: Any?) = when {

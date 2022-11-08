@@ -7,9 +7,15 @@
  */
 package cl.uchile.dcc.finalreality.model.character.player
 
+import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.AbstractCharacter
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.AxeWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.BowWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.KnifeWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.SwordWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.StaffWeapon
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -53,6 +59,26 @@ abstract class AbstractPlayerCharacter(
     protected lateinit var _equippedWeapon: GameWeapon
     override val equippedWeapon: GameWeapon
         get() = _equippedWeapon
+
+    open fun equipAxe(axe: AxeWeapon) {
+        throw InvalidEquippedWeaponException(axe, this)
+    }
+
+    open fun equipBow(bow: BowWeapon) {
+        throw InvalidEquippedWeaponException(bow, this)
+    }
+
+    open fun equipKnife(knife: KnifeWeapon) {
+        throw InvalidEquippedWeaponException(knife, this)
+    }
+
+    open fun equipSword(sword: SwordWeapon) {
+        throw InvalidEquippedWeaponException(sword, this)
+    }
+
+    open fun equipStaff(staff: StaffWeapon) {
+        throw InvalidEquippedWeaponException(staff, this)
+    }
 
     override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
         scheduledExecutor.schedule(

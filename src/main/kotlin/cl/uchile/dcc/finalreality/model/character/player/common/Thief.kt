@@ -10,7 +10,9 @@ package cl.uchile.dcc.finalreality.model.character.player.common
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.AbstractCommonCharacter
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
-import cl.uchile.dcc.finalreality.model.weapon.types.ThiefWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.BowWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.KnifeWeapon
+import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.SwordWeapon
 import java.util.Objects
 import java.util.concurrent.BlockingQueue
 
@@ -39,11 +41,16 @@ class Thief(
         weapon.equipItToThief(this)
     }
 
-    /**
-     * Equips a thief weapon to the character.
-     */
-    fun equipWeapon(weapon: ThiefWeapon) {
-        _equippedWeapon = weapon
+    override fun equipBow(bow: BowWeapon) {
+        _equippedWeapon = bow
+    }
+
+    override fun equipKnife(knife: KnifeWeapon) {
+        _equippedWeapon = knife
+    }
+
+    override fun equipSword(sword: SwordWeapon) {
+        _equippedWeapon = sword
     }
 
     override fun equals(other: Any?) = when {

@@ -1,14 +1,8 @@
 package cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons
 
-import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
-import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
-import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
-import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
 import cl.uchile.dcc.finalreality.model.weapon.types.AbstractNormalWeapon
-import cl.uchile.dcc.finalreality.model.weapon.types.EngineerWeapon
-import cl.uchile.dcc.finalreality.model.weapon.types.ThiefWeapon
 import java.util.Objects
 
 /**
@@ -27,26 +21,14 @@ class Bow(
     name: String,
     damage: Int,
     weight: Int
-) : AbstractNormalWeapon(name, damage, weight), EngineerWeapon, ThiefWeapon {
+) : AbstractNormalWeapon(name, damage, weight), BowWeapon {
 
     override fun equipItToEngineer(engineer: Engineer) {
-        engineer.equipWeapon(this)
-    }
-
-    override fun equipItToKnight(knight: Knight) {
-        throw InvalidEquippedWeaponException("Bow", "Knight")
+        engineer.equipBow(this)
     }
 
     override fun equipItToThief(thief: Thief) {
-        thief.equipWeapon(this)
-    }
-
-    override fun equipItToBlackMage(blackMage: BlackMage) {
-        throw InvalidEquippedWeaponException("Bow", "Black Mage")
-    }
-
-    override fun equipItToWhiteMage(whiteMage: WhiteMage) {
-        throw InvalidEquippedWeaponException("Bow", "White Mage")
+        thief.equipBow(this)
     }
 
     override fun equals(other: Any?) = when {
