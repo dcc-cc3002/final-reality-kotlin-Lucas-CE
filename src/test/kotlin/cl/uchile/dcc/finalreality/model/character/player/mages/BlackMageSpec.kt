@@ -2,6 +2,8 @@ package cl.uchile.dcc.finalreality.model.character.player.mages
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
+import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
@@ -15,8 +17,8 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
-import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.LinkedBlockingQueue
+import org.junit.jupiter.api.assertThrows
 
 private const val BLMG1_NAME = "BLMG1"
 private const val BLMG1_MAX_HP = 100
@@ -31,12 +33,19 @@ class BlackMageSpec : FunSpec({
     lateinit var blmg1: BlackMage
     lateinit var blmg2: BlackMage
     lateinit var blmg12: BlackMage
-    val queue = LinkedBlockingQueue<GameCharacter>()
+    lateinit var fireSpell: Fire
+    lateinit var thunderSpell: Thunder
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
 
     beforeEach {
+        queue = LinkedBlockingQueue<GameCharacter>()
         blmg1 = BlackMage(BLMG1_NAME, BLMG1_MAX_HP, BLMG1_MAX_MP, BLMG1_DEFENSE, queue)
         blmg2 = BlackMage(BLMG2_NAME, BLMG2_MAX_HP, BLMG2_MAX_MP, BLMG2_DEFENSE, queue)
         blmg12 = BlackMage(BLMG1_NAME, BLMG1_MAX_HP, BLMG1_MAX_MP, BLMG1_DEFENSE, queue)
+        fireSpell = Fire()
+        thunderSpell = Thunder()
+
+        blmg1.equipSpell(fireSpell)
     }
 
     test("toString must return the Black mage description") {
@@ -96,5 +105,19 @@ class BlackMageSpec : FunSpec({
         val nonKnightWeapon3 = Sword("sword", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon3) }
         blmg1.equippedWeapon shouldNotBe nonKnightWeapon3
+    }
+
+    test("equipSpell change the spell to black magic spells") {
+        //Using equipSpell
+        blmg1.equipSpell(fireSpell)
+        blmg1.spell shouldBe fireSpell
+        blmg1.equipSpell(thunderSpell)
+        blmg1.spell shouldBe thunderSpell
+
+        //Using equip{SpellName}
+        blmg1.equipSpellFire(fireSpell)
+        blmg1.spell shouldBe fireSpell
+        blmg1.equipSpellThunder(thunderSpell)
+        blmg1.spell shouldBe thunderSpell
     }
 })

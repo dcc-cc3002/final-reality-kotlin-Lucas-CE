@@ -8,7 +8,6 @@
 package cl.uchile.dcc.finalreality.model.character.player.common
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
-import cl.uchile.dcc.finalreality.model.character.player.AbstractCommonCharacter
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.BowWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.KnifeWeapon

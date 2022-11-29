@@ -8,7 +8,9 @@
 package cl.uchile.dcc.finalreality.model.character.player.mages
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
-import cl.uchile.dcc.finalreality.model.character.player.AbstractMages
+import cl.uchile.dcc.finalreality.model.character.player.spells.Spell
+import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
+import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.KnifeWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.StaffWeapon
@@ -49,6 +51,18 @@ class BlackMage(
 
     override fun equipStaff(staff: StaffWeapon) {
         _equippedWeapon = staff
+    }
+
+    fun equipSpell(spell: Spell) {
+        spell.equipSpellToBlackMage(this)
+    }
+
+    override fun equipSpellFire(fire: Fire) {
+        _spell = fire
+    }
+
+    override fun equipSpellThunder(thunder: Thunder) {
+        _spell = thunder
     }
 
     override fun equals(other: Any?) = when {

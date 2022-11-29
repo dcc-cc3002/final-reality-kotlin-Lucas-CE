@@ -2,6 +2,9 @@ package cl.uchile.dcc.finalreality.model.character.player.mages
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Heal
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Paralysis
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Poison
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
@@ -15,8 +18,8 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
-import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.LinkedBlockingQueue
+import org.junit.jupiter.api.assertThrows
 
 private const val WHMG1_NAME = "WHMG1"
 private const val WHMG1_MAX_HP = 100
@@ -31,12 +34,22 @@ class WhiteMageSpec : FunSpec({
     lateinit var whmg1: WhiteMage
     lateinit var whmg2: WhiteMage
     lateinit var whmg12: WhiteMage
-    val queue = LinkedBlockingQueue<GameCharacter>()
+    lateinit var healSpell: Heal
+    lateinit var paralysisSpell: Paralysis
+    lateinit var poisonSpell: Poison
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
+
 
     beforeEach {
+        queue = LinkedBlockingQueue<GameCharacter>()
         whmg1 = WhiteMage(WHMG1_NAME, WHMG1_MAX_HP, WHMG1_MAX_MP, WHMG1_DEFENSE, queue)
         whmg2 = WhiteMage(WHMG2_NAME, WHMG2_MAX_HP, WHMG2_MAX_MP, WHMG2_DEFENSE, queue)
         whmg12 = WhiteMage(WHMG1_NAME, WHMG1_MAX_HP, WHMG1_MAX_MP, WHMG1_DEFENSE, queue)
+        healSpell = Heal()
+        paralysisSpell = Paralysis()
+        poisonSpell = Poison()
+
+        whmg1.equipSpell(healSpell)
     }
 
     test("toString must return the White mage description") {
@@ -97,5 +110,23 @@ class WhiteMageSpec : FunSpec({
         val nonKnightWeapon4 = Sword("sword", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon4) }
         whmg1.equippedWeapon shouldNotBe nonKnightWeapon4
+    }
+
+    test("equip a spell change the spell to white magic spells") {
+        //Using equipSpell
+        whmg1.equipSpell(healSpell)
+        whmg1.spell shouldBe healSpell
+        whmg1.equipSpell(paralysisSpell)
+        whmg1.spell shouldBe paralysisSpell
+        whmg1.equipSpell(poisonSpell)
+        whmg1.spell shouldBe poisonSpell
+
+        //Using equip{SpellName}
+        whmg1.equipSpellHeal(healSpell)
+        whmg1.spell shouldBe healSpell
+        whmg1.equipSpellParalysis(paralysisSpell)
+        whmg1.spell shouldBe paralysisSpell
+        whmg1.equipSpellPoison(poisonSpell)
+        whmg1.spell shouldBe poisonSpell
     }
 })

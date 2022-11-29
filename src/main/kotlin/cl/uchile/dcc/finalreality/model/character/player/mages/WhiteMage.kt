@@ -8,7 +8,10 @@
 package cl.uchile.dcc.finalreality.model.character.player.mages
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
-import cl.uchile.dcc.finalreality.model.character.player.AbstractMages
+import cl.uchile.dcc.finalreality.model.character.player.spells.Spell
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Heal
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Paralysis
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Poison
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.StaffWeapon
 import java.util.Objects
@@ -44,6 +47,22 @@ class WhiteMage(
 
     override fun equipStaff(staff: StaffWeapon) {
         _equippedWeapon = staff
+    }
+
+    fun equipSpell(spell: Spell) {
+        spell.equipSpellToWhiteMage(this)
+    }
+
+    override fun equipSpellHeal(heal: Heal) {
+        _spell = heal
+    }
+
+    override fun equipSpellParalysis(paralysis: Paralysis) {
+        _spell = paralysis
+    }
+
+    override fun equipSpellPoison(poison: Poison) {
+        _spell = poison
     }
 
     override fun equals(other: Any?) = when {

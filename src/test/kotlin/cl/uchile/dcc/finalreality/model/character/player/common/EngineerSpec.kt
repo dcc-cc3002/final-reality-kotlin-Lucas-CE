@@ -2,6 +2,7 @@ package cl.uchile.dcc.finalreality.model.character.player.common
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
@@ -15,8 +16,8 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
-import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.LinkedBlockingQueue
+import org.junit.jupiter.api.assertThrows
 
 private const val ENGINEER1_NAME = "ENGINEER1"
 private const val ENGINEER1_MAX_HP = 100
@@ -24,18 +25,31 @@ private const val ENGINEER1_DEFENSE = 10
 private const val ENGINEER2_NAME = "ENGINEER2"
 private const val ENGINEER2_MAX_HP = 80
 private const val ENGINEER2_DEFENSE = 20
+private const val WEAPON_NAME = "WEAPON"
+private const val WEAPON_DAMAGE = 10
+private const val WEAPON_WEIGHT = 10
 
 class EngineerSpec : FunSpec({
     lateinit var eng1: Engineer
     lateinit var eng2: Engineer
     lateinit var eng12: Engineer
     lateinit var queue: LinkedBlockingQueue<GameCharacter>
+    lateinit var engineerWeapon1: GameWeapon
+    lateinit var engineerWeapon2: GameWeapon
+    lateinit var nonEngineerWeapon1: GameWeapon
+    lateinit var nonEngineerWeapon2: GameWeapon
+    lateinit var nonEngineerWeapon3: GameWeapon
 
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()
         eng1 = Engineer(ENGINEER1_NAME, ENGINEER1_MAX_HP, ENGINEER1_DEFENSE, queue)
         eng2 = Engineer(ENGINEER2_NAME, ENGINEER2_MAX_HP, ENGINEER2_DEFENSE, queue)
         eng12 = Engineer(ENGINEER1_NAME, ENGINEER1_MAX_HP, ENGINEER1_DEFENSE, queue)
+        engineerWeapon1 = Axe(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        engineerWeapon2 = Bow(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonEngineerWeapon1 = Knife(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonEngineerWeapon2 = Staff(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonEngineerWeapon3 = Sword(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
     }
 
     test("toString must return the Engineer description") {
@@ -75,18 +89,13 @@ class EngineerSpec : FunSpec({
     }
 
     test("Only engineer weapons can be equipped to engineer") {
-        val engineerWeapon1 = Axe("axe", 10, 10)
         eng1.equip(engineerWeapon1)
-        val engineerWeapon2 = Bow("bow", 10, 10)
         eng1.equip(engineerWeapon2)
-        val nonEngineerweapon1 = Knife("knife", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { eng1.equip(nonEngineerweapon1) }
-        eng1.equippedWeapon shouldNotBe nonEngineerweapon1
-        val nonEngineerweapon2 = Staff("staff", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { eng1.equip(nonEngineerweapon2) }
-        eng1.equippedWeapon shouldNotBe nonEngineerweapon2
-        val nonEngineerweapon3 = Sword("sword", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { eng1.equip(nonEngineerweapon3) }
-        eng1.equippedWeapon shouldNotBe nonEngineerweapon3
+        assertThrows<InvalidEquippedWeaponException> { eng1.equip(nonEngineerWeapon1) }
+        eng1.equippedWeapon shouldNotBe nonEngineerWeapon1
+        assertThrows<InvalidEquippedWeaponException> { eng1.equip(nonEngineerWeapon2) }
+        eng1.equippedWeapon shouldNotBe nonEngineerWeapon2
+        assertThrows<InvalidEquippedWeaponException> { eng1.equip(nonEngineerWeapon3) }
+        eng1.equippedWeapon shouldNotBe nonEngineerWeapon3
     }
 })

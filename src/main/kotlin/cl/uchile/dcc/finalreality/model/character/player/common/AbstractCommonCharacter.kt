@@ -1,6 +1,7 @@
-package cl.uchile.dcc.finalreality.model.character.player
+package cl.uchile.dcc.finalreality.model.character.player.common
 
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.character.player.AbstractPlayerCharacter
 import java.util.concurrent.BlockingQueue
 
 /**
