@@ -48,7 +48,7 @@ class AbstractPlayerCharacterSpec : FunSpec({
         axe = Axe(WEP_NAME, WEP_DMG, WEP_WGT)
         bow = Bow(WEP_NAME, WEP_DMG, WEP_WGT)
         knife = Knife(WEP_NAME, WEP_DMG, WEP_WGT)
-        staff = Staff(WEP_NAME, WEP_DMG, WEP_WGT)
+        staff = Staff(WEP_NAME, WEP_DMG, WEP_WGT, WEP_DMG)
         sword = Sword(WEP_NAME, WEP_DMG, WEP_WGT)
     }
 

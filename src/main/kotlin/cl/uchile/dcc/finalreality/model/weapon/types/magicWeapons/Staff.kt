@@ -11,6 +11,7 @@ import java.util.Objects
  * @param name        the weapon's name.
  * @param damage      the weapon's damage.
  * @param weight      the weapon's weight.
+ * @param magicDmg    the weapon's magic damage
  * @constructor Creates a new Staff.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
@@ -20,7 +21,8 @@ import java.util.Objects
 class Staff(
     name: String,
     damage: Int,
-    weight: Int
+    weight: Int,
+    override val magicDmg: Int
 ) : AbstractMagicWeapon(name, damage, weight), StaffWeapon {
 
     override fun equipItToBlackMage(blackMage: BlackMage) {
@@ -38,10 +40,11 @@ class Staff(
         name != other.name -> false
         damage != other.damage -> false
         weight != other.weight -> false
+        magicDmg != other.magicDmg -> false
         else -> true
     }
 
-    override fun hashCode() = Objects.hash(Staff::class, name, damage, weight)
+    override fun hashCode() = Objects.hash(Staff::class, name, damage, weight, magicDmg)
 
-    override fun toString() = "Staff {name='$name', damage='$damage', weight='$weight'}"
+    override fun toString() = "Staff {name='$name', damage='$damage', weight='$weight', magicDmg='$magicDmg'}"
 }

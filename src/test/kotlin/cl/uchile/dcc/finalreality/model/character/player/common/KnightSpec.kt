@@ -15,8 +15,8 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
-import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.LinkedBlockingQueue
+import org.junit.jupiter.api.assertThrows
 
 private const val KNIGHT1_NAME = "KNIGHT1"
 private const val KNIGHT1_MAX_HP = 100
@@ -83,7 +83,7 @@ class KnightSpec : FunSpec({
         val nonKnightWeapon1 = Bow("bow", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { knight1.equip(nonKnightWeapon1) }
         knight1.equippedWeapon shouldNotBe nonKnightWeapon1
-        val nonKnightWeapon2 = Staff("staff", 10, 10)
+        val nonKnightWeapon2 = Staff("staff", 10, 10, 10)
         assertThrows<InvalidEquippedWeaponException> { knight1.equip(nonKnightWeapon2) }
         knight1.equippedWeapon shouldNotBe nonKnightWeapon2
     }

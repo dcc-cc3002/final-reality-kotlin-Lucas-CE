@@ -96,7 +96,7 @@ class WhiteMageSpec : FunSpec({
     }
 
     test("Only white mage weapons can be equipped to white mages") {
-        val engineerWeapon2 = Staff("staff", 10, 10)
+        val engineerWeapon2 = Staff("staff", 10, 10, 10)
         whmg1.equip(engineerWeapon2)
         val nonKnightWeapon1 = Axe("axe", 10, 10)
         assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon1) }

@@ -16,10 +16,10 @@ import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.checkAll
-import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.LinkedBlockingQueue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.junit.jupiter.api.assertThrows
 
 private const val NAME = "NAME"
 private const val MAX_HP = 100
@@ -51,7 +51,7 @@ class AbstractCharacterSpec : FunSpec({
         thief1 = Thief(NAME, MAX_HP, DEFENSE, queue)
         whiteMage1 = WhiteMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
         enemy1 = Enemy(NAME, ENEMY_WGT, MAX_HP, DEFENSE, queue)
-        mageWeapon = Staff(WEP_NAME, WEP_DMG, WEP_WGT)
+        mageWeapon = Staff(WEP_NAME, WEP_DMG, WEP_WGT, WEP_DMG)
         engineerWeapon = Axe(WEP_NAME, WEP_DMG, WEP_WGT)
         knightWeapon = Sword(WEP_NAME, WEP_DMG, WEP_WGT)
         thiefWeapon = Knife(WEP_NAME, WEP_DMG, WEP_WGT)

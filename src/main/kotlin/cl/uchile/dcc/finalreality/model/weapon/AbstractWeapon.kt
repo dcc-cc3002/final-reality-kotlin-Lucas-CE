@@ -16,6 +16,8 @@ import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
  *     The base damage done by the weapon.
  * @property weight Int
  *     The weight is the speed of a gun.
+ * @property magicDmg Int
+ *     The magic damage done by the weapon.
  *
  * @constructor Creates a weapon with a name, a base damage, speed.
  *
@@ -28,6 +30,8 @@ abstract class AbstractWeapon(
     override val damage: Int,
     override val weight: Int
 ) : GameWeapon {
+
+    override val magicDmg = 0
 
     override fun equipItToBlackMage(blackMage: BlackMage) {
         throw InvalidEquippedWeaponException(this, blackMage)

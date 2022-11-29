@@ -16,6 +16,8 @@ import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
  *    The damage to the weapon.
  * @property weight
  *    The weight of this weapon.
+ * @property magicDmg
+ *    The magic damage to the weapon.
  *
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
@@ -24,6 +26,7 @@ interface GameWeapon {
     val name: String
     val damage: Int
     val weight: Int
+    val magicDmg: Int
 
     /**
      * Equips this weapon to an engineer, if this weapon is EngineerWeapon

@@ -48,7 +48,7 @@ class EngineerSpec : FunSpec({
         engineerWeapon1 = Axe(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
         engineerWeapon2 = Bow(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
         nonEngineerWeapon1 = Knife(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
-        nonEngineerWeapon2 = Staff(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonEngineerWeapon2 = Staff(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT, WEAPON_DAMAGE)
         nonEngineerWeapon3 = Sword(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
     }
 
