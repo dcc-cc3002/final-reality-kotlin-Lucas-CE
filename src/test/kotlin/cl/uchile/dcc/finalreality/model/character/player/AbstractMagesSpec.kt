@@ -25,6 +25,7 @@ private const val MAGE_MAX_MP = 30
 private const val MAGE_DEFENSE = 10
 
 class AbstractMagesSpec : FunSpec({
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
     lateinit var blackMage1: BlackMage
     lateinit var whiteMage1: WhiteMage
     lateinit var healSpell: Heal
@@ -32,7 +33,6 @@ class AbstractMagesSpec : FunSpec({
     lateinit var poisonSpell: Poison
     lateinit var fireSpell: Fire
     lateinit var thunderSpell: Thunder
-    lateinit var queue: LinkedBlockingQueue<GameCharacter>
 
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()

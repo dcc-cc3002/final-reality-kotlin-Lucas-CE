@@ -26,12 +26,12 @@ private const val WEP_DMG = 10
 private const val WEP_WGT = 10
 
 class AbstractPlayerCharacterSpec : FunSpec({
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
     lateinit var blackMage1: BlackMage
     lateinit var engineer1: Engineer
     lateinit var knight1: Knight
     lateinit var thief1: Thief
     lateinit var whiteMage1: WhiteMage
-    lateinit var queue: LinkedBlockingQueue<GameCharacter>
     lateinit var axe: Axe
     lateinit var bow: Bow
     lateinit var knife: Knife

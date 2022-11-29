@@ -5,6 +5,7 @@ import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Heal
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Paralysis
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Poison
+import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
@@ -29,15 +30,23 @@ private const val WHMG2_NAME = "WHMG2"
 private const val WHMG2_MAX_HP = 80
 private const val WHMG2_MAX_MP = 20
 private const val WHMG2_DEFENSE = 20
+private const val WEAPON_NAME = "WEAPON"
+private const val WEAPON_DAMAGE = 10
+private const val WEAPON_WEIGHT = 10
 
 class WhiteMageSpec : FunSpec({
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
     lateinit var whmg1: WhiteMage
     lateinit var whmg2: WhiteMage
     lateinit var whmg12: WhiteMage
+    lateinit var whiteMageWeapon1: GameWeapon
+    lateinit var nonWhiteMageWeapon1: GameWeapon
+    lateinit var nonWhiteMageWeapon2: GameWeapon
+    lateinit var nonWhiteMageWeapon3: GameWeapon
+    lateinit var nonWhiteMageWeapon4: GameWeapon
     lateinit var healSpell: Heal
     lateinit var paralysisSpell: Paralysis
     lateinit var poisonSpell: Poison
-    lateinit var queue: LinkedBlockingQueue<GameCharacter>
 
 
     beforeEach {
@@ -45,11 +54,21 @@ class WhiteMageSpec : FunSpec({
         whmg1 = WhiteMage(WHMG1_NAME, WHMG1_MAX_HP, WHMG1_MAX_MP, WHMG1_DEFENSE, queue)
         whmg2 = WhiteMage(WHMG2_NAME, WHMG2_MAX_HP, WHMG2_MAX_MP, WHMG2_DEFENSE, queue)
         whmg12 = WhiteMage(WHMG1_NAME, WHMG1_MAX_HP, WHMG1_MAX_MP, WHMG1_DEFENSE, queue)
+        whiteMageWeapon1 = Staff(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT, WEAPON_DAMAGE)
+        nonWhiteMageWeapon1 = Axe(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonWhiteMageWeapon2 = Bow(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonWhiteMageWeapon3 = Knife(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonWhiteMageWeapon4 = Sword(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
         healSpell = Heal()
         paralysisSpell = Paralysis()
         poisonSpell = Poison()
 
+        whmg1.equip(whiteMageWeapon1)
+        whmg12.equip(whiteMageWeapon1)
+        whmg2.equip(whiteMageWeapon1)
         whmg1.equipSpell(healSpell)
+        whmg12.equipSpell(paralysisSpell)
+        whmg2.equipSpell(poisonSpell)
     }
 
     test("toString must return the White mage description") {
@@ -96,20 +115,15 @@ class WhiteMageSpec : FunSpec({
     }
 
     test("Only white mage weapons can be equipped to white mages") {
-        val engineerWeapon2 = Staff("staff", 10, 10, 10)
-        whmg1.equip(engineerWeapon2)
-        val nonKnightWeapon1 = Axe("axe", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon1) }
-        whmg1.equippedWeapon shouldNotBe nonKnightWeapon1
-        val nonKnightWeapon2 = Bow("bow", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon2) }
-        whmg1.equippedWeapon shouldNotBe nonKnightWeapon2
-        val nonKnightWeapon3 = Knife("knife", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon3) }
-        whmg1.equippedWeapon shouldNotBe nonKnightWeapon3
-        val nonKnightWeapon4 = Sword("sword", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonKnightWeapon4) }
-        whmg1.equippedWeapon shouldNotBe nonKnightWeapon4
+        whmg1.equip(whiteMageWeapon1)
+        assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonWhiteMageWeapon1) }
+        whmg1.equippedWeapon shouldNotBe nonWhiteMageWeapon1
+        assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonWhiteMageWeapon2) }
+        whmg1.equippedWeapon shouldNotBe nonWhiteMageWeapon2
+        assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonWhiteMageWeapon3) }
+        whmg1.equippedWeapon shouldNotBe nonWhiteMageWeapon3
+        assertThrows<InvalidEquippedWeaponException> { whmg1.equip(nonWhiteMageWeapon4) }
+        whmg1.equippedWeapon shouldNotBe nonWhiteMageWeapon4
     }
 
     test("equip a spell change the spell to white magic spells") {

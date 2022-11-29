@@ -4,6 +4,7 @@ import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
+import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
@@ -28,24 +29,42 @@ private const val BLMG2_NAME = "BLMG2"
 private const val BLMG2_MAX_HP = 80
 private const val BLMG2_MAX_MP = 20
 private const val BLMG2_DEFENSE = 20
+private const val WEAPON_NAME = "WEAPON"
+private const val WEAPON_DAMAGE = 10
+private const val WEAPON_WEIGHT = 10
 
 class BlackMageSpec : FunSpec({
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
     lateinit var blmg1: BlackMage
-    lateinit var blmg2: BlackMage
     lateinit var blmg12: BlackMage
+    lateinit var blmg2: BlackMage
+    lateinit var blackMageWeapon1: GameWeapon
+    lateinit var blackMageWeapon2: GameWeapon
+    lateinit var nonBlackMageWeapon1: GameWeapon
+    lateinit var nonBlackMageWeapon2: GameWeapon
+    lateinit var nonBlackMageWeapon3: GameWeapon
     lateinit var fireSpell: Fire
     lateinit var thunderSpell: Thunder
-    lateinit var queue: LinkedBlockingQueue<GameCharacter>
 
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()
         blmg1 = BlackMage(BLMG1_NAME, BLMG1_MAX_HP, BLMG1_MAX_MP, BLMG1_DEFENSE, queue)
         blmg2 = BlackMage(BLMG2_NAME, BLMG2_MAX_HP, BLMG2_MAX_MP, BLMG2_DEFENSE, queue)
         blmg12 = BlackMage(BLMG1_NAME, BLMG1_MAX_HP, BLMG1_MAX_MP, BLMG1_DEFENSE, queue)
+        blackMageWeapon1 = Knife(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        blackMageWeapon2 = Staff(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT, WEAPON_DAMAGE)
+        nonBlackMageWeapon1 = Axe(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonBlackMageWeapon2 = Bow(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonBlackMageWeapon3 = Sword(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
         fireSpell = Fire()
         thunderSpell = Thunder()
 
+        blmg1.equip(blackMageWeapon1)
+        blmg12.equip(blackMageWeapon1)
+        blmg2.equip(blackMageWeapon2)
         blmg1.equipSpell(fireSpell)
+        blmg12.equipSpell(fireSpell)
+        blmg2.equipSpell(thunderSpell)
     }
 
     test("toString must return the Black mage description") {
@@ -92,19 +111,14 @@ class BlackMageSpec : FunSpec({
     }
 
     test("Only black mage weapons can be equipped to black mages") {
-        val engineerWeapon1 = Knife("knife", 10, 10)
-        blmg1.equip(engineerWeapon1)
-        val engineerWeapon2 = Staff("staff", 10, 10, 10)
-        blmg1.equip(engineerWeapon2)
-        val nonKnightWeapon1 = Axe("axe", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon1) }
-        blmg1.equippedWeapon shouldNotBe nonKnightWeapon1
-        val nonKnightWeapon2 = Bow("bow", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon2) }
-        blmg1.equippedWeapon shouldNotBe nonKnightWeapon2
-        val nonKnightWeapon3 = Sword("sword", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonKnightWeapon3) }
-        blmg1.equippedWeapon shouldNotBe nonKnightWeapon3
+        blmg1.equip(blackMageWeapon1)
+        blmg1.equip(blackMageWeapon2)
+        assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonBlackMageWeapon1) }
+        blmg1.equippedWeapon shouldNotBe nonBlackMageWeapon1
+        assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonBlackMageWeapon2) }
+        blmg1.equippedWeapon shouldNotBe nonBlackMageWeapon2
+        assertThrows<InvalidEquippedWeaponException> { blmg1.equip(nonBlackMageWeapon3) }
+        blmg1.equippedWeapon shouldNotBe nonBlackMageWeapon3
     }
 
     test("equipSpell change the spell to black magic spells") {

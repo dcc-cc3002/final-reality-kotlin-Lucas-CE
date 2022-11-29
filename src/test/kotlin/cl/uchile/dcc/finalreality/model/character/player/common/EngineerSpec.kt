@@ -30,10 +30,10 @@ private const val WEAPON_DAMAGE = 10
 private const val WEAPON_WEIGHT = 10
 
 class EngineerSpec : FunSpec({
-    lateinit var eng1: Engineer
-    lateinit var eng2: Engineer
-    lateinit var eng12: Engineer
     lateinit var queue: LinkedBlockingQueue<GameCharacter>
+    lateinit var eng1: Engineer
+    lateinit var eng12: Engineer
+    lateinit var eng2: Engineer
     lateinit var engineerWeapon1: GameWeapon
     lateinit var engineerWeapon2: GameWeapon
     lateinit var nonEngineerWeapon1: GameWeapon
@@ -43,13 +43,17 @@ class EngineerSpec : FunSpec({
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()
         eng1 = Engineer(ENGINEER1_NAME, ENGINEER1_MAX_HP, ENGINEER1_DEFENSE, queue)
-        eng2 = Engineer(ENGINEER2_NAME, ENGINEER2_MAX_HP, ENGINEER2_DEFENSE, queue)
         eng12 = Engineer(ENGINEER1_NAME, ENGINEER1_MAX_HP, ENGINEER1_DEFENSE, queue)
+        eng2 = Engineer(ENGINEER2_NAME, ENGINEER2_MAX_HP, ENGINEER2_DEFENSE, queue)
         engineerWeapon1 = Axe(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
         engineerWeapon2 = Bow(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
         nonEngineerWeapon1 = Knife(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
         nonEngineerWeapon2 = Staff(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT, WEAPON_DAMAGE)
         nonEngineerWeapon3 = Sword(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+
+        eng1.equip(engineerWeapon1)
+        eng1.equip(engineerWeapon1)
+        eng2.equip(engineerWeapon2)
     }
 
     test("toString must return the Engineer description") {

@@ -2,6 +2,7 @@ package cl.uchile.dcc.finalreality.model.character.player.common
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
@@ -24,17 +25,35 @@ private const val KNIGHT1_DEFENSE = 10
 private const val KNIGHT2_NAME = "KNIGHT2"
 private const val KNIGHT2_MAX_HP = 80
 private const val KNIGHT2_DEFENSE = 20
+private const val WEAPON_NAME = "WEAPON"
+private const val WEAPON_DAMAGE = 10
+private const val WEAPON_WEIGHT = 10
 
 class KnightSpec : FunSpec({
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
     lateinit var knight1: Knight
-    lateinit var knight2: Knight
     lateinit var knight12: Knight
-    val queue = LinkedBlockingQueue<GameCharacter>()
+    lateinit var knight2: Knight
+    lateinit var knightWeapon1: GameWeapon
+    lateinit var knightWeapon2: GameWeapon
+    lateinit var knightWeapon3: GameWeapon
+    lateinit var nonKnightWeapon1: GameWeapon
+    lateinit var nonKnightWeapon2: GameWeapon
 
     beforeEach {
+        queue = LinkedBlockingQueue<GameCharacter>()
         knight1 = Knight(KNIGHT1_NAME, KNIGHT1_MAX_HP, KNIGHT1_DEFENSE, queue)
-        knight2 = Knight(KNIGHT2_NAME, KNIGHT2_MAX_HP, KNIGHT2_DEFENSE, queue)
         knight12 = Knight(KNIGHT1_NAME, KNIGHT1_MAX_HP, KNIGHT1_DEFENSE, queue)
+        knight2 = Knight(KNIGHT2_NAME, KNIGHT2_MAX_HP, KNIGHT2_DEFENSE, queue)
+        knightWeapon1 = Axe(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        knightWeapon2 = Knife(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        knightWeapon3 = Sword(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonKnightWeapon1 = Bow(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonKnightWeapon2 = Staff(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT, WEAPON_DAMAGE)
+
+        knight1.equip(knightWeapon1)
+        knight12.equip(knightWeapon2)
+        knight2.equip(knightWeapon3)
     }
 
     test("toString must return the Knight description") {
@@ -74,16 +93,11 @@ class KnightSpec : FunSpec({
     }
 
     test("Only knight weapons can be equipped to knights") {
-        val engineerWeapon1 = Axe("axe", 10, 10)
-        knight1.equip(engineerWeapon1)
-        val engineerWeapon2 = Knife("knife", 10, 10)
-        knight1.equip(engineerWeapon2)
-        val engineerWeapon3 = Sword("sword", 10, 10)
-        knight1.equip(engineerWeapon3)
-        val nonKnightWeapon1 = Bow("bow", 10, 10)
+        knight1.equip(knightWeapon1)
+        knight1.equip(knightWeapon2)
+        knight1.equip(knightWeapon3)
         assertThrows<InvalidEquippedWeaponException> { knight1.equip(nonKnightWeapon1) }
         knight1.equippedWeapon shouldNotBe nonKnightWeapon1
-        val nonKnightWeapon2 = Staff("staff", 10, 10, 10)
         assertThrows<InvalidEquippedWeaponException> { knight1.equip(nonKnightWeapon2) }
         knight1.equippedWeapon shouldNotBe nonKnightWeapon2
     }

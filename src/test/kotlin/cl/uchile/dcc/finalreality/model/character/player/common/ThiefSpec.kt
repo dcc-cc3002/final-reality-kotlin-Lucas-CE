@@ -2,6 +2,7 @@ package cl.uchile.dcc.finalreality.model.character.player.common
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Bow
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
@@ -24,17 +25,31 @@ private const val THIEF1_DEFENSE = 10
 private const val THIEF2_NAME = "THIEF2"
 private const val THIEF2_MAX_HP = 80
 private const val THIEF2_DEFENSE = 20
+private const val WEAPON_NAME = "WEAPON"
+private const val WEAPON_DAMAGE = 10
+private const val WEAPON_WEIGHT = 10
 
 class ThiefSpec : FunSpec({
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
     lateinit var thief1: Thief
-    lateinit var thief2: Thief
     lateinit var thief12: Thief
-    val queue = LinkedBlockingQueue<GameCharacter>()
+    lateinit var thief2: Thief
+    lateinit var thiefWeapon1: GameWeapon
+    lateinit var thiefWeapon2: GameWeapon
+    lateinit var thiefWeapon3: GameWeapon
+    lateinit var nonThiefWeapon1: GameWeapon
+    lateinit var nonThiefWeapon2: GameWeapon
 
     beforeEach {
+        queue = LinkedBlockingQueue<GameCharacter>()
         thief1 = Thief(THIEF1_NAME, THIEF1_MAX_HP, THIEF1_DEFENSE, queue)
-        thief2 = Thief(THIEF2_NAME, THIEF2_MAX_HP, THIEF2_DEFENSE, queue)
         thief12 = Thief(THIEF1_NAME, THIEF1_MAX_HP, THIEF1_DEFENSE, queue)
+        thief2 = Thief(THIEF2_NAME, THIEF2_MAX_HP, THIEF2_DEFENSE, queue)
+        thiefWeapon1 = Bow(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        thiefWeapon2 = Knife(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        thiefWeapon3 = Sword(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonThiefWeapon1 = Axe(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT)
+        nonThiefWeapon2 = Staff(WEAPON_NAME, WEAPON_DAMAGE, WEAPON_WEIGHT, WEAPON_DAMAGE)
     }
 
     test("toString must return the Thief description") {
@@ -74,17 +89,12 @@ class ThiefSpec : FunSpec({
     }
 
     test("Only thief weapons can be equipped to thieves") {
-        val engineerWeapon1 = Bow("bow", 10, 10)
-        thief1.equip(engineerWeapon1)
-        val engineerWeapon2 = Knife("knife", 10, 10)
-        thief1.equip(engineerWeapon2)
-        val engineerWeapon3 = Sword("sword", 10, 10)
-        thief1.equip(engineerWeapon3)
-        val nonKnightWeapon1 = Axe("axe", 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { thief1.equip(nonKnightWeapon1) }
-        thief1.equippedWeapon shouldNotBe nonKnightWeapon1
-        val nonKnightWeapon2 = Staff("staff", 10, 10, 10)
-        assertThrows<InvalidEquippedWeaponException> { thief1.equip(nonKnightWeapon2) }
-        thief1.equippedWeapon shouldNotBe nonKnightWeapon2
+        thief1.equip(thiefWeapon1)
+        thief1.equip(thiefWeapon2)
+        thief1.equip(thiefWeapon3)
+        assertThrows<InvalidEquippedWeaponException> { thief1.equip(nonThiefWeapon1) }
+        thief1.equippedWeapon shouldNotBe nonThiefWeapon1
+        assertThrows<InvalidEquippedWeaponException> { thief1.equip(nonThiefWeapon2) }
+        thief1.equippedWeapon shouldNotBe nonThiefWeapon2
     }
 })
