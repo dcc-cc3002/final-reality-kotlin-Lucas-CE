@@ -46,6 +46,10 @@ abstract class AbstractMages(
     override val spell: Spell
         get() = _spell
 
+    fun throwSpell(target: GameCharacter){
+        spell.applyFromTo(this, target)
+    }
+
     override fun equipSpellFire(fire: Fire) {
         throw InvalidEquippedSpellException(fire, this)
     }

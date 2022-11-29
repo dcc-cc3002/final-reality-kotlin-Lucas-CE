@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.model.character.player.mages
 
+import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
 import cl.uchile.dcc.finalreality.model.character.player.spells.Spell
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
@@ -7,7 +8,7 @@ import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Paralysis
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Poison
 
-interface Mages {
+interface Mages : PlayerCharacter {
 
     val maxMp: Int
 
