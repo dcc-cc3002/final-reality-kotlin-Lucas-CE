@@ -73,6 +73,8 @@ class GameController {
 
     fun attack(attacker: GameCharacter, target: GameCharacter) {
         // TODO: Attack a target
+        // detectDeathEnemies()
+        // detectDeathPlayerCharacter()
         onEnemyWin()
         onPlayerWin()
     }
@@ -81,24 +83,30 @@ class GameController {
         // TODO: Use magic on a target
     }
 
+    fun detectDeathPlayerCharacter(playerCharacter: PlayerCharacter) {
+        if (playerCharacter.currentHp == 0) {
+            playerCharacters.remove(playerCharacter)
+        }
+    }
+
+    fun detectDeathEnemies(enemy: Enemy) {
+        if (enemy.currentHp == 0) {
+            enemyCharacters.remove(enemy)
+        }
+    }
+
     fun waitTurn(character: GameCharacter) {
         character.waitTurn()
     }
 
     private fun onPlayerWin() {
-        var life = 0
-        for (character in enemyCharacters)
-            life += character.currentHp
-        if (life == 0) {
+        if (enemyCharacters.isEmpty()) {
             println("The players wins!")
         }
     }
 
     private fun onEnemyWin() {
-        var life = 0
-        for (character in playerCharacters)
-            life += character.currentHp
-        if (life == 0) {
+        if (playerCharacters.isEmpty()) {
             println("The enemies wins!")
         }
     }
