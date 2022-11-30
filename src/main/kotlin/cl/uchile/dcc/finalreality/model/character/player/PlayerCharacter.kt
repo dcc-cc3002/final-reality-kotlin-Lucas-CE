@@ -10,6 +10,8 @@ package cl.uchile.dcc.finalreality.model.character.player
 import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.AbstractCharacter
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
+import cl.uchile.dcc.finalreality.model.character.player.mages.Mages
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Heal
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.AxeWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.BowWeapon
@@ -116,5 +118,9 @@ abstract class AbstractPlayerCharacter(
             /* delay = */ (this.equippedWeapon.weight / 10).toLong(),
             /* unit = */ TimeUnit.SECONDS
         )
+    }
+
+    override fun applyHeal(mage: Mages, heal: Heal) {
+        heal.applyHealFromTo(this)
     }
 }

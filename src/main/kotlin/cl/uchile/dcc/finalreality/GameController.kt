@@ -12,11 +12,6 @@ class GameController {
     private val enemyCharacters = mutableListOf<Enemy>()
 
     init {
-        for (i in 1..10) {
-            // TODO: Add enemies to the game
-            // TODO: Add players to the game
-            // TODO: Add characters to the turns queue
-        }
     }
 
     fun createPlayer(name: String, hp: Int, defense: Int, weapon: GameWeapon) {

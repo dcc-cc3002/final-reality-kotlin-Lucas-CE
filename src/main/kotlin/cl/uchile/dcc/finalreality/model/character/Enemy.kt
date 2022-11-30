@@ -1,6 +1,11 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.exceptions.Require
+import cl.uchile.dcc.finalreality.model.character.player.mages.Mages
+import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
+import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Paralysis
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Poison
 import java.util.Objects
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.ScheduledExecutorService
@@ -36,6 +41,22 @@ class Enemy(
             /* delay = */ (this.weight / 10).toLong(),
             /* unit = */ TimeUnit.SECONDS
         )
+    }
+
+    override fun applyFire(mage: Mages, fire: Fire) {
+        fire.applyFireFromTo(mage, this)
+    }
+
+    override fun applyThunder(mage: Mages, thunder: Thunder) {
+        thunder.applyThunderFromTo(mage, this)
+    }
+
+    override fun applyParalysis(mage: Mages, paralysis: Paralysis) {
+        paralysis.applyParalysisFromTo(this)
+    }
+
+    override fun applyPoison(mage: Mages, poison: Poison) {
+        poison.applyPoisonFromTo(this)
     }
 
     override fun equals(other: Any?) = when {

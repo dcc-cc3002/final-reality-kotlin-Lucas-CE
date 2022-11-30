@@ -3,8 +3,8 @@ package cl.uchile.dcc.finalreality.model.character.player.effects
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.mages.Mages
 
-class Burned : Effect {
+class CompositeEffect(val effects: List<Effect>) : Effect {
     override fun applyEffect(mages: Mages, target: GameCharacter) {
-        TODO("Not yet implemented")
+        effects.forEach { it.applyEffect(mages, target) }
     }
 }
