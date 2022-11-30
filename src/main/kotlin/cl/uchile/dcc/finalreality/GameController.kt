@@ -73,6 +73,8 @@ class GameController {
 
     fun attack(attacker: GameCharacter, target: GameCharacter) {
         // TODO: Attack a target
+        onEnemyWin()
+        onPlayerWin()
     }
 
     fun useMagic(attacker: GameCharacter, target: GameCharacter) {
@@ -83,11 +85,21 @@ class GameController {
         character.waitTurn()
     }
 
-    fun onPlayerWin() {
-        // TODO: Handle the player winning the game
+    private fun onPlayerWin() {
+        var life = 0
+        for (character in enemyCharacters)
+            life += character.currentHp
+        if (life == 0) {
+            println("The players wins!")
+        }
     }
 
-    fun onEnemyWin() {
-        // TODO: Handle the enemy winning the game
+    private fun onEnemyWin() {
+        var life = 0
+        for (character in playerCharacters)
+            life += character.currentHp
+        if (life == 0) {
+            println("The enemies wins!")
+        }
     }
 }
