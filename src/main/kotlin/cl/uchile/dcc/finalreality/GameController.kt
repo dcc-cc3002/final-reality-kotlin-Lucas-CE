@@ -20,6 +20,18 @@ class GameController {
     init {
     }
 
+    fun initGame() {
+        var gameCharacter: GameCharacter
+        for (character in playerCharacters)
+            character.waitTurn()
+        for (enemy in enemyCharacters)
+            enemy.waitTurn()
+        Thread.sleep(6000)
+        while (!turnsQueue.isEmpty()) {
+            gameCharacter = turnsQueue.poll()
+        }
+    }
+
     fun createPlayerCharacterEngineer(name: String, hp: Int, defense: Int, weapon: GameWeapon) {
         val engineer = Engineer(name, hp, defense, turnsQueue)
         engineer.equip(weapon)
