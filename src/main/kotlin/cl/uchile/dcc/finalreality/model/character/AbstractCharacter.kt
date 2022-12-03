@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.model.character
 
+import cl.uchile.dcc.finalreality.controller.CharacterObserver
 import cl.uchile.dcc.finalreality.exceptions.Require
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.Executors
@@ -27,13 +28,33 @@ abstract class AbstractCharacter(
     private val turnsQueue: BlockingQueue<GameCharacter>
 ) : GameCharacter {
 
+    override val characterListeners = mutableListOf<CharacterObserver>()
+
     private lateinit var scheduledExecutor: ScheduledExecutorService
+
     override val maxHp = Require.Stat(maxHp, "Max Hp") atLeast 1
+
     override var currentHp = maxHp
         set(value) {
             field = Require.Stat(value, "Current Hp") inRange 0..maxHp
         }
+
     override val defense = Require.Stat(defense, "Defense") atLeast 0
+
+    override fun addListener(characterObserver: CharacterObserver) {
+        characterListeners.add(characterObserver)
+    }
+
+    override fun recieveDamage(damage: Int) {
+        currentHp -= (damage - defense)
+        this.verifyDeath()
+    }
+
+    override fun verifyDeath() {
+        if (currentHp == 0) {
+            this.notifyDeath()
+        }
+    }
 
     override fun waitTurn() {
         scheduledExecutor = Executors.newSingleThreadScheduledExecutor()

@@ -92,6 +92,24 @@ abstract class AbstractPlayerCharacter(
     override val equippedWeapon: GameWeapon
         get() = _equippedWeapon
 
+    override fun attack(gameCharacter: GameCharacter) {
+        gameCharacter.recieveDamage(this.equippedWeapon.damage)
+    }
+
+    override fun notifyDeath() {
+        for (listener in characterListeners) {
+            listener.updateDeathPlayerCharacter(this)
+        }
+    }
+
+    override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
+        scheduledExecutor.schedule(
+            /* command = */ ::addToQueue,
+            /* delay = */ (this.equippedWeapon.weight / 10).toLong(),
+            /* unit = */ TimeUnit.SECONDS
+        )
+    }
+
     override fun equipAxe(axe: AxeWeapon) {
         throw InvalidEquippedWeaponException(axe, this)
     }
@@ -110,14 +128,6 @@ abstract class AbstractPlayerCharacter(
 
     override fun equipStaff(staff: StaffWeapon) {
         throw InvalidEquippedWeaponException(staff, this)
-    }
-
-    override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
-        scheduledExecutor.schedule(
-            /* command = */ ::addToQueue,
-            /* delay = */ (this.equippedWeapon.weight / 10).toLong(),
-            /* unit = */ TimeUnit.SECONDS
-        )
     }
 
     override fun applyHeal(mage: Mages, heal: Heal) {

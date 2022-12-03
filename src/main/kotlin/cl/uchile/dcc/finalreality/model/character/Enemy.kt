@@ -43,6 +43,16 @@ class Enemy(
         )
     }
 
+    override fun notifyDeath() {
+        for (listener in characterListeners) {
+            listener.updateDeathEnemy(this)
+        }
+    }
+
+    override fun attack(gameCharacter: GameCharacter) {
+        gameCharacter.recieveDamage(this.weight/2)
+    }
+
     override fun applyFire(mage: Mages, fire: Fire) {
         fire.applyFireFromTo(mage, this)
     }
