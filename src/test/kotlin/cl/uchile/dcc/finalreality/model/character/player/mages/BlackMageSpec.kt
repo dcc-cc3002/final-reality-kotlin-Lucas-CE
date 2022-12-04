@@ -18,8 +18,8 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
-import java.util.concurrent.LinkedBlockingQueue
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.LinkedBlockingQueue
 
 private const val BLMG1_NAME = "BLMG1"
 private const val BLMG1_MAX_HP = 100
@@ -69,7 +69,9 @@ class BlackMageSpec : FunSpec({
 
     test("toString must return the Black mage description") {
         checkAll(
-            Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
+            Arb.string(),
+            Arb.positiveInt(1000),
+            Arb.positiveInt(50),
             Arb.positiveInt(100)
         ) { name, maxHp, maxMp, defense ->
             val blmg3 = BlackMage(name, maxHp, maxMp, defense, queue)
@@ -80,7 +82,9 @@ class BlackMageSpec : FunSpec({
 
     test("Two Black mages with the same parameters are equals") {
         checkAll(
-            Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
+            Arb.string(),
+            Arb.positiveInt(1000),
+            Arb.positiveInt(50),
             Arb.positiveInt(100)
         ) { name, maxHp, maxMp, defense ->
             val blmg31 = BlackMage(name, maxHp, maxMp, defense, queue)
@@ -97,7 +101,9 @@ class BlackMageSpec : FunSpec({
 
     test("Two Black mages with different parameters have not the same hash code") {
         checkAll(
-            Arb.string(), Arb.positiveInt(200), Arb.positiveInt(100),
+            Arb.string(),
+            Arb.positiveInt(200),
+            Arb.positiveInt(100),
             Arb.positiveInt(50)
         ) { name, maxHp, maxMp, defense ->
             val blmg31 = BlackMage(name, maxHp, maxMp, defense, queue)
@@ -122,13 +128,13 @@ class BlackMageSpec : FunSpec({
     }
 
     test("equipSpell change the spell to black magic spells") {
-        //Using equipSpell
+        // Using equipSpell
         blmg1.equipSpell(fireSpell)
         blmg1.spell shouldBe fireSpell
         blmg1.equipSpell(thunderSpell)
         blmg1.spell shouldBe thunderSpell
 
-        //Using equip{SpellName}
+        // Using equip{SpellName}
         blmg1.equipSpellFire(fireSpell)
         blmg1.spell shouldBe fireSpell
         blmg1.equipSpellThunder(thunderSpell)

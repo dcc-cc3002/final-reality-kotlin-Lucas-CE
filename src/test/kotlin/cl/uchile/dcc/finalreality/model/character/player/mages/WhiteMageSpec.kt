@@ -19,8 +19,8 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
-import java.util.concurrent.LinkedBlockingQueue
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.LinkedBlockingQueue
 
 private const val WHMG1_NAME = "WHMG1"
 private const val WHMG1_MAX_HP = 100
@@ -48,7 +48,6 @@ class WhiteMageSpec : FunSpec({
     lateinit var paralysisSpell: Paralysis
     lateinit var poisonSpell: Poison
 
-
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()
         whmg1 = WhiteMage(WHMG1_NAME, WHMG1_MAX_HP, WHMG1_MAX_MP, WHMG1_DEFENSE, queue)
@@ -73,7 +72,9 @@ class WhiteMageSpec : FunSpec({
 
     test("toString must return the White mage description") {
         checkAll(
-            Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
+            Arb.string(),
+            Arb.positiveInt(1000),
+            Arb.positiveInt(50),
             Arb.positiveInt(100)
         ) { name, maxHp, maxMp, defense ->
             val whmg3 = WhiteMage(name, maxHp, maxMp, defense, queue)
@@ -84,7 +85,9 @@ class WhiteMageSpec : FunSpec({
 
     test("Two White mages with the same parameters are equals") {
         checkAll(
-            Arb.string(), Arb.positiveInt(1000), Arb.positiveInt(50),
+            Arb.string(),
+            Arb.positiveInt(1000),
+            Arb.positiveInt(50),
             Arb.positiveInt(100)
         ) { name, maxHp, maxMp, defense ->
             val whmg31 = WhiteMage(name, maxHp, maxMp, defense, queue)
@@ -101,7 +104,9 @@ class WhiteMageSpec : FunSpec({
 
     test("Two White mages with different parameters have not the same hash code") {
         checkAll(
-            Arb.string(), Arb.positiveInt(200), Arb.positiveInt(100),
+            Arb.string(),
+            Arb.positiveInt(200),
+            Arb.positiveInt(100),
             Arb.positiveInt(50)
         ) { name, maxHp, maxMp, defense ->
             val whmg31 = WhiteMage(name, maxHp, maxMp, defense, queue)
@@ -127,7 +132,7 @@ class WhiteMageSpec : FunSpec({
     }
 
     test("equip a spell change the spell to white magic spells") {
-        //Using equipSpell
+        // Using equipSpell
         whmg1.equipSpell(healSpell)
         whmg1.spell shouldBe healSpell
         whmg1.equipSpell(paralysisSpell)
@@ -135,7 +140,7 @@ class WhiteMageSpec : FunSpec({
         whmg1.equipSpell(poisonSpell)
         whmg1.spell shouldBe poisonSpell
 
-        //Using equip{SpellName}
+        // Using equip{SpellName}
         whmg1.equipSpellHeal(healSpell)
         whmg1.spell shouldBe healSpell
         whmg1.equipSpellParalysis(paralysisSpell)

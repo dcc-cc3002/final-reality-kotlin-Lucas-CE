@@ -16,8 +16,8 @@ import io.kotest.matchers.shouldNotBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.checkAll
-import java.util.concurrent.LinkedBlockingQueue
 import org.junit.jupiter.api.assertThrows
+import java.util.concurrent.LinkedBlockingQueue
 
 private const val MAGE_NAME = "MAGE1"
 private const val MAGE_MAX_HP = 100
@@ -55,13 +55,13 @@ class AbstractMagesSpec : FunSpec({
 
     test("The currentMp setter change the currentMp value") {
         checkAll(Arb.int(0..MAGE_MAX_MP)) {
-            currentMp ->
+                currentMp ->
             blackMage1.currentMp = currentMp
             blackMage1.currentMp shouldBe currentMp
         }
 
         checkAll(Arb.int(0..MAGE_MAX_MP)) {
-            currentMp ->
+                currentMp ->
             whiteMage1.currentMp = currentMp
             whiteMage1.currentMp shouldBe currentMp
         }
@@ -82,7 +82,7 @@ class AbstractMagesSpec : FunSpec({
     }
 
     test("Trying to equip spells to wrong mages classes throws an exception and not change spell") {
-        //Using equipSpell
+        // Using equipSpell
         assertThrows<InvalidEquippedSpellException> { whiteMage1.equipSpell(fireSpell) }
         whiteMage1.spell shouldNotBe fireSpell
         assertThrows<InvalidEquippedSpellException> { whiteMage1.equipSpell(thunderSpell) }
@@ -94,7 +94,7 @@ class AbstractMagesSpec : FunSpec({
         assertThrows<InvalidEquippedSpellException> { blackMage1.equipSpell(poisonSpell) }
         blackMage1.spell shouldNotBe poisonSpell
 
-        //Using equip{SpellName}
+        // Using equip{SpellName}
         assertThrows<InvalidEquippedSpellException> { whiteMage1.equipSpellFire(fireSpell) }
         whiteMage1.spell shouldNotBe fireSpell
         assertThrows<InvalidEquippedSpellException> { whiteMage1.equipSpellThunder(thunderSpell) }
