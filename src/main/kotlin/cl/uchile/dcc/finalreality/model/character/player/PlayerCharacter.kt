@@ -10,7 +10,7 @@ package cl.uchile.dcc.finalreality.model.character.player
 import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedWeaponException
 import cl.uchile.dcc.finalreality.model.character.AbstractCharacter
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
-import cl.uchile.dcc.finalreality.model.character.player.mages.Mages
+import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Heal
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.AxeWeapon
@@ -130,7 +130,7 @@ abstract class AbstractPlayerCharacter(
         throw InvalidEquippedWeaponException(staff, this)
     }
 
-    override fun applyHeal(mage: Mages, heal: Heal) {
-        heal.applyHealFromTo(this)
+    override fun applyHeal(from: Mage, heal: Heal) {
+        heal.applyHealFromTo(from, this)
     }
 }

@@ -1,7 +1,7 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.exceptions.Require
-import cl.uchile.dcc.finalreality.model.character.player.mages.Mages
+import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Paralysis
@@ -33,6 +33,7 @@ class Enemy(
     defense: Int,
     turnsQueue: BlockingQueue<GameCharacter>
 ) : AbstractCharacter(name, maxHp, defense, turnsQueue) {
+
     val weight = Require.Stat(weight, "Weight") atLeast 1
 
     override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
@@ -53,20 +54,20 @@ class Enemy(
         gameCharacter.recieveDamage(this.weight/2)
     }
 
-    override fun applyFire(mage: Mages, fire: Fire) {
-        fire.applyFireFromTo(mage, this)
+    override fun applyFire(from: Mage, fire: Fire) {
+        fire.applyFireFromTo(from, this)
     }
 
-    override fun applyThunder(mage: Mages, thunder: Thunder) {
-        thunder.applyThunderFromTo(mage, this)
+    override fun applyThunder(from: Mage, thunder: Thunder) {
+        thunder.applyThunderFromTo(from, this)
     }
 
-    override fun applyParalysis(mage: Mages, paralysis: Paralysis) {
-        paralysis.applyParalysisFromTo(this)
+    override fun applyParalysis(from: Mage, paralysis: Paralysis) {
+        paralysis.applyParalysisFromTo(from, this)
     }
 
-    override fun applyPoison(mage: Mages, poison: Poison) {
-        poison.applyPoisonFromTo(this)
+    override fun applyPoison(from: Mage, poison: Poison) {
+        poison.applyPoisonFromTo(from, this)
     }
 
     override fun equals(other: Any?) = when {

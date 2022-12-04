@@ -4,13 +4,13 @@ import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedSpellException
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.effects.Effect
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
-import cl.uchile.dcc.finalreality.model.character.player.mages.Mages
+import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
 
 interface Spell {
 
     val manaCost: Int
-    val effect: Effect
+    val effects: Effect
 
     fun equipSpellToBlackMage(blackMage: BlackMage) {
         throw InvalidEquippedSpellException(this, blackMage)
@@ -20,5 +20,5 @@ interface Spell {
         throw InvalidEquippedSpellException(this, whiteMage)
     }
 
-    fun applyFromTo(mage: Mages, target: GameCharacter)
+    fun applyFromTo(from: Mage, target: GameCharacter)
 }

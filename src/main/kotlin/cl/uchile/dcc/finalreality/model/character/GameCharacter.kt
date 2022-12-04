@@ -2,7 +2,7 @@ package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.controller.CharacterObserver
 import cl.uchile.dcc.finalreality.exceptions.InvalidSpellTargetException
-import cl.uchile.dcc.finalreality.model.character.player.mages.Mages
+import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Heal
@@ -66,23 +66,23 @@ interface GameCharacter {
      */
     fun waitTurn()
 
-    fun applyFire(mage: Mages, fire: Fire) {
+    fun applyFire(from: Mage, fire: Fire) {
         throw InvalidSpellTargetException(fire, this)
     }
 
-    fun applyThunder(mage: Mages, thunder: Thunder) {
+    fun applyThunder(from: Mage, thunder: Thunder) {
         throw InvalidSpellTargetException(thunder, this)
     }
 
-    fun applyHeal(mage: Mages, heal: Heal) {
+    fun applyHeal(from: Mage, heal: Heal) {
         throw InvalidSpellTargetException(heal, this)
     }
 
-    fun applyParalysis(mage: Mages, paralysis: Paralysis) {
+    fun applyParalysis(from: Mage, paralysis: Paralysis) {
         throw InvalidSpellTargetException(paralysis, this)
     }
 
-    fun applyPoison(mage: Mages, poison: Poison) {
+    fun applyPoison(from: Mage, poison: Poison) {
         throw InvalidSpellTargetException(poison, this)
     }
 }

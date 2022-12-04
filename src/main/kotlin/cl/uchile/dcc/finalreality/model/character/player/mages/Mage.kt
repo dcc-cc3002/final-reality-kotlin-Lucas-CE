@@ -8,7 +8,7 @@ import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Paralysis
 import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Poison
 
-interface Mages : PlayerCharacter {
+interface Mage : PlayerCharacter {
 
     val maxMp: Int
 

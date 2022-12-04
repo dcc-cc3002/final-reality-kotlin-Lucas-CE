@@ -29,13 +29,13 @@ import java.util.concurrent.BlockingQueue
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 
-abstract class AbstractMages(
+abstract class AbstractMage(
     name: String,
     maxHp: Int,
     maxMp: Int,
     defense: Int,
     turnsQueue: BlockingQueue<GameCharacter>
-) : AbstractPlayerCharacter(name, maxHp, defense, turnsQueue), Mages {
+) : AbstractPlayerCharacter(name, maxHp, defense, turnsQueue), Mage {
     override val maxMp = Require.Stat(maxMp, "Max MP") atLeast 0
     var currentMp: Int = maxMp
         set(value) {
@@ -46,7 +46,7 @@ abstract class AbstractMages(
     override val spell: Spell
         get() = _spell
 
-    fun throwSpell(target: GameCharacter){
+    fun throwSpell(target: GameCharacter) {
         spell.applyFromTo(this, target)
     }
 
