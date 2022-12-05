@@ -36,12 +36,8 @@ class Enemy(
 
     val weight = Require.Stat(weight, "Weight") atLeast 1
 
-    override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
-        scheduledExecutor.schedule(
-            /* command = */ ::addToQueue,
-            /* delay = */ (this.weight / 10).toLong(),
-            /* unit = */ TimeUnit.SECONDS
-        )
+    override fun attack(gameCharacter: GameCharacter) {
+        gameCharacter.recieveDamage(this.weight/2)
     }
 
     override fun notifyDeath() {
@@ -50,8 +46,12 @@ class Enemy(
         }
     }
 
-    override fun attack(gameCharacter: GameCharacter) {
-        gameCharacter.recieveDamage(this.weight/2)
+    override fun waitTheirTurn(scheduledExecutor: ScheduledExecutorService) {
+        scheduledExecutor.schedule(
+            /* command = */ ::addToQueue,
+            /* delay = */ (this.weight / 10).toLong(),
+            /* unit = */ TimeUnit.SECONDS
+        )
     }
 
     override fun applyFire(from: Mage, fire: Fire) {

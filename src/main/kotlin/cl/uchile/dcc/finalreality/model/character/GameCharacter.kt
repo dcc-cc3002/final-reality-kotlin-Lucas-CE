@@ -1,7 +1,6 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.controller.CharacterObserver
-import cl.uchile.dcc.finalreality.exceptions.InvalidSpellTargetException
 import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
@@ -66,23 +65,28 @@ interface GameCharacter {
      */
     fun waitTurn()
 
-    fun applyFire(from: Mage, fire: Fire) {
-        throw InvalidSpellTargetException(fire, this)
-    }
+    /**
+     * Applies fire spell against the character.
+     */
+    fun applyFire(from: Mage, fire: Fire)
 
-    fun applyThunder(from: Mage, thunder: Thunder) {
-        throw InvalidSpellTargetException(thunder, this)
-    }
+    /**
+     * Applies thunder spell against the character.
+     */
+    fun applyThunder(from: Mage, thunder: Thunder)
 
-    fun applyHeal(from: Mage, heal: Heal) {
-        throw InvalidSpellTargetException(heal, this)
-    }
+    /**
+     * Applies to heal spell against the character.
+     */
+    fun applyHeal(from: Mage, heal: Heal)
 
-    fun applyParalysis(from: Mage, paralysis: Paralysis) {
-        throw InvalidSpellTargetException(paralysis, this)
-    }
+    /**
+     * Applies paralysis spell against the character.
+     */
+    fun applyParalysis(from: Mage, paralysis: Paralysis)
 
-    fun applyPoison(from: Mage, poison: Poison) {
-        throw InvalidSpellTargetException(poison, this)
-    }
+    /**
+     * Applies poison spell against the character.
+     */
+    fun applyPoison(from: Mage, poison: Poison)
 }
