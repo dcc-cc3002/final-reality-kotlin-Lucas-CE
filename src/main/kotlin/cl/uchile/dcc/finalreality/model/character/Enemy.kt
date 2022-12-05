@@ -37,7 +37,7 @@ class Enemy(
     val weight = Require.Stat(weight, "Weight") atLeast 1
 
     override fun attack(gameCharacter: GameCharacter) {
-        gameCharacter.recieveDamage(this.weight/2)
+        gameCharacter.recieveDamage(this.weight / 2)
     }
 
     override fun notifyDeath() {

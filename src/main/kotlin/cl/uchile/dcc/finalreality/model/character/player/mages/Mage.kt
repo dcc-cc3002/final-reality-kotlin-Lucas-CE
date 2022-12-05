@@ -23,5 +23,4 @@ interface Mage : PlayerCharacter {
     fun equipSpellParalysis(paralysis: Paralysis)
 
     fun equipSpellPoison(poison: Poison)
-
 }

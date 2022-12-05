@@ -55,13 +55,13 @@ class AbstractMagesSpec : FunSpec({
 
     test("The currentMp setter change the currentMp value") {
         checkAll(Arb.int(0..MAGE_MAX_MP)) {
-                currentMp ->
+            currentMp ->
             blackMage1.currentMp = currentMp
             blackMage1.currentMp shouldBe currentMp
         }
 
         checkAll(Arb.int(0..MAGE_MAX_MP)) {
-                currentMp ->
+            currentMp ->
             whiteMage1.currentMp = currentMp
             whiteMage1.currentMp shouldBe currentMp
         }
