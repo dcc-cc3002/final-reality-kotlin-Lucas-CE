@@ -46,7 +46,7 @@ abstract class AbstractMage(
     override val spell: Spell
         get() = _spell
 
-    fun throwSpell(target: GameCharacter) {
+    override fun throwSpell(target: GameCharacter) {
         spell.applyFromTo(this, target)
     }
 

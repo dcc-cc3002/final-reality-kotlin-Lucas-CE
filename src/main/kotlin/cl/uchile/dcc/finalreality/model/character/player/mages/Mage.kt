@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.model.character.player.mages
 
+import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
 import cl.uchile.dcc.finalreality.model.character.player.spells.Spell
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
@@ -13,6 +14,8 @@ interface Mage : PlayerCharacter {
     val maxMp: Int
 
     val spell: Spell
+
+    fun throwSpell(target: GameCharacter)
 
     fun equipSpellFire(fire: Fire)
 
