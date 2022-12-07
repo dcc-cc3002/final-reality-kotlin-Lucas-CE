@@ -3,10 +3,10 @@ package cl.uchile.dcc.finalreality.controller.gameStates
 import cl.uchile.dcc.finalreality.controller.GameController
 
 class PullingCharacterState(context: GameController) : GameState(context) {
-    override fun toEnemyMenu() {
+    override fun toEnemyMenuState() {
         context.setState(EnemyMenuState(context))
     }
-    override fun toPlayerMenu() {
+    override fun toPlayerMenuState() {
         context.setState(PlayerMenuState(context))
     }
 }

@@ -7,22 +7,22 @@ open class GameState(protected val context: GameController) {
     init {
         context.setState(this)
     }
-    private fun transitionError(gameState: String) {
+    private fun transitionError(gameState: GameState) {
         throw IllegalStateTransitionException(this, gameState)
     }
     open fun toIdleState() {
-        transitionError("IdleState")
+        transitionError(IdleState(context))
     }
-    open fun toPlayerMenu() {
-        transitionError("PlayerMenu")
+    open fun toPlayerMenuState() {
+        transitionError(PlayerMenuState(context))
     }
-    open fun toEnemyMenu() {
-        transitionError("EnemyMenu")
+    open fun toEnemyMenuState() {
+        transitionError(EnemyMenuState(context))
     }
     open fun toPullingCharacterState() {
-        transitionError("PullingCharacter")
+        transitionError(PullingCharacterState(context))
     }
     open fun toGameFinishedState() {
-        transitionError("GameFinishedState")
+        transitionError(GameFinishedState(context))
     }
 }
