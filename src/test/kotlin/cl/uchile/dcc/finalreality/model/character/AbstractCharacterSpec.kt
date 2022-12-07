@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.model.character
 
+import cl.uchile.dcc.finalreality.controller.GameController
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
@@ -42,6 +43,7 @@ class AbstractCharacterSpec : FunSpec({
     lateinit var engineerWeapon: GameWeapon
     lateinit var knightWeapon: GameWeapon
     lateinit var thiefWeapon: GameWeapon
+    lateinit var gameController: GameController
 
     beforeEach {
         queue = LinkedBlockingQueue<GameCharacter>()
@@ -55,6 +57,7 @@ class AbstractCharacterSpec : FunSpec({
         engineerWeapon = Axe(WEP_NAME, WEP_DMG, WEP_WGT)
         knightWeapon = Sword(WEP_NAME, WEP_DMG, WEP_WGT)
         thiefWeapon = Knife(WEP_NAME, WEP_DMG, WEP_WGT)
+        gameController = GameController()
     }
 
     test("initializing maxHp with a value less than 1 throws an exception") {
@@ -161,6 +164,11 @@ class AbstractCharacterSpec : FunSpec({
             assertThrows<InvalidStatValueException> { enemy1.currentHp = greaterMaxHp }
             assertThrows<InvalidStatValueException> { enemy1.currentHp = lessMinHp }
         }
+    }
+
+    test("addListener method should the observer to the listeners list") {
+        blackMage1.addListener(gameController)
+        blackMage1.characterListeners.contains(gameController) shouldBe true
     }
 
     test("waitTurn method must put in queue the character who is calling the function") {
