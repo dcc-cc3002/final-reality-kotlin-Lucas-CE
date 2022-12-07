@@ -54,12 +54,6 @@ interface GameCharacter {
     fun recieveDamage(damage: Int)
 
     /**
-     * Verifies if the character is death. If the character is death, notify the death to the
-     * listeners.
-     */
-    fun verifyDeath()
-
-    /**
      * Sets a scheduled executor to make this character (thread) wait for `speed / 10`
      * seconds before adding the character to the queue.
      */

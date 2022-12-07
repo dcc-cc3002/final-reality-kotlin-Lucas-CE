@@ -16,6 +16,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
+import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
 import kotlinx.coroutines.Dispatchers
@@ -169,6 +170,29 @@ class AbstractCharacterSpec : FunSpec({
     test("addListener method should the observer to the listeners list") {
         blackMage1.addListener(gameController)
         blackMage1.characterListeners.contains(gameController) shouldBe true
+    }
+
+    test("When a character takes damage greater than his defense, their life should " +
+             "decrease in damage less defense points.") {
+        checkAll(Arb.int(min = blackMage1.defense)) { damage ->
+            if(blackMage1.currentHp > damage - blackMage1.defense) {
+                blackMage1.recieveDamage(damage)
+                blackMage1.currentHp shouldBe damage - blackMage1.defense
+            }
+            else {
+                blackMage1.recieveDamage(damage)
+                blackMage1.currentHp shouldBe 0
+            }
+        }
+    }
+
+    test("When a character takes less damage than his defense, their current hp " +
+             "does not change.") {
+        checkAll(Arb.positiveInt(blackMage1.defense)) { damage ->
+            val initialHp = blackMage1.currentHp
+            blackMage1.recieveDamage(damage)
+            blackMage1.currentHp shouldBe initialHp
+        }
     }
 
     test("waitTurn method must put in queue the character who is calling the function") {
