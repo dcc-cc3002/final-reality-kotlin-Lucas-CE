@@ -172,23 +172,32 @@ class AbstractCharacterSpec : FunSpec({
         blackMage1.characterListeners.contains(gameController) shouldBe true
     }
 
-    test("When a character takes damage greater than his defense, their life should " +
+    test("When a character takes damage greater than his defense, but less than " +
+             "their hp + defense, their life should decrease in damage less defense points.") {
+        checkAll(
+            Arb.int(blackMage1.defense..MAX_HP + blackMage1.defense)
+        ) { damage ->
+            blackMage1 = BlackMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
+            blackMage1.recieveDamage(damage)
+            blackMage1.currentHp shouldBe MAX_HP + blackMage1.defense - damage
+        }
+    }
+
+    test("When a character takes damage greater than his defense + hp, their life should " +
              "decrease in damage less defense points.") {
-        checkAll(Arb.int(min = blackMage1.defense)) { damage ->
-            if(blackMage1.currentHp > damage - blackMage1.defense) {
-                blackMage1.recieveDamage(damage)
-                blackMage1.currentHp shouldBe damage - blackMage1.defense
-            }
-            else {
-                blackMage1.recieveDamage(damage)
-                blackMage1.currentHp shouldBe 0
-            }
+        checkAll(
+            Arb.int(min = blackMage1.currentHp + blackMage1.defense)
+        ) { damage ->
+            blackMage1 = BlackMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
+            blackMage1.recieveDamage(damage)
+            blackMage1.currentHp shouldBe 0
         }
     }
 
     test("When a character takes less damage than his defense, their current hp " +
              "does not change.") {
         checkAll(Arb.positiveInt(blackMage1.defense)) { damage ->
+            blackMage1 = BlackMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
             val initialHp = blackMage1.currentHp
             blackMage1.recieveDamage(damage)
             blackMage1.currentHp shouldBe initialHp
