@@ -3,7 +3,6 @@ package cl.uchile.dcc.finalreality.model.character
 import cl.uchile.dcc.finalreality.controller.CharacterObserver
 import cl.uchile.dcc.finalreality.exceptions.InvalidSpellTargetException
 import cl.uchile.dcc.finalreality.exceptions.Require
-import cl.uchile.dcc.finalreality.model.character.player.effects.NullEffect
 import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
@@ -48,8 +47,6 @@ abstract class AbstractCharacter(
         }
 
     override val defense = Require.Stat(defense, "Defense") atLeast 0
-
-    override val effect = NullEffect()
 
     override fun addListener(characterObserver: CharacterObserver) {
         characterListeners.add(characterObserver)
