@@ -10,5 +10,5 @@ import cl.uchile.dcc.finalreality.controller.gameStates.GameState
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
  */
 
-class IllegalStateTransitionException(actual: GameState, target: String) :
+class IllegalStateTransitionException(actual: GameState, target: GameState) :
     Exception("$actual state does not have a transition to $target state")
