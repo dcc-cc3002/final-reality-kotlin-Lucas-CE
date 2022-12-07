@@ -1,6 +1,7 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.controller.CharacterObserver
+import cl.uchile.dcc.finalreality.model.character.player.effects.Effect
 import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
@@ -22,6 +23,8 @@ import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.
  *    The current health points of the character.
  * @property characterListeners
  *    The listeners of the character.
+ * @property effect
+ *    The effect that is being applied to the character.
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
@@ -32,6 +35,7 @@ interface GameCharacter {
     var currentHp: Int
     val defense: Int
     val characterListeners: List<CharacterObserver>
+    val effect: Effect
 
     /**
      * Notify the death of the character to the listeners.
