@@ -17,5 +17,6 @@ import cl.uchile.dcc.finalreality.model.weapon.AbstractWeapon
 abstract class AbstractMagicWeapon(
     name: String,
     damage: Int,
-    weight: Int
+    weight: Int,
+    override val magicDmg: Int
 ) : AbstractWeapon(name, damage, weight)

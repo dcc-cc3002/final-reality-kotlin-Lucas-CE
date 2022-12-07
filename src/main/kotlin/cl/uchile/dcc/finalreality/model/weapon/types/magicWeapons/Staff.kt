@@ -22,8 +22,8 @@ class Staff(
     name: String,
     damage: Int,
     weight: Int,
-    override val magicDmg: Int
-) : AbstractMagicWeapon(name, damage, weight), StaffWeapon {
+    magicDmg: Int
+) : AbstractMagicWeapon(name, damage, weight, magicDmg), StaffWeapon {
 
     override fun equipItToBlackMage(blackMage: BlackMage) {
         blackMage.equipStaff(this)
