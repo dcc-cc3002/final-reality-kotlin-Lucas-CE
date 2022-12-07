@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.controller
 
+import cl.uchile.dcc.finalreality.controller.gameStates.GameState
 import cl.uchile.dcc.finalreality.model.character.Enemy
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
@@ -17,6 +18,7 @@ class GameController : CharacterObserver {
     private val turnsQueue = LinkedBlockingQueue<GameCharacter>()
     private val playerCharacters = mutableListOf<PlayerCharacter>()
     private val enemyCharacters = mutableListOf<Enemy>()
+    private var state: GameState = GameState(this)
 
     init {
     }
@@ -82,14 +84,12 @@ class GameController : CharacterObserver {
     }
 
     fun attack(attacker: GameCharacter, target: GameCharacter) {
-        // TODO: Attack a target
         attacker.attack(target)
         onEnemyWin()
         onPlayerWin()
     }
 
     fun useMagic(attacker: Mage, target: GameCharacter) {
-        // TODO: Use magic on a target
         attacker.throwSpell(target)
     }
 
@@ -127,5 +127,9 @@ class GameController : CharacterObserver {
 
     override fun updateDeathPlayerCharacter(playerCharacter: PlayerCharacter) {
         playerCharacters.remove(playerCharacter)
+    }
+
+    fun setState(gameState: GameState) {
+        state = gameState
     }
 }
