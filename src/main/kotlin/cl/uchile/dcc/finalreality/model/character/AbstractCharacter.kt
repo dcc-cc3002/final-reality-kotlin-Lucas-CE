@@ -55,7 +55,7 @@ abstract class AbstractCharacter(
     override fun recieveDamage(damage: Int) {
         if (damage in defense..currentHp + defense) {
             currentHp = currentHp - damage + defense
-        } else if (damage - defense > 0){
+        } else if (damage - defense > 0) {
             currentHp = 0
             this.notifyDeath()
         }
