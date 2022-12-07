@@ -16,8 +16,8 @@ class Poison : Spell {
         whiteMage.equipSpellPoison(this)
     }
 
-    override fun applyFromTo(mage: Mage, target: GameCharacter) {
-        target.applyPoison(mage, this)
+    override fun applyFromTo(from: Mage, target: GameCharacter) {
+        target.applyPoison(from, this)
     }
 
     fun applyPoisonFromTo(from: Mage, target: GameCharacter) {
