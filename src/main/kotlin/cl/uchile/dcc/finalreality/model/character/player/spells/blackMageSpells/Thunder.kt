@@ -21,7 +21,7 @@ class Thunder : Spell {
     }
 
     fun applyThunderFromTo(from: Mage, target: GameCharacter) {
-        target.recieveDamage(from.equippedWeapon.magicDmg)
+        target.receiveDamage(from.equippedWeapon.magicDmg)
         if (Math.random() < 0.3) {
             effects.applyEffect(from, target)
         }

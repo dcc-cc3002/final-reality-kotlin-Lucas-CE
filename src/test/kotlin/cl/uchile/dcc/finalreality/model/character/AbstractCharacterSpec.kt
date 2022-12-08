@@ -180,7 +180,7 @@ class AbstractCharacterSpec : FunSpec({
             Arb.int(blackMage.defense..MAX_HP + blackMage.defense)
         ) { damage ->
             blackMage = BlackMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
-            blackMage.recieveDamage(damage)
+            blackMage.receiveDamage(damage)
             blackMage.currentHp shouldBe MAX_HP + blackMage.defense - damage
         }
     }
@@ -193,7 +193,7 @@ class AbstractCharacterSpec : FunSpec({
             Arb.int(min = blackMage.currentHp + blackMage.defense)
         ) { damage ->
             blackMage = BlackMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
-            blackMage.recieveDamage(damage)
+            blackMage.receiveDamage(damage)
             blackMage.currentHp shouldBe 0
         }
     }
@@ -205,7 +205,7 @@ class AbstractCharacterSpec : FunSpec({
         checkAll(Arb.positiveInt(blackMage.defense)) { damage ->
             blackMage = BlackMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
             val initialHp = blackMage.currentHp
-            blackMage.recieveDamage(damage)
+            blackMage.receiveDamage(damage)
             blackMage.currentHp shouldBe initialHp
         }
     }

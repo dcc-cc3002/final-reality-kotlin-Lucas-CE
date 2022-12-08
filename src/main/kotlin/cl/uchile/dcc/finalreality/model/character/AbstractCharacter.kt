@@ -53,12 +53,21 @@ abstract class AbstractCharacter(
         characterListeners.add(characterObserver)
     }
 
-    override fun recieveDamage(damage: Int) {
+    override fun receiveDamage(damage: Int) {
         if (damage in defense..currentHp + defense) {
             currentHp = currentHp - damage + defense
         } else if (damage - defense > 0) {
             currentHp = 0
             this.notifyDeath()
+        }
+    }
+
+    override fun receiveCure(cure: Int) {
+        if (cure + currentHp <= maxHp) {
+            currentHp += cure
+        }
+        else {
+            currentHp = maxHp
         }
     }
 

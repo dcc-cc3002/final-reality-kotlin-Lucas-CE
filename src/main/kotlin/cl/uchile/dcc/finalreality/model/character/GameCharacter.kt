@@ -54,7 +54,12 @@ interface GameCharacter {
     /**
      * Modifies the current hp of the character according to the damage received.
      */
-    fun recieveDamage(damage: Int)
+    fun receiveDamage(damage: Int)
+
+    /**
+     * Modifies the current hp of the character according to the cure received.
+     */
+    fun receiveCure(cure: Int)
 
     /**
      * Sets a scheduled executor to make this character (thread) wait for `speed / 10`

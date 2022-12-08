@@ -32,7 +32,7 @@ class Fire : Spell {
     }
 
     fun applyFireFromTo(from: Mage, target: GameCharacter) {
-        target.recieveDamage(from.equippedWeapon.magicDmg)
+        target.receiveDamage(from.equippedWeapon.magicDmg)
         if (Math.random() < 0.2) {
             effects.applyEffect(from, target)
         }

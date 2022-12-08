@@ -93,7 +93,7 @@ abstract class AbstractPlayerCharacter(
         get() = _equippedWeapon
 
     override fun attack(gameCharacter: GameCharacter) {
-        gameCharacter.recieveDamage(this.equippedWeapon.damage)
+        gameCharacter.receiveDamage(this.equippedWeapon.damage)
     }
 
     override fun notifyDeath() {
