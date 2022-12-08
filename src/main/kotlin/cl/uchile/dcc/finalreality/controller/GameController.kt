@@ -1,6 +1,7 @@
 package cl.uchile.dcc.finalreality.controller
 
 import cl.uchile.dcc.finalreality.controller.gameStates.GameState
+import cl.uchile.dcc.finalreality.controller.gameStates.PullingCharacterState
 import cl.uchile.dcc.finalreality.model.character.Enemy
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
@@ -15,24 +16,27 @@ import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import java.util.concurrent.LinkedBlockingQueue
 
 class GameController : CharacterObserver {
-    private val turnsQueue = LinkedBlockingQueue<GameCharacter>()
+    private val _turnsQueue = LinkedBlockingQueue<GameCharacter>()
     private val playerCharacters = mutableListOf<PlayerCharacter>()
     private val enemyCharacters = mutableListOf<Enemy>()
     private var state: GameState = GameState(this)
-    private val paralyzedCharacters = mutableListOf<GameCharacter>()
-    private val poisonedCharacters = mutableListOf<GameCharacter>()
-    private val burnedCharacters = mutableListOf<GameCharacter>()
-
-    init {
-    }
+    private val _paralyzedCharacters = mutableListOf<GameCharacter>()
+    private val _poisonedCharacters = mutableListOf<GameCharacter>()
+    private val _burnedCharacters = mutableListOf<GameCharacter>()
+    val turnsQueue
+        get() = _turnsQueue
+    val paralyzedCharacters
+        get() = _paralyzedCharacters
 
     fun initGame() {
+        setState(PullingCharacterState(this))
     }
 
     fun createPlayerCharacterEngineer(name: String, hp: Int, defense: Int, weapon: GameWeapon) {
         val engineer = Engineer(name, hp, defense, turnsQueue)
         engineer.equip(weapon)
         playerCharacters.add(engineer)
+        _turnsQueue.add(engineer)
         engineer.addListener(this)
     }
 
@@ -40,6 +44,7 @@ class GameController : CharacterObserver {
         val knight = Knight(name, hp, defense, turnsQueue)
         knight.equip(weapon)
         playerCharacters.add(knight)
+        _turnsQueue.add(knight)
         knight.addListener(this)
     }
 
@@ -47,6 +52,7 @@ class GameController : CharacterObserver {
         val thief = Thief(name, hp, defense, turnsQueue)
         thief.equip(weapon)
         playerCharacters.add(thief)
+        _turnsQueue.add(thief)
         thief.addListener(this)
     }
 
@@ -62,6 +68,7 @@ class GameController : CharacterObserver {
         whiteMage.equip(weapon)
         whiteMage.equipSpell(spell)
         playerCharacters.add(whiteMage)
+        _turnsQueue.add(whiteMage)
         whiteMage.addListener(this)
     }
 
@@ -77,19 +84,19 @@ class GameController : CharacterObserver {
         blackMage.equip(weapon)
         blackMage.equipSpell(spell)
         playerCharacters.add(blackMage)
+        _turnsQueue.add(blackMage)
         blackMage.addListener(this)
     }
 
     fun createEnemy(name: String, hp: Int, defense: Int, weight: Int) {
-        val enemy = Enemy(name, hp, defense, weight, turnsQueue)
+        val enemy = Enemy(name, weight, hp, defense, turnsQueue)
         enemyCharacters.add(enemy)
+        _turnsQueue.add(enemy)
         enemy.addListener(this)
     }
 
     fun attack(attacker: GameCharacter, target: GameCharacter) {
         attacker.attack(target)
-        onEnemyWin()
-        onPlayerWin()
     }
 
     fun useMagic(attacker: Mage, target: GameCharacter) {
@@ -126,22 +133,24 @@ class GameController : CharacterObserver {
 
     override fun updateDeathEnemy(enemy: Enemy) {
         enemyCharacters.remove(enemy)
+        _turnsQueue.remove(enemy)
     }
 
     override fun updateDeathPlayerCharacter(playerCharacter: PlayerCharacter) {
         playerCharacters.remove(playerCharacter)
+        turnsQueue.remove(playerCharacter)
     }
 
     override fun updateBurnedEffect(gameCharacter: GameCharacter) {
-        burnedCharacters.add(gameCharacter)
+        _burnedCharacters.add(gameCharacter)
     }
 
     override fun updatePoisonedEffect(gameCharacter: GameCharacter) {
-        poisonedCharacters.add(gameCharacter)
+        _poisonedCharacters.add(gameCharacter)
     }
 
     override fun updateParalyzedEffect(gameCharacter: GameCharacter) {
-        paralyzedCharacters.add(gameCharacter)
+        _paralyzedCharacters.add(gameCharacter)
     }
 
     fun setState(gameState: GameState) {
