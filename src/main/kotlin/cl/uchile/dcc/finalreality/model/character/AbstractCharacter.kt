@@ -3,6 +3,7 @@ package cl.uchile.dcc.finalreality.model.character
 import cl.uchile.dcc.finalreality.controller.CharacterObserver
 import cl.uchile.dcc.finalreality.exceptions.InvalidSpellTargetException
 import cl.uchile.dcc.finalreality.exceptions.Require
+import cl.uchile.dcc.finalreality.model.character.player.effects.Effect
 import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
@@ -97,5 +98,9 @@ abstract class AbstractCharacter(
 
     override fun applyPoison(from: Mage, poison: Poison) {
         throw InvalidSpellTargetException(poison, this)
+    }
+
+    override fun effectApplied(effect: Effect) {
+        effect.notifyEffectApplied(this, characterListeners)
     }
 }

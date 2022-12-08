@@ -19,6 +19,9 @@ class GameController : CharacterObserver {
     private val playerCharacters = mutableListOf<PlayerCharacter>()
     private val enemyCharacters = mutableListOf<Enemy>()
     private var state: GameState = GameState(this)
+    private val paralyzedCharacters = mutableListOf<GameCharacter>()
+    private val poisonedCharacters = mutableListOf<GameCharacter>()
+    private val burnedCharacters = mutableListOf<GameCharacter>()
 
     init {
     }
@@ -127,6 +130,18 @@ class GameController : CharacterObserver {
 
     override fun updateDeathPlayerCharacter(playerCharacter: PlayerCharacter) {
         playerCharacters.remove(playerCharacter)
+    }
+
+    override fun updateBurnedEffect(gameCharacter: GameCharacter) {
+        burnedCharacters.add(gameCharacter)
+    }
+
+    override fun updatePoisonedEffect(gameCharacter: GameCharacter) {
+        poisonedCharacters.add(gameCharacter)
+    }
+
+    override fun updateParalyzedEffect(gameCharacter: GameCharacter) {
+        paralyzedCharacters.add(gameCharacter)
     }
 
     fun setState(gameState: GameState) {

@@ -1,6 +1,7 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.controller.CharacterObserver
+import cl.uchile.dcc.finalreality.model.character.player.effects.Effect
 import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
 import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
@@ -85,4 +86,6 @@ interface GameCharacter {
      * Applies poison spell against the character.
      */
     fun applyPoison(from: Mage, poison: Poison)
+
+    fun effectApplied(effect: Effect)
 }
