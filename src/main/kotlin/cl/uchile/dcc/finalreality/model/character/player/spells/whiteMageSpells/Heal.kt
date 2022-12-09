@@ -20,7 +20,7 @@ class Heal : Spell {
     }
 
     fun applyHealFromTo(from: Mage, target: GameCharacter) {
-        target.receiveCure((target.currentHp * 0.3).toInt())
+        target.receiveCure((target.maxHp * 0.3).toInt())
         effects.applyEffect(from, target)
     }
 }

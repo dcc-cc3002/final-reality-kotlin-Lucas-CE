@@ -6,6 +6,7 @@ import cl.uchile.dcc.finalreality.model.character.player.effects.Paralyzed
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.Spell
+import kotlin.random.Random
 
 class Thunder : Spell {
 
@@ -22,7 +23,7 @@ class Thunder : Spell {
 
     fun applyThunderFromTo(from: Mage, target: GameCharacter) {
         target.receiveDamage(from.equippedWeapon.magicDmg)
-        if (Math.random() < 0.3) {
+        if (Random(100).nextDouble() < 0.3) {
             effects.applyEffect(from, target)
         }
     }

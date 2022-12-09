@@ -27,6 +27,10 @@ class GameController : CharacterObserver {
         get() = _turnsQueue
     val paralyzedCharacters
         get() = _paralyzedCharacters
+    val poisonedCharacters
+        get() = _poisonedCharacters
+    val burnedCharacters
+        get() = _burnedCharacters
 
     fun initGame() {
         setState(PullingCharacterState(this))
