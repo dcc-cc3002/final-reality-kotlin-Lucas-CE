@@ -1,6 +1,7 @@
 package cl.uchile.dcc.finalreality.controller
 
 import cl.uchile.dcc.finalreality.controller.gameStates.GameState
+import cl.uchile.dcc.finalreality.controller.gameStates.IdleState
 import cl.uchile.dcc.finalreality.model.character.Enemy
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
@@ -18,7 +19,7 @@ class GameController : CharacterObserver {
     private val _turnsQueue = LinkedBlockingQueue<GameCharacter>()
     private val playerCharacters = mutableListOf<PlayerCharacter>()
     private val enemyCharacters = mutableListOf<Enemy>()
-    private var state: GameState = GameState(this)
+    private var _state: GameState = IdleState(this)
     private val _paralyzedCharacters = mutableListOf<GameCharacter>()
     private val _poisonedCharacters = mutableListOf<GameCharacter>()
     private val _burnedCharacters = mutableListOf<GameCharacter>()
@@ -31,20 +32,22 @@ class GameController : CharacterObserver {
         get() = _poisonedCharacters
     val burnedCharacters
         get() = _burnedCharacters
+    val state
+        get() = _state
     val characterSelected
         get() = _characterSelected
 
     fun nextTurn() {
         _characterSelected = _turnsQueue.poll()
-        state.toDecidingTheTurnState()
+        _state.toDecidingTheTurnState()
     }
 
     fun decideTurn() {
         if (_characterSelected in playerCharacters) {
-            state.toPlayerMenuState()
+            _state.toPlayerMenuState()
         }
         else if (_characterSelected in enemyCharacters) {
-            state.toEnemyMenuState()
+            _state.toEnemyMenuState()
         }
     }
 
@@ -114,12 +117,12 @@ class GameController : CharacterObserver {
 
     fun attack(attacker: GameCharacter, target: GameCharacter) {
         attacker.attack(target)
-        state.toIdleState()
+        _state.toIdleState()
     }
 
     fun useMagic(attacker: Mage, target: GameCharacter) {
         attacker.throwSpell(target)
-        state.toIdleState()
+        _state.toIdleState()
     }
 
     fun waitTurn(character: GameCharacter) {
@@ -166,6 +169,6 @@ class GameController : CharacterObserver {
     }
 
     fun setState(gameState: GameState) {
-        state = gameState
+        _state = gameState
     }
 }
