@@ -1,7 +1,7 @@
 package cl.uchile.dcc.finalreality.exceptions
 
 import cl.uchile.dcc.finalreality.controller.GameController
-import cl.uchile.dcc.finalreality.controller.gameStates.GameFinishedState
+import cl.uchile.dcc.finalreality.controller.gameStates.EnemyMenuState
 import cl.uchile.dcc.finalreality.controller.gameStates.GameState
 import cl.uchile.dcc.finalreality.controller.gameStates.IdleState
 import io.kotest.core.spec.style.FunSpec
@@ -16,7 +16,7 @@ class IllegalStateTransitionExceptionSpec : FunSpec({
     beforeEach {
         context = GameController()
         actual = IdleState(context)
-        target = GameFinishedState(context)
+        target = EnemyMenuState(context)
     }
 
     test(

@@ -1,6 +1,8 @@
 package cl.uchile.dcc.finalreality.model.character.player.mages
 
 import cl.uchile.dcc.finalreality.controller.GameController
+import cl.uchile.dcc.finalreality.exceptions.InvalidEquippedSpellException
+import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException
 import cl.uchile.dcc.finalreality.model.character.Enemy
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
@@ -12,8 +14,13 @@ import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.
 import cl.uchile.dcc.finalreality.model.weapon.types.magicWeapons.Staff
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.int
+import io.kotest.property.checkAll
 import java.util.concurrent.LinkedBlockingQueue
 import kotlin.random.Random
+import org.junit.jupiter.api.assertThrows
 
 private const val NAME = "NAME"
 private const val MAX_HP = 100
@@ -53,6 +60,60 @@ class AbstractMageSpec : FunSpec({
         blackMage.equip(staff)
         whiteMage.equipSpell(heal)
         blackMage.equipSpell(thunder)
+    }
+    test("The currentMp initial value is the maxMp value") {
+        blackMage.currentMp shouldBe MAX_MP
+        whiteMage.currentMp shouldBe MAX_HP
+    }
+    test("The currentMp setter change the currentMp value") {
+        checkAll(Arb.int(0..MAX_HP)) {
+            currentMp ->
+            blackMage.currentMp = currentMp
+            blackMage.currentMp shouldBe currentMp
+        }
+        checkAll(Arb.int(0..MAX_HP)) {
+            currentMp ->
+            whiteMage.currentMp = currentMp
+            whiteMage.currentMp shouldBe currentMp
+        }
+    }
+    test("The currentMp setter throws an exception when the value is out of range (0,maxMp)") {
+        checkAll(
+            Arb.int(MAX_HP + 1..2 * MAX_HP),
+            Arb.int(-MAX_HP..-1)
+        ) { greaterMaxMp, lessMinMp ->
+            // BlackMage
+            assertThrows<InvalidStatValueException> { blackMage.currentMp = greaterMaxMp }
+            assertThrows<InvalidStatValueException> { blackMage.currentMp = lessMinMp }
+            // WhiteMage
+            assertThrows<InvalidStatValueException> { whiteMage.currentMp = greaterMaxMp }
+            assertThrows<InvalidStatValueException> { whiteMage.currentMp = lessMinMp }
+        }
+    }
+    test("Trying to equip spells to wrong mages classes throws an exception and not change spell") {
+        // Using equipSpell
+        assertThrows<InvalidEquippedSpellException> { whiteMage.equipSpell(fire) }
+        whiteMage.spell shouldNotBe fire
+        assertThrows<InvalidEquippedSpellException> { whiteMage.equipSpell(thunder) }
+        whiteMage.spell shouldNotBe thunder
+        assertThrows<InvalidEquippedSpellException> { blackMage.equipSpell(heal) }
+        blackMage.spell shouldNotBe heal
+        assertThrows<InvalidEquippedSpellException> { blackMage.equipSpell(paralysis) }
+        blackMage.spell shouldNotBe paralysis
+        assertThrows<InvalidEquippedSpellException> { blackMage.equipSpell(poison) }
+        blackMage.spell shouldNotBe poison
+
+        // Using equip{SpellName}
+        assertThrows<InvalidEquippedSpellException> { whiteMage.equipSpellFire(fire) }
+        whiteMage.spell shouldNotBe fire
+        assertThrows<InvalidEquippedSpellException> { whiteMage.equipSpellThunder(thunder) }
+        whiteMage.spell shouldNotBe thunder
+        assertThrows<InvalidEquippedSpellException> { blackMage.equipSpellHeal(heal) }
+        blackMage.spell shouldNotBe heal
+        assertThrows<InvalidEquippedSpellException> { blackMage.equipSpellParalysis(paralysis) }
+        blackMage.spell shouldNotBe paralysis
+        assertThrows<InvalidEquippedSpellException> { blackMage.equipSpellPoison(poison) }
+        blackMage.spell shouldNotBe poison
     }
     test("white mage can cure to other characters with heal spell") {
         whiteMage.equipSpell(heal)

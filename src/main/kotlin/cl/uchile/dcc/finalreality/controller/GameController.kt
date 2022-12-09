@@ -1,7 +1,6 @@
 package cl.uchile.dcc.finalreality.controller
 
 import cl.uchile.dcc.finalreality.controller.gameStates.GameState
-import cl.uchile.dcc.finalreality.controller.gameStates.PullingCharacterState
 import cl.uchile.dcc.finalreality.model.character.Enemy
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.PlayerCharacter
@@ -23,6 +22,7 @@ class GameController : CharacterObserver {
     private val _paralyzedCharacters = mutableListOf<GameCharacter>()
     private val _poisonedCharacters = mutableListOf<GameCharacter>()
     private val _burnedCharacters = mutableListOf<GameCharacter>()
+    private var _characterSelected : GameCharacter? = null
     val turnsQueue
         get() = _turnsQueue
     val paralyzedCharacters
@@ -31,10 +31,23 @@ class GameController : CharacterObserver {
         get() = _poisonedCharacters
     val burnedCharacters
         get() = _burnedCharacters
+    val characterSelected
+        get() = _characterSelected
 
-    fun initGame() {
-        setState(PullingCharacterState(this))
+    fun nextTurn() {
+        _characterSelected = _turnsQueue.poll()
+        state.toDecidingTheTurnState()
     }
+
+    fun decideTurn() {
+        if (_characterSelected in playerCharacters) {
+            state.toPlayerMenuState()
+        }
+        else if (_characterSelected in enemyCharacters) {
+            state.toEnemyMenuState()
+        }
+    }
+
 
     fun createPlayerCharacterEngineer(name: String, hp: Int, defense: Int, weapon: GameWeapon) {
         val engineer = Engineer(name, hp, defense, turnsQueue)
@@ -101,26 +114,21 @@ class GameController : CharacterObserver {
 
     fun attack(attacker: GameCharacter, target: GameCharacter) {
         attacker.attack(target)
+        state.toIdleState()
     }
 
     fun useMagic(attacker: Mage, target: GameCharacter) {
         attacker.throwSpell(target)
-    }
-
-    fun detectDeathPlayerCharacter(playerCharacter: PlayerCharacter) {
-        if (playerCharacter.currentHp == 0) {
-            playerCharacters.remove(playerCharacter)
-        }
-    }
-
-    fun detectDeathEnemies(enemy: Enemy) {
-        if (enemy.currentHp == 0) {
-            enemyCharacters.remove(enemy)
-        }
+        state.toIdleState()
     }
 
     fun waitTurn(character: GameCharacter) {
         character.waitTurn()
+    }
+
+    fun verifyWin() {
+        onEnemyWin()
+        onPlayerWin()
     }
 
     private fun onPlayerWin() {

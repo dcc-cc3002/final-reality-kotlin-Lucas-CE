@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.controller
 
+import cl.uchile.dcc.finalreality.controller.gameStates.PlayerMenuState
 import cl.uchile.dcc.finalreality.model.character.Enemy
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
@@ -96,6 +97,7 @@ class GameControllerSpec : FunSpec({
         queue.poll() shouldBe expected
     }
     test("The game controller allows characters to attack other characters") {
+        gameController.setState(PlayerMenuState(gameController))
         gameController.attack(engineer, enemy)
         enemy.currentHp shouldBe MAX_HP - (DAMAGE - DEFENSE)
     }
