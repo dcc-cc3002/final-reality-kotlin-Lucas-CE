@@ -18,9 +18,9 @@ import io.kotest.matchers.shouldNotBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.checkAll
-import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.LinkedBlockingQueue
 import kotlin.random.Random
+import org.junit.jupiter.api.assertThrows
 
 private const val NAME = "NAME"
 private const val MAX_HP = 100
@@ -79,8 +79,8 @@ class AbstractMageSpec : FunSpec({
     }
     test("The currentMp setter throws an exception when the value is out of range (0,maxMp)") {
         checkAll(
-            Arb.int(MAX_HP + 1..2 * MAX_HP),
-            Arb.int(-MAX_HP..-1)
+            Arb.int(MAX_MP + 1..2 * MAX_MP),
+            Arb.int(-MAX_MP..-1)
         ) { greaterMaxMp, lessMinMp ->
             // BlackMage
             assertThrows<InvalidStatValueException> { blackMage.currentMp = greaterMaxMp }
