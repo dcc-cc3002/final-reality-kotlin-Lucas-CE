@@ -63,15 +63,15 @@ class AbstractMageSpec : FunSpec({
     }
     test("The currentMp initial value is the maxMp value") {
         blackMage.currentMp shouldBe MAX_MP
-        whiteMage.currentMp shouldBe MAX_HP
+        whiteMage.currentMp shouldBe MAX_MP
     }
     test("The currentMp setter change the currentMp value") {
-        checkAll(Arb.int(0..MAX_HP)) {
+        checkAll(Arb.int(0..MAX_MP)) {
             currentMp ->
             blackMage.currentMp = currentMp
             blackMage.currentMp shouldBe currentMp
         }
-        checkAll(Arb.int(0..MAX_HP)) {
+        checkAll(Arb.int(0..MAX_MP)) {
             currentMp ->
             whiteMage.currentMp = currentMp
             whiteMage.currentMp shouldBe currentMp
