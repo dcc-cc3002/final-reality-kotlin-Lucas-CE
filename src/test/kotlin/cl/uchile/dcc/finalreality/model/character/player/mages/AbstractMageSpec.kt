@@ -18,9 +18,9 @@ import io.kotest.matchers.shouldNotBe
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.checkAll
+import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.LinkedBlockingQueue
 import kotlin.random.Random
-import org.junit.jupiter.api.assertThrows
 
 private const val NAME = "NAME"
 private const val MAX_HP = 100

@@ -39,7 +39,7 @@ class GameControllerSpec : FunSpec({
     lateinit var heal: Heal
     lateinit var engineer: Engineer
     lateinit var enemy: Enemy
-    beforeEach(){
+    beforeEach() {
         gameController = GameController()
         queue = LinkedBlockingQueue<GameCharacter>()
         axe = Axe(NAME, DAMAGE, WEIGHT)
