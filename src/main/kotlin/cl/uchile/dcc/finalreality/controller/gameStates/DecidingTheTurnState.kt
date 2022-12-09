@@ -4,6 +4,7 @@ import cl.uchile.dcc.finalreality.controller.GameController
 
 class DecidingTheTurnState(context: GameController) : GameState(context) {
     init {
+        context.setState(this)
         context.decideTurn()
     }
     override fun toEnemyMenuState() {

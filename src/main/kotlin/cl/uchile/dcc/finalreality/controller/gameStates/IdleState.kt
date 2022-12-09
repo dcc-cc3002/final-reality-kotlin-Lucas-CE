@@ -4,6 +4,6 @@ import cl.uchile.dcc.finalreality.controller.GameController
 
 class IdleState(context: GameController) : GameState(context) {
     override fun toDecidingTheTurnState() {
-        context.setState(DecidingTheTurnState(context))
+        DecidingTheTurnState(context)
     }
 }

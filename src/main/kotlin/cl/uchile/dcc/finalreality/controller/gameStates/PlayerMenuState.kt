@@ -4,7 +4,7 @@ import cl.uchile.dcc.finalreality.controller.GameController
 
 class PlayerMenuState(context: GameController) : GameState(context) {
     override fun toIdleState() {
-        context.setState(IdleState(context))
+        IdleState(context)
         context.verifyWin()
     }
 }

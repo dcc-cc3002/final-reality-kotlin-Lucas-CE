@@ -1,5 +1,6 @@
 package cl.uchile.dcc.finalreality.controller
 
+import cl.uchile.dcc.finalreality.controller.gameStates.EnemyMenuState
 import cl.uchile.dcc.finalreality.controller.gameStates.PlayerMenuState
 import cl.uchile.dcc.finalreality.model.character.Enemy
 import cl.uchile.dcc.finalreality.model.character.GameCharacter
@@ -38,6 +39,7 @@ class GameControllerSpec : FunSpec({
     lateinit var thunder: Thunder
     lateinit var heal: Heal
     lateinit var engineer: Engineer
+    lateinit var whiteMage: WhiteMage
     lateinit var enemy: Enemy
     beforeEach() {
         gameController = GameController()
@@ -51,7 +53,26 @@ class GameControllerSpec : FunSpec({
         heal = Heal()
         engineer = Engineer(NAME, MAX_HP, DEFENSE, queue)
         enemy = Enemy(NAME, WEIGHT, MAX_HP, DEFENSE, queue)
+        whiteMage = WhiteMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
         engineer.equip(axe)
+        whiteMage.equipSpell(heal)
+        whiteMage.equip(staff)
+    }
+    test("The player character selected is the first character in the queue") {
+        gameController.createPlayerCharacterEngineer(NAME, MAX_HP, DEFENSE, axe)
+        queue = gameController.turnsQueue
+        val engineerInQueue = Engineer(NAME, MAX_HP, DEFENSE, queue)
+        gameController.nextTurn()
+        gameController.characterSelected shouldBe engineerInQueue
+        gameController.state::class shouldBe PlayerMenuState::class
+    }
+    test("The enemy selected is the first character in the queue") {
+        gameController.createEnemy(NAME, MAX_HP, DEFENSE, WEIGHT)
+        queue = gameController.turnsQueue
+        val enemyInQueue = Enemy(NAME, WEIGHT, MAX_HP, DEFENSE, queue)
+        gameController.nextTurn()
+        gameController.characterSelected shouldBe enemyInQueue
+        gameController.state::class shouldBe EnemyMenuState::class
     }
     test("Game controller can create engineers") {
         gameController.createPlayerCharacterEngineer(NAME, MAX_HP, DEFENSE, axe)
@@ -101,4 +122,32 @@ class GameControllerSpec : FunSpec({
         gameController.attack(engineer, enemy)
         enemy.currentHp shouldBe MAX_HP - (DAMAGE - DEFENSE)
     }
+    test("Mages can use magic with other characters") {
+        gameController.setState(PlayerMenuState(gameController))
+        engineer.currentHp /= 2
+        gameController.useMagic(whiteMage, engineer)
+        engineer.currentHp shouldBe MAX_HP*0.8
+    }
+    test("If a character death must be removed from the character list") {
+        // to enemy
+        gameController.createEnemy(NAME, MAX_HP, DEFENSE, WEIGHT)
+        queue = gameController.turnsQueue
+        val enemyInQueue = Enemy(NAME, WEIGHT, MAX_HP, DEFENSE, queue)
+        enemyInQueue.addListener(gameController)
+        gameController.turnsQueue.contains(enemyInQueue) shouldBe true
+        enemyInQueue.currentHp = 0
+        enemyInQueue.notifyDeath()
+        gameController.turnsQueue.contains(enemyInQueue) shouldBe false
+
+        // to player character
+        gameController.createPlayerCharacterEngineer(NAME, MAX_HP, DEFENSE, axe)
+        queue = gameController.turnsQueue
+        val engineerInQueue = Engineer(NAME, MAX_HP, DEFENSE, queue)
+        engineerInQueue.addListener(gameController)
+        gameController.turnsQueue.contains(engineerInQueue) shouldBe true
+        engineerInQueue.currentHp = 0
+        engineerInQueue.notifyDeath()
+        gameController.turnsQueue.contains(engineerInQueue) shouldBe false
+    }
+
 })

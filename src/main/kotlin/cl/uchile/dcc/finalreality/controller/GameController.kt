@@ -117,6 +117,7 @@ class GameController : CharacterObserver {
 
     fun attack(attacker: GameCharacter, target: GameCharacter) {
         attacker.attack(target)
+        waitTurn(attacker)
         _state.toIdleState()
     }
 
@@ -125,7 +126,7 @@ class GameController : CharacterObserver {
         _state.toIdleState()
     }
 
-    fun waitTurn(character: GameCharacter) {
+    private fun waitTurn(character: GameCharacter) {
         character.waitTurn()
     }
 
@@ -137,12 +138,18 @@ class GameController : CharacterObserver {
     private fun onPlayerWin() {
         if (enemyCharacters.isEmpty()) {
             println("The players wins!")
+            _turnsQueue.removeAll(_turnsQueue)
+            playerCharacters.removeAll(playerCharacters)
+            enemyCharacters.removeAll(enemyCharacters)
         }
     }
 
     private fun onEnemyWin() {
         if (playerCharacters.isEmpty()) {
             println("The enemies wins!")
+            _turnsQueue.removeAll(_turnsQueue)
+            playerCharacters.removeAll(playerCharacters)
+            enemyCharacters.removeAll(enemyCharacters)
         }
     }
 
@@ -153,7 +160,7 @@ class GameController : CharacterObserver {
 
     override fun updateDeathPlayerCharacter(playerCharacter: PlayerCharacter) {
         playerCharacters.remove(playerCharacter)
-        turnsQueue.remove(playerCharacter)
+        _turnsQueue.remove(playerCharacter)
     }
 
     override fun updateBurnedEffect(gameCharacter: GameCharacter) {
