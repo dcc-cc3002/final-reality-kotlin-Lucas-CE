@@ -49,6 +49,10 @@ abstract class AbstractCharacter(
 
     override val defense = Require.Stat(defense, "Defense") atLeast 0
 
+    override var magicDamageFire = 0
+
+    override var magicDamagePoison = 0
+
     override fun addListener(characterObserver: CharacterObserver) {
         characterListeners.add(characterObserver)
     }

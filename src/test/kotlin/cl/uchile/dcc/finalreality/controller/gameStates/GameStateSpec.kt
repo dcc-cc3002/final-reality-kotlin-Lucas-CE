@@ -24,7 +24,6 @@ class GameStateSpec : FunSpec({
         assertThrows<IllegalStateTransitionException> { idleState.toEnemyMenuState() }
         assertThrows<IllegalStateTransitionException> { idleState.toIdleState() }
         // From decidingTheTurnState
-        assertThrows<IllegalStateTransitionException> { decidingTheTurnState.toIdleState() }
         assertThrows<IllegalStateTransitionException> { decidingTheTurnState.toDecidingTheTurnState() }
         // From playerMenuState
         assertThrows<IllegalStateTransitionException> { playerMenuState.toEnemyMenuState() }

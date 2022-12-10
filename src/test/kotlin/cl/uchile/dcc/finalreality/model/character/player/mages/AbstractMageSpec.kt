@@ -142,7 +142,7 @@ class AbstractMageSpec : FunSpec({
             enemy.currentHp = MAX_HP
             blackMage.throwSpell(enemy)
             enemy.currentHp shouldBe MAX_HP - MAGIC_DAMAGE + DEFENSE
-            while (random.nextDouble() < 0.2) {
+            if (random.nextDouble() < 0.2) {
                 gameController.burnedCharacters.contains(enemy) shouldBe true
             }
         }

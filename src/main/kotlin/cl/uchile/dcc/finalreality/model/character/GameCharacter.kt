@@ -23,8 +23,12 @@ import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.
  *    The current health points of the character.
  * @property characterListeners
  *    The listeners of the character.
- * @property effect
- *    The effect that is being applied to the character.
+ * @property magicDamageFire
+ *    The magic damage dealt by the fire effect. Will be 0 if the character is not under fire
+ *    effect
+ * @property magicDamagePoison
+ *    The magic damage dealt by the poison effect. Will be 0 if the character is not under poison
+ *    effect
  *
  * @author <a href="https://www.github.com/r8vnhill">R8V</a>
  * @author <a href="https://github.com/Lucas-CE">Lucase</a>
@@ -35,6 +39,8 @@ interface GameCharacter {
     var currentHp: Int
     val defense: Int
     val characterListeners: List<CharacterObserver>
+    var magicDamageFire: Int
+    var magicDamagePoison: Int
 
     /**
      * Notify the death of the character to the listeners.

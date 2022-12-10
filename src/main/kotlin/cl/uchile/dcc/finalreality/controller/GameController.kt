@@ -17,8 +17,8 @@ import java.util.concurrent.LinkedBlockingQueue
 
 class GameController : CharacterObserver {
     private val _turnsQueue = LinkedBlockingQueue<GameCharacter>()
-    private val playerCharacters = mutableListOf<PlayerCharacter>()
-    private val enemyCharacters = mutableListOf<Enemy>()
+    private val _playerCharacters = mutableListOf<PlayerCharacter>()
+    private val _enemyCharacters = mutableListOf<Enemy>()
     private var _state: GameState = IdleState(this)
     private val _paralyzedCharacters = mutableListOf<GameCharacter>()
     private val _poisonedCharacters = mutableListOf<GameCharacter>()
@@ -26,6 +26,10 @@ class GameController : CharacterObserver {
     private var _characterSelected : GameCharacter? = null
     val turnsQueue
         get() = _turnsQueue
+    val playerCharacters
+        get() = _playerCharacters
+    val enemyCharacters
+        get() = _enemyCharacters
     val paralyzedCharacters
         get() = _paralyzedCharacters
     val poisonedCharacters
@@ -38,40 +42,64 @@ class GameController : CharacterObserver {
         get() = _characterSelected
 
     fun nextTurn() {
-        _characterSelected = _turnsQueue.poll()
-        _state.toDecidingTheTurnState()
-    }
-
-    fun decideTurn() {
-        if (_characterSelected in playerCharacters) {
-            _state.toPlayerMenuState()
-        }
-        else if (_characterSelected in enemyCharacters) {
-            _state.toEnemyMenuState()
+        if (!_turnsQueue.isEmpty()) {
+            _characterSelected = _turnsQueue.poll()
+            _state.toDecidingTheTurnState()
+            decideTurn()
+        } else {
+            println("The queue is still empty")
         }
     }
 
+    private fun applyDamageEffects() {
+        if (_characterSelected in _burnedCharacters) {
+            _characterSelected!!.receiveDamage(_characterSelected!!.magicDamageFire)
+            _characterSelected!!.magicDamageFire = 0
+            _burnedCharacters.remove(_characterSelected)
+        }
+        if (_characterSelected in _poisonedCharacters) {
+            _characterSelected!!.receiveDamage(_characterSelected!!.magicDamagePoison)
+            _characterSelected!!.magicDamagePoison = 0
+            _poisonedCharacters.remove(_characterSelected)
+        }
+    }
+
+    private fun decideTurn() {
+        applyDamageEffects()
+        when (_characterSelected) {
+            in _paralyzedCharacters -> {
+                _characterSelected?.let { waitTurn(it) }
+                _state.toIdleState()
+            }
+            in _playerCharacters -> {
+                _state.toPlayerMenuState()
+            }
+            in _enemyCharacters -> {
+                _state.toEnemyMenuState()
+            }
+        }
+    }
 
     fun createPlayerCharacterEngineer(name: String, hp: Int, defense: Int, weapon: GameWeapon) {
-        val engineer = Engineer(name, hp, defense, turnsQueue)
+        val engineer = Engineer(name, hp, defense, _turnsQueue)
         engineer.equip(weapon)
-        playerCharacters.add(engineer)
+        _playerCharacters.add(engineer)
         _turnsQueue.add(engineer)
         engineer.addListener(this)
     }
 
     fun createPlayerCharacterKnight(name: String, hp: Int, defense: Int, weapon: GameWeapon) {
-        val knight = Knight(name, hp, defense, turnsQueue)
+        val knight = Knight(name, hp, defense, _turnsQueue)
         knight.equip(weapon)
-        playerCharacters.add(knight)
+        _playerCharacters.add(knight)
         _turnsQueue.add(knight)
         knight.addListener(this)
     }
 
     fun createPlayerCharacterThief(name: String, hp: Int, defense: Int, weapon: GameWeapon) {
-        val thief = Thief(name, hp, defense, turnsQueue)
+        val thief = Thief(name, hp, defense, _turnsQueue)
         thief.equip(weapon)
-        playerCharacters.add(thief)
+        _playerCharacters.add(thief)
         _turnsQueue.add(thief)
         thief.addListener(this)
     }
@@ -84,10 +112,10 @@ class GameController : CharacterObserver {
         weapon: GameWeapon,
         spell: Spell
     ) {
-        val whiteMage = WhiteMage(name, hp, mp, defense, turnsQueue)
+        val whiteMage = WhiteMage(name, hp, mp, defense, _turnsQueue)
         whiteMage.equip(weapon)
         whiteMage.equipSpell(spell)
-        playerCharacters.add(whiteMage)
+        _playerCharacters.add(whiteMage)
         _turnsQueue.add(whiteMage)
         whiteMage.addListener(this)
     }
@@ -100,17 +128,17 @@ class GameController : CharacterObserver {
         weapon: GameWeapon,
         spell: Spell
     ) {
-        val blackMage = BlackMage(name, hp, mp, defense, turnsQueue)
+        val blackMage = BlackMage(name, hp, mp, defense, _turnsQueue)
         blackMage.equip(weapon)
         blackMage.equipSpell(spell)
-        playerCharacters.add(blackMage)
+        _playerCharacters.add(blackMage)
         _turnsQueue.add(blackMage)
         blackMage.addListener(this)
     }
 
     fun createEnemy(name: String, hp: Int, defense: Int, weight: Int) {
-        val enemy = Enemy(name, weight, hp, defense, turnsQueue)
-        enemyCharacters.add(enemy)
+        val enemy = Enemy(name, weight, hp, defense, _turnsQueue)
+        _enemyCharacters.add(enemy)
         _turnsQueue.add(enemy)
         enemy.addListener(this)
     }
@@ -121,8 +149,10 @@ class GameController : CharacterObserver {
         _state.toIdleState()
     }
 
-    fun useMagic(attacker: Mage, target: GameCharacter) {
+    fun useMagic(target: GameCharacter) {
+        val attacker = _characterSelected as Mage
         attacker.throwSpell(target)
+        waitTurn(attacker)
         _state.toIdleState()
     }
 
@@ -136,30 +166,30 @@ class GameController : CharacterObserver {
     }
 
     private fun onPlayerWin() {
-        if (enemyCharacters.isEmpty()) {
+        if (_enemyCharacters.isEmpty()) {
             println("The players wins!")
             _turnsQueue.removeAll(_turnsQueue)
-            playerCharacters.removeAll(playerCharacters)
-            enemyCharacters.removeAll(enemyCharacters)
+            _playerCharacters.removeAll(_playerCharacters)
+            _enemyCharacters.removeAll(_enemyCharacters)
         }
     }
 
     private fun onEnemyWin() {
-        if (playerCharacters.isEmpty()) {
+        if (_playerCharacters.isEmpty()) {
             println("The enemies wins!")
             _turnsQueue.removeAll(_turnsQueue)
-            playerCharacters.removeAll(playerCharacters)
-            enemyCharacters.removeAll(enemyCharacters)
+            _playerCharacters.removeAll(_playerCharacters)
+            _enemyCharacters.removeAll(_enemyCharacters)
         }
     }
 
     override fun updateDeathEnemy(enemy: Enemy) {
-        enemyCharacters.remove(enemy)
+        _enemyCharacters.remove(enemy)
         _turnsQueue.remove(enemy)
     }
 
     override fun updateDeathPlayerCharacter(playerCharacter: PlayerCharacter) {
-        playerCharacters.remove(playerCharacter)
+        _playerCharacters.remove(playerCharacter)
         _turnsQueue.remove(playerCharacter)
     }
 
