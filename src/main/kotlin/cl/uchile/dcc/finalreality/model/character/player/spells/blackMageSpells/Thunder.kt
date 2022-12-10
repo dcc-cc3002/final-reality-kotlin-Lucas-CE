@@ -12,6 +12,7 @@ class Thunder : Spell {
 
     override val manaCost = 15
     override val effects = CompositeEffect(listOf(Paralyzed()))
+    val random = Random(100)
 
     override fun equipSpellToBlackMage(blackMage: BlackMage) {
         blackMage.equipSpellThunder(this)
@@ -23,7 +24,7 @@ class Thunder : Spell {
 
     fun applyThunderFromTo(from: Mage, target: GameCharacter) {
         target.receiveDamage(from.equippedWeapon.magicDmg)
-        if (Random(100).nextDouble() < 0.3) {
+        if (random.nextDouble() < 0.3) {
             effects.applyEffect(from, target)
         }
     }

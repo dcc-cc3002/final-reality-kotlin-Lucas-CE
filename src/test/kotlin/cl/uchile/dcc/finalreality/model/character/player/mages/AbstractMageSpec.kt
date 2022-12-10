@@ -130,30 +130,29 @@ class AbstractMageSpec : FunSpec({
     }
     test("white mage can poison to an enemy") {
         whiteMage.equipSpell(poison)
-        whiteMage.addListener(gameController)
         enemy.addListener(gameController)
         whiteMage.throwSpell(enemy)
         gameController.poisonedCharacters.contains(enemy) shouldBe true
     }
     test("black mage can throw fire to an enemy") {
+        blackMage.equipSpell(fire)
+        enemy.addListener(gameController)
+        val random = Random(100)
         repeat(100) {
             enemy.currentHp = MAX_HP
-            blackMage.equipSpell(fire)
-            blackMage.addListener(gameController)
-            enemy.addListener(gameController)
             blackMage.throwSpell(enemy)
             enemy.currentHp shouldBe MAX_HP - MAGIC_DAMAGE + DEFENSE
-            while (Random(100).nextDouble() < 0.2) {
+            while (random.nextDouble() < 0.2) {
                 gameController.burnedCharacters.contains(enemy) shouldBe true
             }
         }
     }
     test("black mage can throw thunder to an enemy") {
+        blackMage.equipSpell(thunder)
+        enemy.addListener(gameController)
+        val random = Random(100)
         repeat(100) {
             enemy.currentHp = MAX_HP
-            blackMage.equipSpell(thunder)
-            blackMage.addListener(gameController)
-            enemy.addListener(gameController)
             blackMage.throwSpell(enemy)
             enemy.currentHp shouldBe MAX_HP - MAGIC_DAMAGE + DEFENSE
             while (Random(100).nextDouble() < 0.3) {

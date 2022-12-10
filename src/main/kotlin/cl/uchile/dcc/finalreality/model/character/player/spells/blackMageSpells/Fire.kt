@@ -6,7 +6,7 @@ import cl.uchile.dcc.finalreality.model.character.player.effects.CompositeEffect
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import cl.uchile.dcc.finalreality.model.character.player.mages.Mage
 import cl.uchile.dcc.finalreality.model.character.player.spells.Spell
-import java.util.Random
+import kotlin.random.Random
 
 /**
  * A fire is a type of spell that can be thrown by a mage.
@@ -23,6 +23,7 @@ class Fire : Spell {
 
     override val manaCost = 15
     override val effects = CompositeEffect(listOf(Burned()))
+    val random = Random(100)
 
     override fun equipSpellToBlackMage(blackMage: BlackMage) {
         blackMage.equipSpellFire(this)
@@ -34,7 +35,7 @@ class Fire : Spell {
 
     fun applyFireFromTo(from: Mage, target: GameCharacter) {
         target.receiveDamage(from.equippedWeapon.magicDmg)
-        if (Random(100).nextDouble() < 0.2) {
+        if (random.nextDouble() < 0.2) {
             effects.applyEffect(from, target)
         }
     }
