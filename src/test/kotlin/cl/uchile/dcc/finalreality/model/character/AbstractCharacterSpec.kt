@@ -1,12 +1,18 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.controller.GameController
+import cl.uchile.dcc.finalreality.exceptions.InvalidSpellTargetException
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException
 import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import cl.uchile.dcc.finalreality.model.character.player.common.Knight
 import cl.uchile.dcc.finalreality.model.character.player.common.Thief
 import cl.uchile.dcc.finalreality.model.character.player.mages.BlackMage
 import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
+import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Fire
+import cl.uchile.dcc.finalreality.model.character.player.spells.blackMageSpells.Thunder
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Heal
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Paralysis
+import cl.uchile.dcc.finalreality.model.character.player.spells.whiteMageSpells.Poison
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Axe
 import cl.uchile.dcc.finalreality.model.weapon.types.commonWeapons.Knife
@@ -18,10 +24,10 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.checkAll
+import java.util.concurrent.LinkedBlockingQueue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.junit.jupiter.api.assertThrows
-import java.util.concurrent.LinkedBlockingQueue
 
 private const val NAME = "NAME"
 private const val MAX_HP = 100
@@ -39,7 +45,7 @@ class AbstractCharacterSpec : FunSpec({
     lateinit var knight: Knight
     lateinit var thief: Thief
     lateinit var whiteMage: WhiteMage
-    lateinit var enemy1: Enemy
+    lateinit var enemy: Enemy
     lateinit var mageWeapon: GameWeapon
     lateinit var engineerWeapon: GameWeapon
     lateinit var knightWeapon: GameWeapon
@@ -53,7 +59,7 @@ class AbstractCharacterSpec : FunSpec({
         knight = Knight(NAME, MAX_HP, DEFENSE, queue)
         thief = Thief(NAME, MAX_HP, DEFENSE, queue)
         whiteMage = WhiteMage(NAME, MAX_HP, MAX_MP, DEFENSE, queue)
-        enemy1 = Enemy(NAME, ENEMY_WGT, MAX_HP, DEFENSE, queue)
+        enemy = Enemy(NAME, ENEMY_WGT, MAX_HP, DEFENSE, queue)
         mageWeapon = Staff(WEP_NAME, WEP_DMG, WEP_WGT, WEP_DMG)
         engineerWeapon = Axe(WEP_NAME, WEP_DMG, WEP_WGT)
         knightWeapon = Sword(WEP_NAME, WEP_DMG, WEP_WGT)
@@ -115,7 +121,7 @@ class AbstractCharacterSpec : FunSpec({
         knight.currentHp shouldBe MAX_HP
         thief.currentHp shouldBe MAX_HP
         whiteMage.currentHp shouldBe MAX_HP
-        enemy1.currentHp shouldBe MAX_HP
+        enemy.currentHp shouldBe MAX_HP
     }
 
     test("The currentHp setter change the currentHp value") {
@@ -136,8 +142,8 @@ class AbstractCharacterSpec : FunSpec({
             whiteMage.currentHp = currentHp
             whiteMage.currentHp shouldBe currentHp
 
-            enemy1.currentHp = currentHp
-            enemy1.currentHp shouldBe currentHp
+            enemy.currentHp = currentHp
+            enemy.currentHp shouldBe currentHp
         }
     }
 
@@ -162,8 +168,8 @@ class AbstractCharacterSpec : FunSpec({
             assertThrows<InvalidStatValueException> { whiteMage.currentHp = greaterMaxHp }
             assertThrows<InvalidStatValueException> { whiteMage.currentHp = lessMinHp }
             // Enemy
-            assertThrows<InvalidStatValueException> { enemy1.currentHp = greaterMaxHp }
-            assertThrows<InvalidStatValueException> { enemy1.currentHp = lessMinHp }
+            assertThrows<InvalidStatValueException> { enemy.currentHp = greaterMaxHp }
+            assertThrows<InvalidStatValueException> { enemy.currentHp = lessMinHp }
         }
     }
 
@@ -198,6 +204,28 @@ class AbstractCharacterSpec : FunSpec({
         }
     }
 
+    test("When a character receive cure, their current hp increments in cure points " +
+             "if the current hp + cure points are less than the max hp.") {
+        checkAll(
+            Arb.positiveInt(MAX_HP - MAX_HP / 3)
+        ) { cure ->
+            engineer.currentHp = MAX_HP/3
+            engineer.receiveCure(cure)
+            engineer.currentHp shouldBe MAX_HP/3 + cure
+        }
+    }
+
+    test("When a character receive cure, their current hp is set in max hp " +
+             "if the current hp + cure points are greater than the max hp.") {
+        checkAll(
+            Arb.int(MAX_HP - MAX_HP / 3 + 1..10000)
+        ) { cure ->
+            engineer.currentHp = MAX_HP/3
+            engineer.receiveCure(cure)
+            engineer.currentHp shouldBe MAX_HP
+        }
+    }
+
     test(
         "When a character takes less damage than his defense, their current hp " +
             "does not change."
@@ -227,7 +255,7 @@ class AbstractCharacterSpec : FunSpec({
         withContext(Dispatchers.IO) { Thread.sleep(100) }
         whiteMage.waitTurn()
         withContext(Dispatchers.IO) { Thread.sleep(100) }
-        enemy1.waitTurn()
+        enemy.waitTurn()
 
         withContext(Dispatchers.IO) { Thread.sleep(6000) }
 
@@ -236,6 +264,14 @@ class AbstractCharacterSpec : FunSpec({
         queue.poll() shouldBe knight
         queue.poll() shouldBe thief
         queue.poll() shouldBe whiteMage
-        queue.poll() shouldBe enemy1
+        queue.poll() shouldBe enemy
+    }
+
+    test("Apply spells to invalid spell target throw invalid spell target exception.") {
+        assertThrows<InvalidSpellTargetException> { enemy.applyHeal(whiteMage, Heal()) }
+        assertThrows<InvalidSpellTargetException> { engineer.applyPoison(whiteMage, Poison()) }
+        assertThrows<InvalidSpellTargetException> { engineer.applyParalysis(whiteMage, Paralysis()) }
+        assertThrows<InvalidSpellTargetException> { engineer.applyFire(blackMage, Fire()) }
+        assertThrows<InvalidSpellTargetException> { engineer.applyThunder(blackMage, Thunder()) }
     }
 })
