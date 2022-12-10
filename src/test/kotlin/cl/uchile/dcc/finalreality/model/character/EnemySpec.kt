@@ -1,6 +1,7 @@
 package cl.uchile.dcc.finalreality.model.character
 
 import cl.uchile.dcc.finalreality.exceptions.InvalidStatValueException
+import cl.uchile.dcc.finalreality.model.character.player.common.Engineer
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -10,35 +11,50 @@ import io.kotest.property.arbitrary.int
 import io.kotest.property.arbitrary.positiveInt
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
-import org.junit.jupiter.api.assertThrows
 import java.util.concurrent.LinkedBlockingQueue
+import org.junit.jupiter.api.assertThrows
 
-private const val ENEMY1_NAME = "ENEMY1"
-private const val ENEMY1_WEIGHT = 10
-private const val ENEMY1_MAX_HP = 100
-private const val ENEMY1_DEFENSE = 10
-private const val ENEMY2_NAME = "ENEMY2"
-private const val ENEMY2_WEIGHT = 10
-private const val ENEMY2_MAX_HP = 80
-private const val ENEMY2_DEFENSE = 20
+private const val NAME1 = "NAME1"
+private const val WEIGHT1 = 40
+private const val MAX_HP1 = 100
+private const val DEFENSE1 = 10
+private const val NAME2 = "NAME2"
+private const val WEIGHT2 = 10
+private const val MAX_HP2 = 80
+private const val DEFENSE2 = 20
 
 class EnemySpec : FunSpec({
+    lateinit var queue: LinkedBlockingQueue<GameCharacter>
     lateinit var enemy1: Enemy
     lateinit var enemy2: Enemy
-    val queue = LinkedBlockingQueue<GameCharacter>()
+    lateinit var engineer: Engineer
 
     beforeEach {
-        enemy1 = Enemy(ENEMY1_NAME, ENEMY1_WEIGHT, ENEMY1_MAX_HP, ENEMY1_DEFENSE, queue)
-        enemy2 = Enemy(ENEMY2_NAME, ENEMY2_WEIGHT, ENEMY2_MAX_HP, ENEMY2_DEFENSE, queue)
+        queue = LinkedBlockingQueue<GameCharacter>()
+        enemy1 = Enemy(NAME1, WEIGHT1, MAX_HP1, DEFENSE1, queue)
+        enemy2 = Enemy(NAME2, WEIGHT2, MAX_HP2, DEFENSE2, queue)
+        engineer = Engineer(NAME1, MAX_HP1, DEFENSE1, queue)
     }
 
     test("weight setter throws exception when the value is less 1") {
-        checkAll(Arb.int(-ENEMY1_WEIGHT..0)) {
+        checkAll(Arb.int(-WEIGHT1..0)) {
             errorWeight ->
             assertThrows<InvalidStatValueException> {
                 val enemyErrorWeight =
-                    Enemy(ENEMY1_NAME, errorWeight, ENEMY1_MAX_HP, ENEMY1_DEFENSE, queue)
+                    Enemy(NAME1, errorWeight, MAX_HP1, DEFENSE1, queue)
             }
+        }
+    }
+
+    test("Enemy can attack to other characters and deals weight / 2 points damage points") {
+        val realDamage = WEIGHT1 / 2 - DEFENSE1
+        enemy1.attack(engineer)
+        if (realDamage in 0..MAX_HP1) {
+            engineer.currentHp shouldBe MAX_HP1 - WEIGHT1 / 2 + DEFENSE1
+        } else if (realDamage > 0) {
+            engineer.currentHp shouldBe 0
+        } else {
+            engineer.currentHp shouldBe MAX_HP1
         }
     }
 
