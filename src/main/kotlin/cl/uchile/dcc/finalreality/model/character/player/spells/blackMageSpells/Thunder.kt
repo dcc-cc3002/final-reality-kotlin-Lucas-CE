@@ -12,7 +12,7 @@ class Thunder : Spell {
 
     override val manaCost = 15
     override val effects = CompositeEffect(listOf(Paralyzed()))
-    val random = Random(100)
+    private val random = Random(100)
 
     override fun equipSpellToBlackMage(blackMage: BlackMage) {
         blackMage.equipSpellThunder(this)

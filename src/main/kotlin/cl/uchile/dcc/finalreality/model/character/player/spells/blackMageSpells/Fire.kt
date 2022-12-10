@@ -23,7 +23,7 @@ class Fire : Spell {
 
     override val manaCost = 15
     override val effects = CompositeEffect(listOf(Burned()))
-    val random = Random(100)
+    private val random = Random(100)
 
     override fun equipSpellToBlackMage(blackMage: BlackMage) {
         blackMage.equipSpellFire(this)
