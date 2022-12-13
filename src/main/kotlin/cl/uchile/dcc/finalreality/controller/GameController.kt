@@ -143,9 +143,9 @@ class GameController : CharacterObserver {
         enemy.addListener(this)
     }
 
-    fun attack(attacker: GameCharacter, target: GameCharacter) {
-        attacker.attack(target)
-        waitTurn(attacker)
+    fun attack(target: GameCharacter) {
+        _characterSelected.attack(target)
+        waitTurn(_characterSelected)
         _state.toIdleState()
     }
 

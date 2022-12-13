@@ -166,9 +166,11 @@ class GameControllerSpec : FunSpec({
         queue.poll() shouldBe expected
     }
     test("The game controller allows characters to attack other characters") {
-        gameController.setState(PlayerMenuState(gameController))
-        gameController.attack(engineer, enemy)
-        enemy.currentHp shouldBe MAX_HP - (DAMAGE - DEFENSE)
+        gameController.createPlayerCharacterEngineer(NAME, MAX_HP, DEFENSE, axe)
+        gameController.createEnemy(NAME, MAX_HP, DEFENSE, WEIGHT)
+        gameController.nextTurn()
+        gameController.attack(gameController.enemyCharacters[0])
+        gameController.enemyCharacters[0].currentHp shouldBe MAX_HP - (DAMAGE - DEFENSE)
     }
     test("Mages can use magic with other characters") {
         gameController.createPlayerCharacterWhiteMage(NAME, MAX_HP, MAX_MP, DEFENSE, staff, heal)
