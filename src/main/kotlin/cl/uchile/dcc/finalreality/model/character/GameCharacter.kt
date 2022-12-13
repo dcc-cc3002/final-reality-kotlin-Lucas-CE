@@ -98,5 +98,8 @@ interface GameCharacter {
      */
     fun applyPoison(from: Mage, poison: Poison)
 
+    /**
+     * Manage what happened if an effect was applied to the character.
+     */
     fun effectApplied(effect: Effect)
 }

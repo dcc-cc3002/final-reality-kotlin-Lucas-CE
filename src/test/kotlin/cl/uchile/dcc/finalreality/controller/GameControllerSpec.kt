@@ -175,10 +175,10 @@ class GameControllerSpec : FunSpec({
         gameController.createPlayerCharacterEngineer(NAME, MAX_HP, DEFENSE, axe)
         gameController.createEnemy(NAME, MAX_HP, DEFENSE, WEIGHT)
         gameController.playerCharacters[1].currentHp /= 2
-        gameController.playerCharacters[1].currentHp shouldBe MAX_HP/2
+        gameController.playerCharacters[1].currentHp shouldBe MAX_HP / 2
         gameController.nextTurn()
         gameController.useMagic(gameController.playerCharacters[1])
-        gameController.playerCharacters[1].currentHp shouldBe MAX_HP*0.8
+        gameController.playerCharacters[1].currentHp shouldBe MAX_HP * 0.8
     }
     test("If a character death must be removed from the character list") {
         // to enemy
@@ -201,5 +201,4 @@ class GameControllerSpec : FunSpec({
         engineerInQueue.notifyDeath()
         gameController.turnsQueue.contains(engineerInQueue) shouldBe false
     }
-
 })

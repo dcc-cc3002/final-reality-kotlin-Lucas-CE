@@ -204,23 +204,25 @@ class AbstractCharacterSpec : FunSpec({
         }
     }
 
-    test("When a character receive cure, their current hp increments in cure points " +
-             "if the current hp + cure points are less than the max hp.") {
-        checkAll(
-            Arb.positiveInt(MAX_HP - MAX_HP / 3)
-        ) { cure ->
-            engineer.currentHp = MAX_HP/3
+    test(
+        "When a character receive cure, their current hp increments in cure points " +
+            "if the current hp + cure points are less than the max hp."
+    ) {
+        checkAll(Arb.positiveInt(MAX_HP - MAX_HP / 3)) { cure ->
+            engineer.currentHp = MAX_HP / 3
             engineer.receiveCure(cure)
-            engineer.currentHp shouldBe MAX_HP/3 + cure
+            engineer.currentHp shouldBe MAX_HP / 3 + cure
         }
     }
 
-    test("When a character receive cure, their current hp is set in max hp " +
-             "if the current hp + cure points are greater than the max hp.") {
+    test(
+        "When a character receive cure, their current hp is set in max hp " +
+            "if the current hp + cure points are greater than the max hp."
+    ) {
         checkAll(
             Arb.int(MAX_HP - MAX_HP / 3 + 1..10000)
         ) { cure ->
-            engineer.currentHp = MAX_HP/3
+            engineer.currentHp = MAX_HP / 3
             engineer.receiveCure(cure)
             engineer.currentHp shouldBe MAX_HP
         }

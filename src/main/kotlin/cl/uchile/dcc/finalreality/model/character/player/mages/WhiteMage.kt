@@ -18,7 +18,7 @@ import java.util.Objects
 import java.util.concurrent.BlockingQueue
 
 /**
- * A White Mage is a type of [PlayerCharacter] that can cast white magic.
+ * A White Mage is a type of [AbstractMage] that can cast white magic.
  *
  * @param name        the character's name
  * @param maxHp       the character's maximum health points

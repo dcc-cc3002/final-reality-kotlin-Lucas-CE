@@ -69,8 +69,7 @@ abstract class AbstractCharacter(
     override fun receiveCure(cure: Int) {
         if (cure + currentHp <= maxHp) {
             currentHp += cure
-        }
-        else {
+        } else {
             currentHp = maxHp
         }
     }

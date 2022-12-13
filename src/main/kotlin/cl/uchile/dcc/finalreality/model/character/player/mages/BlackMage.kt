@@ -18,7 +18,7 @@ import java.util.Objects
 import java.util.concurrent.BlockingQueue
 
 /**
- * A Black Mage is a type of player character that can cast black magic.
+ * A Black Mage is a type of [AbstractMage] that can cast black magic.
  *
  * @param name        the character's name
  * @param maxHp       the character's maximum health points

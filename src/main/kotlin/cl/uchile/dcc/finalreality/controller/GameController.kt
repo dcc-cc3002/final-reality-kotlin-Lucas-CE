@@ -23,7 +23,7 @@ class GameController : CharacterObserver {
     private val _paralyzedCharacters = mutableListOf<GameCharacter>()
     private val _poisonedCharacters = mutableListOf<GameCharacter>()
     private val _burnedCharacters = mutableListOf<GameCharacter>()
-    private var _characterSelected : GameCharacter? = null
+    private lateinit var _characterSelected: GameCharacter
     val turnsQueue
         get() = _turnsQueue
     val playerCharacters
@@ -53,13 +53,13 @@ class GameController : CharacterObserver {
 
     private fun applyDamageEffects() {
         if (_characterSelected in _burnedCharacters) {
-            _characterSelected!!.receiveDamage(_characterSelected!!.magicDamageFire)
-            _characterSelected!!.magicDamageFire = 0
+            _characterSelected.receiveDamage(_characterSelected.magicDamageFire)
+            _characterSelected.magicDamageFire = 0
             _burnedCharacters.remove(_characterSelected)
         }
         if (_characterSelected in _poisonedCharacters) {
-            _characterSelected!!.receiveDamage(_characterSelected!!.magicDamagePoison)
-            _characterSelected!!.magicDamagePoison = 0
+            _characterSelected.receiveDamage(_characterSelected.magicDamagePoison)
+            _characterSelected.magicDamagePoison = 0
             _poisonedCharacters.remove(_characterSelected)
         }
     }
@@ -68,7 +68,7 @@ class GameController : CharacterObserver {
         applyDamageEffects()
         when (_characterSelected) {
             in _paralyzedCharacters -> {
-                _characterSelected?.let { waitTurn(it) }
+                _characterSelected.waitTurn()
                 _state.toIdleState()
             }
             in _playerCharacters -> {
