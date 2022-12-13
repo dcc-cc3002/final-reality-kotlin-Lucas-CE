@@ -1,6 +1,5 @@
 package cl.uchile.dcc.finalreality.controller
 
-import cl.uchile.dcc.finalreality.controller.gameStates.EnemyMenuState
 import cl.uchile.dcc.finalreality.controller.gameStates.IdleState
 import cl.uchile.dcc.finalreality.controller.gameStates.PlayerMenuState
 import cl.uchile.dcc.finalreality.model.character.Enemy
@@ -28,10 +27,10 @@ import kotlin.random.Random
 private const val NAME = "NAME"
 private const val MAX_HP = 100
 private const val MAX_MP = 100
-private const val DEFENSE = 10
+private const val DEFENSE = 5
 private const val DAMAGE = 30
 private const val MAGIC_DAMAGE = 60
-private const val WEIGHT = 5
+private const val WEIGHT = 20
 
 class GameControllerSpec : FunSpec({
     lateinit var gameController: GameController
@@ -71,6 +70,7 @@ class GameControllerSpec : FunSpec({
     }
     test("The player character selected is the first character in the queue") {
         gameController.createPlayerCharacterEngineer(NAME, MAX_HP, DEFENSE, axe)
+        gameController.createEnemy(NAME, MAX_HP, DEFENSE, WEIGHT)
         queue = gameController.turnsQueue
         val engineerInQueue = Engineer(NAME, MAX_HP, DEFENSE, queue)
         gameController.nextTurn()
@@ -79,11 +79,12 @@ class GameControllerSpec : FunSpec({
     }
     test("The enemy selected is the first character in the queue") {
         gameController.createEnemy(NAME, MAX_HP, DEFENSE, WEIGHT)
+        gameController.createPlayerCharacterEngineer(NAME, MAX_HP, DEFENSE, axe)
         queue = gameController.turnsQueue
         val enemyInQueue = Enemy(NAME, WEIGHT, MAX_HP, DEFENSE, queue)
         gameController.nextTurn()
         gameController.characterSelected shouldBe enemyInQueue
-        gameController.state::class shouldBe EnemyMenuState::class
+        gameController.state::class shouldBe IdleState::class
     }
 
     test("The game controller will jump the turn of a paralyzed character") {
@@ -107,7 +108,7 @@ class GameControllerSpec : FunSpec({
             if (random.nextDouble() < 0.2) {
                 gameController.burnedCharacters.isEmpty() shouldBe false
                 gameController.nextTurn() // Enemy turn
-                gameController.characterSelected?.currentHp shouldBe
+                gameController.characterSelected.currentHp shouldBe
                     MAX_HP - staff.magicDmg / 2 + DEFENSE
             }
         }
@@ -120,7 +121,7 @@ class GameControllerSpec : FunSpec({
         gameController.enemyCharacters[0].currentHp = MAX_HP
         gameController.poisonedCharacters.isEmpty() shouldBe false
         gameController.nextTurn() // Enemy turn
-        gameController.characterSelected?.currentHp shouldBe MAX_HP - staff.magicDmg / 3 + DEFENSE
+        gameController.characterSelected.currentHp shouldBe MAX_HP - staff.magicDmg / 3 + DEFENSE
     }
     test("Game controller can create engineers") {
         gameController.createPlayerCharacterEngineer(NAME, MAX_HP, DEFENSE, axe)
@@ -171,6 +172,12 @@ class GameControllerSpec : FunSpec({
         gameController.nextTurn()
         gameController.attack(gameController.enemyCharacters[0])
         gameController.enemyCharacters[0].currentHp shouldBe MAX_HP - (DAMAGE - DEFENSE)
+    }
+    test("The enemies attack automatically in their turn.") {
+        gameController.createEnemy(NAME, MAX_HP, DEFENSE, WEIGHT)
+        gameController.createPlayerCharacterEngineer(NAME, MAX_HP, DEFENSE, axe)
+        gameController.nextTurn()
+        gameController.playerCharacters[0].currentHp shouldBe MAX_HP - WEIGHT / 2 + DEFENSE
     }
     test("Mages can use magic with other characters") {
         gameController.createPlayerCharacterWhiteMage(NAME, MAX_HP, MAX_MP, DEFENSE, staff, heal)

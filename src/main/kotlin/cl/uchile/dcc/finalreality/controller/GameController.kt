@@ -14,6 +14,7 @@ import cl.uchile.dcc.finalreality.model.character.player.mages.WhiteMage
 import cl.uchile.dcc.finalreality.model.character.player.spells.Spell
 import cl.uchile.dcc.finalreality.model.weapon.GameWeapon
 import java.util.concurrent.LinkedBlockingQueue
+import kotlin.random.Random
 
 class GameController : CharacterObserver {
     private val _turnsQueue = LinkedBlockingQueue<GameCharacter>()
@@ -42,6 +43,7 @@ class GameController : CharacterObserver {
         get() = _characterSelected
 
     fun nextTurn() {
+        verifyWin()
         if (!_turnsQueue.isEmpty()) {
             _characterSelected = _turnsQueue.poll()
             _state.toDecidingTheTurnState()
@@ -76,6 +78,7 @@ class GameController : CharacterObserver {
             }
             in _enemyCharacters -> {
                 _state.toEnemyMenuState()
+                attack(_playerCharacters[Random.nextInt(0, _playerCharacters.size)])
             }
         }
     }
@@ -147,6 +150,7 @@ class GameController : CharacterObserver {
         _characterSelected.attack(target)
         waitTurn(_characterSelected)
         _state.toIdleState()
+        verifyWin()
     }
 
     fun useMagic(target: GameCharacter) {
@@ -154,6 +158,7 @@ class GameController : CharacterObserver {
         attacker.throwSpell(target)
         waitTurn(attacker)
         _state.toIdleState()
+        verifyWin()
     }
 
     private fun waitTurn(character: GameCharacter) {
